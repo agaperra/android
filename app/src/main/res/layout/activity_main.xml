@@ -9,7 +9,7 @@
 
 
     <LinearLayout
-        android:id="@+id/settings"
+        android:id="@+id/head"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
 
@@ -30,12 +30,12 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <ImageView
+                <ImageButton
                     android:id="@+id/iv_options"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:src="@drawable/menu"
+                    android:background="@drawable/menu"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -44,13 +44,20 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:layout_marginEnd="42dp"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/city"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />
+                <ImageButton
+                    android:id="@+id/settings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/settings"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
 
             </LinearLayout>
@@ -225,7 +232,7 @@
                 android:layout_weight="2"
                 android:gravity="center">
 
-                <androidx.appcompat.widget.AppCompatButton
+                <Button
                     android:id="@+id/button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -236,7 +243,8 @@
                     android:gravity="center"
                     android:padding="10dp"
                     android:text="@string/show"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/black"
+                    android:onClick="buttonEffect"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
