@@ -47,7 +47,6 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/city"
-                    android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />
                 <ImageButton
@@ -69,7 +68,6 @@
                 android:layout_marginTop="10dp"
                 android:gravity="center"
                 android:text="@string/area"
-                android:textColor="@color/black"
                 android:textSize="15sp" />
 
             <TextView
@@ -79,7 +77,6 @@
                 android:layout_marginTop="40dp"
                 android:gravity="center"
                 android:text="@string/degrees"
-                android:textColor="@color/black"
                 android:textSize="40sp" />
 
             <TextView
@@ -89,7 +86,6 @@
                 android:layout_marginTop="20dp"
                 android:gravity="center"
                 android:text="@string/the_type_of_weather"
-                android:textColor="@color/black"
                 android:textSize="20sp" />
 
         </LinearLayout>
@@ -118,7 +114,6 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="@string/wind"
-                        android:textColor="@color/black"
                         android:textSize="15sp" />
 
 
@@ -130,7 +125,6 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="@string/humidity"
-                        android:textColor="@color/black"
                         android:textSize="15sp"
                         tools:ignore="MissingConstraints" />
 
@@ -142,7 +136,6 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="@string/pressure"
-                        android:textColor="@color/black"
                         android:textSize="15sp" />
                 </LinearLayout>
 
@@ -191,7 +184,6 @@
                     android:id="@+id/days_weather"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
                     android:padding="5dp" />
 
 
@@ -221,8 +213,8 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:hint="@string/enter_name_of_the_city"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     tools:ignore="LabelFor" />
             </LinearLayout>
 
@@ -237,13 +229,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     android:background="@drawable/button"
                     android:gravity="center"
                     android:padding="10dp"
+                    android:textSize="15sp"
                     android:text="@string/show"
-                    android:textColor="@color/black"
                     android:onClick="buttonEffect"/>
             </LinearLayout>
         </LinearLayout>
