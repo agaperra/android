@@ -2,7 +2,11 @@ package com.geekbrains.android_lessons;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.view.MotionEvent;
+import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -10,5 +14,25 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    public static void buttonEffect(View button){
+        button.setOnTouchListener((v, event) -> {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN: {
+                    v.getBackground().setColorFilter(0xe0858585, PorterDuff.Mode.SRC_ATOP);
+                    v.invalidate();
+                    break;
+                }
+                case MotionEvent.ACTION_UP: {
+                    v.getBackground().clearColorFilter();
+                    v.invalidate();
+                    break;
+                }
+            }
+            return false;
+        });
+        
     }
 }
