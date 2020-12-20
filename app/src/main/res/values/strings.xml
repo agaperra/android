@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">Android_Lessons</string>
+    <string name="app_name">Weather</string>
     <string name="city">City</string>
     <string name="area">Area</string>
     <string name="degrees">Degrees</string>

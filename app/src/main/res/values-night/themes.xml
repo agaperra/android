@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.Android_Lessons" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_200</item>
+        <item name="colorPrimary">@color/light_green</item>
         <item name="colorPrimaryVariant">@color/grey</item>
         <item name="colorOnPrimary">#2B2727</item>
         <item name="android:textColor">@color/white</item>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" >Android_Lessons</string>
+    <string name="app_name" >Погода</string>
     <string name="city">Город</string>
     <string name="area">Область/Район</string>
     <string name="degrees">Температура в градусах</string>
