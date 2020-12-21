@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="light_green">#98E0AD</color>
-    <color name="green_middle">#4AD572</color>
-    <color name="green_max">#1BB548</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
+    <color name="cyan">#009A83</color>
+    <color name="dark_cyan">#007888</color>
+
     <color name="black">#000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#B6B6B6</color>
