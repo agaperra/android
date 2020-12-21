@@ -7,7 +7,8 @@
     android:theme="@android:style/Theme.Black.NoTitleBar"
     tools:context=".MainActivity">
 
-   <!-- <ImageView
+   <!--пока не придумала, как нормально вставить
+   <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@mipmap/back"
@@ -168,37 +169,9 @@
         app:layout_constraintTop_toBottomOf="@+id/editText" />
 
 
-    <!-- <ImageView
-         android:layout_width="16dp"
-         android:layout_height="45dp"
-         android:layout_gravity="center"
-         android:layout_weight="1"
-         android:gravity="center"
-         android:src="@mipmap/wind"
-
-         />
-
-     <ImageView
-         android:layout_width="14dp"
-         android:layout_height="32dp"
-         android:layout_gravity="center"
-         android:layout_weight="1"
-         android:gravity="center"
-         android:src="@mipmap/humidity"
-
-         />
-
-     <ImageView
-         android:layout_width="42dp"
-         android:layout_height="44dp"
-         android:layout_gravity="center"
-         android:layout_weight="1"
-         android:gravity="center"
-         android:src="@mipmap/pressure" />-->
-    <!--
 
 
-
+    <!--пока не придумала, как вставить нормально изображения
       <ImageView
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
@@ -228,37 +201,6 @@
           android:src="@mipmap/pressure" />
 
 
-      <androidx.recyclerview.widget.RecyclerView
-          android:id="@+id/days_weather"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:padding="5dp" />
-
-
-      <EditText
-          android:id="@+id/editText"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center"
-          android:layout_marginLeft="10dp"
-          android:layout_marginRight="10dp"
-          android:gravity="center"
-          android:hint="@string/enter_name_of_the_city"
-          tools:ignore="LabelFor" />
-
-
-      <Button
-          android:id="@+id/button"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center"
-          android:layout_marginLeft="10dp"
-          android:layout_marginRight="10dp"
-          android:background="@drawable/button"
-          android:gravity="center"
-          android:onClick="buttonEffect"
-          android:padding="10dp"
-          android:text="@string/show"
-          android:textSize="15sp" />-->
+-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
