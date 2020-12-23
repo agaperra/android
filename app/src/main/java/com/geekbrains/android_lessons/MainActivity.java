@@ -1,5 +1,6 @@
 package com.geekbrains.android_lessons;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
@@ -20,8 +21,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
     }
 
     @Override
@@ -29,6 +28,25 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.main, menu);
         setTitle("");
         return true;
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId())
+        {
+            case R.id.ic_menu:
+
+                Intent intentMenu = new Intent(this, SearchActivity.class);
+                startActivity(intentMenu);
+                return true;
+            case R.id.ic_settings:
+
+                Intent intentSettings = new Intent(this, SettingsActivity.class);
+                startActivity(intentSettings);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
 
