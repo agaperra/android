@@ -10,9 +10,9 @@
         android:id="@+id/SearchView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
+        android:layout_marginStart="@dimen/usually_margin"
         android:layout_marginTop="50dp"
-        android:layout_marginEnd="15dp"
+        android:layout_marginEnd="@dimen/usually_margin"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,28 +34,29 @@
             android:layout_margin="5dp"
             android:layout_weight="1"
             android:text="@string/find"
-            android:textSize="12sp" />
+            android:textSize="@dimen/text_size_12sp" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/TopCitiesView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
+        android:layout_margin="@dimen/usually_margin"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/SearchView"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/SearchView"
         app:layout_constraintTop_toBottomOf="@+id/SearchView"
-        app:layout_constraintVertical_bias="0.027">
+        app:layout_constraintVertical_bias="0.03">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="5dp"
             android:gravity="center"
-            android:text="@string/top_10_cities"/>
+            android:text="@string/top_10_cities"
+            android:textSize="@dimen/always_text_size"/>
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -65,7 +66,7 @@
                 android:id="@+id/days_weather"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="15dp" />
+                android:layout_margin="@dimen/usually_margin" />
         </ScrollView>
     </LinearLayout>
 
@@ -78,25 +79,29 @@
         app:layout_constraintStart_toStartOf="@+id/TopCitiesView"
         app:layout_constraintTop_toBottomOf="@+id/TopCitiesView"
         android:orientation="vertical"
-        android:layout_margin="15dp">
+        android:layout_margin="@dimen/usually_margin">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="@string/select_the_additional_parameters_you_are_interested_in" />
+            android:text="@string/select_the_additional_parameters_you_are_interested_in"
+            android:textSize="@dimen/always_text_size"/>
 
         <CheckBox
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/wind" />
+            android:text="@string/wind"
+            android:textSize="@dimen/always_text_size"/>
         <CheckBox
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/pressure"/>
+            android:text="@string/pressure"
+            android:textSize="@dimen/always_text_size"/>
         <CheckBox
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/humidity"/>
+            android:text="@string/humidity"
+            android:textSize="@dimen/always_text_size"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SettingsActivity">
+
+    <LinearLayout
+        android:id="@+id/CheckNewParametersView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/usually_margin"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.03">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/settings"
+            android:textSize="@dimen/text_size_big"/>
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/themeSwitch"
+            android:layout_marginTop="@dimen/usually_margin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/theme"
+            android:layout_gravity="center"
+            android:checked="false"
+            android:textSize="@dimen/text_size_big"
+            android:textOff="@string/light_theme"
+            android:textOn="@string/dark_theme"
+            android:theme="@style/MySwitch"/>
+
+        <!--хочу потом сделать квадратные переключатели с надписями-->
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/SwitchTemperature"
+            android:layout_marginTop="@dimen/usually_margin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/temperature"
+            android:layout_gravity="center"
+            android:checked="false"
+            android:textSize="@dimen/text_size_big"
+            android:textOff="@string/cels"
+            android:textOn="@string/faringate"
+            android:theme="@style/MySwitch"/>
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/SwitchWind"
+            android:layout_marginTop="@dimen/usually_margin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/wind_force"
+            android:layout_gravity="center"
+            android:checked="false"
+            android:textSize="@dimen/text_size_big"
+            android:textOff="@string/m_s"
+            android:textOn="@string/km_h"
+            android:theme="@style/MySwitch"/>
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/SwitchPressure"
+            android:layout_marginTop="@dimen/usually_margin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pressure"
+            android:layout_gravity="center"
+            android:checked="false"
+            android:textSize="@dimen/text_size_big"
+            android:textOff="@string/mm_of_m_c"
+            android:textOn="@string/gPa"
+            android:theme="@style/MySwitch"/>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
