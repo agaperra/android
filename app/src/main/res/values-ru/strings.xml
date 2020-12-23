@@ -14,5 +14,9 @@
     <string name="enter_name_of_the_city">Введите название города</string>
     <string name="menu">Меню</string>
     <string name="settings">Настройки</string>
+    <string name="find">Найти</string>
+    <string name="enter_city_name">Введите город</string>
+    <string name="top_10_cities">Топ 10 городов</string>
+    <string name="select_the_additional_parameters_you_are_interested_in">Выберите интересующие вас дополнительные параметры</string>
 
 </resources>

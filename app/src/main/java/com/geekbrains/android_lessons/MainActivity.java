@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_search);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    @SuppressLint("ClickableViewAccessibility")
+    /*@SuppressLint("ClickableViewAccessibility")
     public static void buttonEffect(View button){
         button.setOnTouchListener((v, event) -> {
             switch (event.getAction()) {
@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
             return false;
         });
         
-    }
+    }*/
 
 
 }
