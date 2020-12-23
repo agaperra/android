@@ -7,36 +7,35 @@
     android:theme="@android:style/Theme.Black.NoTitleBar"
     tools:context=".MainActivity">
 
-   <!--пока не придумала, как нормально вставить
-   <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@mipmap/back"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:gravity="top"/>-->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <GridLayout
-        android:id="@+id/headerGridLayout"
+
+
+    <LinearLayout
+        android:id="@+id/headLayoutView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:columnCount="1"
-        android:rowCount="5"
+        android:layout_marginTop="60dp"
+        android:layout_marginStart="@dimen/margin_big"
+        android:layout_marginEnd="@dimen/margin_big"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
 
         <TextView
             android:id="@+id/CityNameView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
+            android:layout_margin="@dimen/usually_margin"
             android:gravity="center"
             android:text="@string/city"
-            android:textSize="20sp"
+            android:textSize="@dimen/text_size_big"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -46,10 +45,11 @@
             android:id="@+id/AreaNameView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_margin="@dimen/usually_margin"
+            android:layout_marginTop="10dp"
             android:gravity="center"
             android:text="@string/area"
-            android:textSize="15sp"
+            android:textSize="@dimen/always_text_size"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -60,147 +60,48 @@
             android:id="@+id/DegreesCountView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_margin="@dimen/usually_margin"
+            android:layout_marginTop="@dimen/margin_big"
             android:gravity="center"
             android:text="@string/degrees"
-            android:textSize="40sp" />
+            android:textSize="@dimen/text_size_biggest" />
 
         <TextView
             android:id="@+id/WeatherTypeView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_margin="@dimen/usually_margin"
+            android:layout_marginTop="@dimen/margin_big"
             android:gravity="center"
             android:text="@string/the_type_of_weather"
-            android:textSize="20sp" />
+            android:textSize="@dimen/text_size_big" />
 
-    </GridLayout>
+    </LinearLayout>
 
-    <GridLayout
-        android:id="@+id/OthersGridLayout"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:columnCount="3"
-        android:rowCount="1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/headerGridLayout">
-
-        <TextView
-            android:id="@+id/WindTypeView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="0"
-            android:layout_column="0"
-            android:layout_columnWeight="1"
-            android:gravity="center"
-            android:text="@string/wind"
-            android:textSize="15sp" />
-
-        <TextView
-            android:id="@+id/HumidityView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="0"
-            android:layout_column="1"
-            android:layout_columnWeight="1"
-            android:gravity="center"
-            android:text="@string/humidity"
-            android:textSize="15sp" />
-
-        <TextView
-            android:id="@+id/PressureView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="0"
-            android:layout_column="2"
-            android:layout_columnWeight="1"
-            android:gravity="center"
-            android:text="@string/pressure"
-            android:textSize="15sp" />
-
-
-    </GridLayout>
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/days_weather"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/OthersGridLayout"
-        />
-
-
-    <EditText
-        android:id="@+id/editText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:hint="@string/enter_name_of_the_city"
+        android:layout_margin="@dimen/margin_big"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/headLayoutView"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/headerGridLayout"
-        app:layout_constraintVertical_bias="0.704"
-        tools:ignore="LabelFor" />
+        app:layout_constraintStart_toStartOf="@+id/headLayoutView"
+        app:layout_constraintTop_toBottomOf="@+id/headLayoutView">
 
-    <Button
-        android:id="@+id/buttonFind"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="@drawable/button"
-        android:gravity="center"
-        android:onClick="buttonEffect"
-        android:padding="10dp"
-        android:text="@string/show"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/days_weather"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/usually_margin"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/headerGridLayout" />
+    </ScrollView>
 
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
-
-
-    <!--пока не придумала, как вставить нормально изображения
-      <ImageView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center"
-          android:layout_weight="1"
-          android:gravity="center"
-          android:src="@mipmap/wind"
-
-          />
-
-      <ImageView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center"
-          android:layout_weight="1"
-          android:gravity="center"
-          android:src="@mipmap/humidity"
-
-          />
-
-      <ImageView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center"
-          android:layout_weight="1"
-          android:gravity="center"
-          android:src="@mipmap/pressure" />
-
-
--->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

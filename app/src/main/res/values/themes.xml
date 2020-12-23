@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.Android_Lessons" parent="Theme.AppCompat.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/cyan</item>
+        <item name="colorPrimary">@color/light</item>
         <item name="colorPrimaryVariant">@color/grey</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="android:textColor">@color/black</item>
@@ -10,13 +10,20 @@
         <item name="colorSecondary">@color/black</item>
         <item name="colorSecondaryVariant">@color/black</item>
         <item name="colorOnSecondary">@color/white</item>
-        <item name="colorAccent">@color/cyan</item>
+        <item name="colorAccent">@color/light</item>
         <!-- Status bar color. -->
         <!-- Customize your theme here. -->
-        <item name="android:windowActionBarOverlay">true</item>
 
-        <!-- Support library compatibility -->
-        <item name="windowActionBarOverlay">true</item>
+    </style>
+    <style name="MySwitch" parent="Theme.AppCompat.DayNight">
+        <!-- активное состояние (30% прозрачности для фона) -->
+        <item name="colorControlActivated">#72B6FF</item>
+
+        <!-- неактивное состояние ползунка -->
+        <item name="colorSwitchThumbNormal">#9E9E9E</item>
+
+        <!-- цвет дорожки для неактивного состояния (30% прозрачности) -->
+        <item name="android:colorForeground">#A1A1A1</item>
     </style>
 
 </resources>
