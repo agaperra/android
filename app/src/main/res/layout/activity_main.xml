@@ -11,95 +11,85 @@
         android:id="@+id/fullScreenMainScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
 
+            <LinearLayout
+                android:id="@+id/headLayoutView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_big"
+                android:layout_marginTop="60dp"
+                android:layout_marginEnd="@dimen/margin_big"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-    <LinearLayout
-        android:id="@+id/headLayoutView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:layout_marginStart="@dimen/margin_big"
-        android:layout_marginEnd="@dimen/margin_big"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+                <TextView
+                    android:id="@+id/cityNameView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/usually_margin"
+                    android:gravity="center"
+                    android:text="@string/city"
+                    android:textSize="@dimen/text_size_big"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/cityNameView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/usually_margin"
-            android:gravity="center"
-            android:text="@string/city"
-            android:textSize="@dimen/text_size_big"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/freaNameView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/usually_margin"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:text="@string/area"
-            android:textSize="@dimen/always_text_size"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/CityNameView" />
+                <TextView
+                    android:id="@+id/freaNameView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/usually_margin"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:text="@string/area"
+                    android:textSize="@dimen/always_text_size"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/CityNameView" />
 
 
-        <TextView
-            android:id="@+id/degreesCountView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/usually_margin"
-            android:layout_marginTop="@dimen/margin_big"
-            android:gravity="center"
-            android:text="@string/degrees"
-            android:textSize="@dimen/text_size_biggest" />
+                <TextView
+                    android:id="@+id/degreesCountView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/usually_margin"
+                    android:layout_marginTop="@dimen/margin_big"
+                    android:gravity="center"
+                    android:text="@string/degrees"
+                    android:textSize="@dimen/text_size_biggest" />
 
-        <TextView
-            android:id="@+id/weatherTypeView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/usually_margin"
-            android:layout_marginTop="@dimen/margin_big"
-            android:gravity="center"
-            android:text="@string/the_type_of_weather"
-            android:textSize="@dimen/text_size_big" />
+                <TextView
+                    android:id="@+id/weatherTypeView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/usually_margin"
+                    android:layout_marginTop="@dimen/margin_big"
+                    android:gravity="center"
+                    android:text="@string/the_type_of_weather"
+                    android:textSize="@dimen/text_size_big" />
 
-    </LinearLayout>
+            </LinearLayout>
 
-    <ScrollView
-        android:id="@+id/weatherNextDaysScrollView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_big"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/headLayoutView"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/headLayoutView"
-        app:layout_constraintTop_toBottomOf="@+id/headLayoutView">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/usually_margin"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/headerGridLayout" />
-    </ScrollView>
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/usually_margin"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/headLayoutView" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
