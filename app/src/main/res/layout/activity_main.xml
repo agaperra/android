@@ -22,7 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_big"
-                android:layout_marginTop="60dp"
+                android:layout_marginTop="15dp"
                 android:layout_marginEnd="@dimen/margin_big"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
