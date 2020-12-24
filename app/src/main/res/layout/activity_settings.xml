@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".SettingsActivity">
     <ScrollView
+        android:id="@+id/fullScreenSettingsScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -13,7 +14,7 @@
             android:layout_height="wrap_content">
 
     <LinearLayout
-        android:id="@+id/CheckNewParametersView"
+        android:id="@+id/checkNewParametersView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/usually_margin"
@@ -26,6 +27,7 @@
         app:layout_constraintVertical_bias="0.03">
 
         <TextView
+            android:id="@+id/checkNewParametersTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
@@ -47,7 +49,7 @@
 
         <!--хочу потом сделать квадратные переключатели с надписями-->
         <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/SwitchTemperature"
+            android:id="@+id/switchTemperature"
             android:layout_marginTop="@dimen/usually_margin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -59,7 +61,7 @@
             android:textOn="@string/faringate"
             android:theme="@style/MySwitch"/>
         <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/SwitchWind"
+            android:id="@+id/switchWind"
             android:layout_marginTop="@dimen/usually_margin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -71,7 +73,7 @@
             android:textOn="@string/km_h"
             android:theme="@style/MySwitch"/>
         <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/SwitchPressure"
+            android:id="@+id/switchPressure"
             android:layout_marginTop="@dimen/usually_margin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

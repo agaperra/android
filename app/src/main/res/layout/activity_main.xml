@@ -8,6 +8,7 @@
     tools:context=".MainActivity">
 
     <ScrollView
+        android:id="@+id/fullScreenMainScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -29,7 +30,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/CityNameView"
+            android:id="@+id/cityNameView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/usually_margin"
@@ -42,7 +43,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/AreaNameView"
+            android:id="@+id/freaNameView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/usually_margin"
@@ -57,7 +58,7 @@
 
 
         <TextView
-            android:id="@+id/DegreesCountView"
+            android:id="@+id/degreesCountView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/usually_margin"
@@ -67,7 +68,7 @@
             android:textSize="@dimen/text_size_biggest" />
 
         <TextView
-            android:id="@+id/WeatherTypeView"
+            android:id="@+id/weatherTypeView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/usually_margin"
@@ -79,6 +80,7 @@
     </LinearLayout>
 
     <ScrollView
+        android:id="@+id/weatherNextDaysScrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_big"
@@ -89,7 +91,6 @@
         app:layout_constraintTop_toBottomOf="@+id/headLayoutView">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/days_weather"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/usually_margin"

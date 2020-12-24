@@ -7,6 +7,7 @@
     tools:context=".SearchActivity">
 
     <ScrollView
+        android:id="@+id/fullScreenMenuScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,6 +27,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <SearchView
+            android:id="@+id/searchCityView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
@@ -36,6 +38,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
+            android:id="@+id/buttonFindCityView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
@@ -58,6 +61,7 @@
         app:layout_constraintVertical_bias="0.03">
 
         <TextView
+            android:id="@+id/top10CitiesTextView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="5dp"
@@ -65,12 +69,13 @@
             android:text="@string/top_10_cities"
             android:textSize="@dimen/always_text_size"/>
         <ScrollView
+            android:id="@+id/top10CitiesScrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/days_weather"
+                android:id="@+id/top10_cities"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/usually_margin" />
@@ -89,6 +94,7 @@
         android:layout_margin="@dimen/usually_margin">
 
         <TextView
+            android:id="@+id/newParametersTextView"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -96,16 +102,19 @@
             android:textSize="@dimen/always_text_size"/>
 
         <CheckBox
+            android:id="@+id/checkWindCheckbox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/wind"
             android:textSize="@dimen/always_text_size"/>
         <CheckBox
+            android:id="@+id/checkPressureCheckbox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/pressure"
             android:textSize="@dimen/always_text_size"/>
         <CheckBox
+            android:id="@+id/checkHumidityCheckbox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/humidity"
