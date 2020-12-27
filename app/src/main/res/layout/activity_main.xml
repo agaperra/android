@@ -10,11 +10,26 @@
     <ScrollView
         android:id="@+id/fullScreenMainScrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
+
+            <ImageView
+                android:id="@+id/backgroundView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitStart"
+                android:src="@mipmap/snow"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
 
 
             <LinearLayout
@@ -22,10 +37,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_big"
-                android:layout_marginTop="15dp"
+
                 android:layout_marginEnd="@dimen/margin_big"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -33,7 +49,7 @@
                     android:id="@+id/cityNameView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/usually_margin"
+                    android:layout_margin="@dimen/margin10dp"
                     android:gravity="center"
                     android:text="@string/city"
                     android:textSize="@dimen/text_size_big"
@@ -43,11 +59,10 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/freaNameView"
+                    android:id="@+id/areaNameView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/usually_margin"
-                    android:layout_marginTop="10dp"
+                    android:layout_margin="@dimen/margin10dp"
                     android:gravity="center"
                     android:text="@string/area"
                     android:textSize="@dimen/always_text_size"
@@ -61,8 +76,7 @@
                     android:id="@+id/degreesCountView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/usually_margin"
-                    android:layout_marginTop="@dimen/margin_big"
+                    android:layout_margin="@dimen/margin10dp"
                     android:gravity="center"
                     android:text="@string/degrees"
                     android:textSize="@dimen/text_size_biggest" />
@@ -71,16 +85,15 @@
                     android:id="@+id/weatherTypeView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/usually_margin"
-                    android:layout_marginTop="@dimen/margin_big"
+                    android:layout_margin="@dimen/margin10dp"
                     android:gravity="center"
                     android:text="@string/the_type_of_weather"
                     android:textSize="@dimen/text_size_big" />
 
             </LinearLayout>
 
-
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/usually_margin"

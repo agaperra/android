@@ -66,12 +66,6 @@ public class SettingsActivity extends AppCompatActivity {
         Log.d("INFO: ","onDestroy");
         Toast.makeText(this,"onDestroy",Toast.LENGTH_SHORT).show();
     }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        setTitle("");
-        return true;
-    }
 
     @SuppressLint("NonConstantResourceId")
     @Override

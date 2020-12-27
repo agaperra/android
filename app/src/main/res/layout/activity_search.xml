@@ -79,46 +79,7 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/CheckNewParametersView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/usually_margin"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/TopCitiesView"
-                app:layout_constraintStart_toStartOf="@+id/TopCitiesView"
-                app:layout_constraintTop_toBottomOf="@+id/TopCitiesView">
 
-                <TextView
-                    android:id="@+id/newParametersTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="@string/select_the_additional_parameters_you_are_interested_in"
-                    android:textSize="@dimen/always_text_size" />
-
-                <CheckBox
-                    android:id="@+id/checkWindCheckbox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/wind"
-                    android:textSize="@dimen/always_text_size" />
-
-                <CheckBox
-                    android:id="@+id/checkPressureCheckbox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/pressure"
-                    android:textSize="@dimen/always_text_size" />
-
-                <CheckBox
-                    android:id="@+id/checkHumidityCheckbox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/humidity"
-                    android:textSize="@dimen/always_text_size" />
-            </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

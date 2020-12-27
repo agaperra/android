@@ -2,4 +2,7 @@
 <resources>
     <dimen name="usually_margin">15dp</dimen>
     <dimen name="margin_big">30dp</dimen>
+    <dimen name="margin20dp">20dp</dimen>
+    <dimen name="margin25dp">25dp</dimen>
+    <dimen name="margin10dp">10dp</dimen>
 </resources>
