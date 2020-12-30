@@ -50,7 +50,7 @@
                     android:theme="@style/MySwitch" />
 
                 <!--хочу потом сделать квадратные переключатели с надписями-->
-                <androidx.appcompat.widget.SwitchCompat
+                <com.google.android.material.switchmaterial.SwitchMaterial
                     android:id="@+id/switchTemperature"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

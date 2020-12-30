@@ -4,19 +4,19 @@ package com.geekbrains.android_lessons;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.drawable.ColorDrawable;
+
 import android.os.Bundle;
+
 import android.util.Log;
-import android.util.TypedValue;
+
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
-import android.view.WindowManager;
+
 import android.widget.Toast;
 
+
 public class SettingsActivity extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +24,9 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
         Log.d("INFO: ", "onCreate");
         Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show();
+
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

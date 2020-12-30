@@ -5,14 +5,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class SearchActivity extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +24,7 @@ public class SearchActivity extends AppCompatActivity {
         Log.d("INFO: ", "onCreate");
         Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show();
     }
+
 
 
     @Override

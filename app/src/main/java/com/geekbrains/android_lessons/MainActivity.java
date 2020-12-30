@@ -19,19 +19,15 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String PREF_DEGREES = "PREF_DEGREES";
     private TextView degreesCountView;
-    private String degrees;
 
     private static final String PREF_WIND = "PREF_WIND";
     private TextView windForceParameterView;
-    private String wind;
 
     private static final String PREF_HUMID = "PREF_HUMID";
     private TextView humidityParameterView;
-    private String humidity;
 
     private static final String PREF_PRESS = "PREF_PRESS";
     private TextView pressureParameterView;
-    private String pressure;
 
     private SharedPreferences sPrefs;
 
@@ -60,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
                getValue(PREF_HUMID),
                getValue(PREF_PRESS));
 
-
+//при нажатии на текстовое поле "влажность" - увеличение всех вью на 1
         findViewById(R.id.humidityView).setOnClickListener(v -> {
             updateValue(String.valueOf(Integer.parseInt(getValue(PREF_DEGREES)) + 1),
                     String.valueOf(Integer.parseInt(getValue(PREF_WIND)) + 1),
