@@ -11,42 +11,38 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity {
 
-//    private TextView cityView;
-//    private static final String PREF_CITY = "PREF_CITY";
-//    private TextView areaView;
-//    private static final String PREF_AREA = "PREF_AREA";
-//    private TextView typeWeatherView;
-//    private static final String PREF_TYPE = "PREF_TYPE";
-
     private static final String PREF_DEGREES = "PREF_DEGREES";
-    private TextView degreesView;
+    private TextView degreesCountView;
+    private String degrees;
+
     private static final String PREF_WIND = "PREF_WIND";
-    private TextView windForceView;
+    private TextView windForceParameterView;
+    private String wind;
+
     private static final String PREF_HUMID = "PREF_HUMID";
-    private TextView humidityView;
+    private TextView humidityParameterView;
+    private String humidity;
+
     private static final String PREF_PRESS = "PREF_PRESS";
-    private TextView pressureView;
-    private final String degreesPostfix = "\u00B0";
-    private final String percents = "%";
+    private TextView pressureParameterView;
+    private String pressure;
 
     private SharedPreferences sPrefs;
 
 
     private void findViews() {
-//        cityView = findViewById(R.id.cityNameView);
-//        areaView = findViewById(R.id.areaNameView);
-        degreesView = findViewById(R.id.degreesCountView);
-//        typeWeatherView = findViewById(R.id.weatherTypeView);
-        windForceView = findViewById(R.id.windForceParameterView);
-        humidityView = findViewById(R.id.humidityParameterView);
-        pressureView = findViewById(R.id.pressureParameterView);
+
+        degreesCountView = findViewById(R.id.degreesCountView);
+        windForceParameterView = findViewById(R.id.windForceParameterView);
+        humidityParameterView = findViewById(R.id.humidityParameterView);
+        pressureParameterView = findViewById(R.id.pressureParameterView);
+
     }
 
 
@@ -56,52 +52,46 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Log.d("INFO: ", "onCreate");
         Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show();
-        findViews();
-        generateData((View) findViewById(R.id.headLayoutView));
-        //с SharedPreferences не получилось пока
         sPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-        updateValues(getValues(PREF_DEGREES, degreesView),
-                getValues(PREF_WIND, windForceView),
-                getValues(PREF_HUMID, humidityView),
-                getValues(PREF_PRESS, pressureView));
+        findViews();
+        //для проверки работоспособности при перевороте экрана
+       updateValue(getValue(PREF_DEGREES),
+               getValue(PREF_WIND),
+               getValue(PREF_HUMID),
+               getValue(PREF_PRESS));
+
+
+        findViewById(R.id.humidityView).setOnClickListener(v -> {
+            updateValue(String.valueOf(Integer.parseInt(getValue(PREF_DEGREES)) + 1),
+                    String.valueOf(Integer.parseInt(getValue(PREF_WIND)) + 1),
+                    String.valueOf(Integer.parseInt(getValue(PREF_HUMID)) + 1),
+                    String.valueOf(Integer.parseInt(getValue(PREF_PRESS)) + 1));
+        });
+
+
     }
 
-    @SuppressLint("CommitPrefEdits")
-    private void updateValues( String degrees, String windForce, String humidity, String pressure) {
 
-        sPrefs.edit().putString(PREF_DEGREES, degrees).apply();
-        degreesView.setText(String.valueOf(degrees));
+    private void updateValue(String degrees,String wind, String humidity, String pressure) {
+        sPrefs.edit().putString( PREF_DEGREES, degrees).apply();
+        degreesCountView.setText(degrees);
 
-        sPrefs.edit().putString(PREF_WIND, windForce).apply();
-        windForceView.setText(String.valueOf(windForce));
+        sPrefs.edit().putString( PREF_WIND, wind).apply();
+        windForceParameterView.setText(wind);
 
-        sPrefs.edit().putString(PREF_HUMID, humidity).apply();
-        humidityView.setText(String.valueOf(humidity));
+        sPrefs.edit().putString( PREF_HUMID, humidity).apply();
+        humidityParameterView.setText(humidity);
 
-        sPrefs.edit().putString(PREF_PRESS, pressure).apply();
-        pressureView.setText(String.valueOf(pressure));
+        sPrefs.edit().putString( PREF_PRESS, pressure).apply();
+        pressureParameterView.setText(pressure);
+
+
     }
 
-    private String getValues(String key, TextView v) {
-        return sPrefs.getString(key, v.getText().toString());
+    private String getValue(String key) {
+        return sPrefs.getString(key, "0");
     }
 
-    private void setData(String degrees, String windForce, String humidity, String pressure) {
-        degreesView.setText(degrees);
-        windForceView.setText(windForce);
-        humidityView.setText(humidity);
-        pressureView.setText(pressure);
-    }
-
-    public void generateData(View view) {
-
-        String degrees = (int) (Math.random() * 10) + degreesPostfix;
-        String wind = String.valueOf((int) (Math.random() * 10));
-        String humidity = (int) (Math.random() * 100) + percents;
-        String pressure = String.valueOf((int) (Math.random() * 800));
-
-        setData(degrees, wind, humidity, pressure);
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

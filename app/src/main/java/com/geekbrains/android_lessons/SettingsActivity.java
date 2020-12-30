@@ -78,11 +78,6 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.ic_menu:
-
-                Intent intentMenu = new Intent(this, SearchActivity.class);
-                startActivity(intentMenu);
-                return true;
             case R.id.home:
                 this.finish();
                 return true;
