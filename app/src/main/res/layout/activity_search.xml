@@ -45,7 +45,7 @@
                     android:layout_margin="5dp"
                     android:layout_weight="1"
                     android:text="@string/find"
-                    android:textSize="@dimen/text_size_12sp" />
+                    android:textSize="@dimen/text_size_12sp"/>
             </LinearLayout>
 
             <LinearLayout
@@ -68,7 +68,7 @@
                     android:layout_margin="5dp"
                     android:gravity="center"
                     android:text="@string/top_10_cities"
-                    android:textSize="@dimen/always_text_size" />
+                    android:textSize="@dimen/text_size_big" />
 
 
                 <androidx.recyclerview.widget.RecyclerView

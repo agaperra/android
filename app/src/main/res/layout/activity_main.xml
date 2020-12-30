@@ -131,7 +131,6 @@
                         android:text="@string/pressure" />
 
 
-
                     <TextView
                         android:id="@+id/windForceParameterView"
                         android:layout_width="wrap_content"
@@ -164,10 +163,8 @@
                         android:gravity="center"
                         android:text="@string/pressure" />
                 </GridLayout>
-
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
