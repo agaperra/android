@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
 import android.widget.Toast;
 
 public class SearchActivity extends AppCompatActivity {
@@ -21,11 +22,6 @@ public class SearchActivity extends AppCompatActivity {
         Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        setTitle("");
-        return true;
-    }
 
     @Override
     protected void onStart() {

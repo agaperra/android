@@ -28,7 +28,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        setTitle("");
+        closeOptionsMenu();
         return true;
     }
 

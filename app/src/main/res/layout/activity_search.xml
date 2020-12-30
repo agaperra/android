@@ -29,23 +29,15 @@
 
                 <SearchView
                     android:id="@+id/searchCityView"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:layout_weight="3"
                     android:queryHint="@string/enter_city_name"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <Button
-                    android:id="@+id/buttonSearchCityView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_weight="1"
-                    android:text="@string/find"
-                    android:textSize="@dimen/text_size_12sp"/>
+
             </LinearLayout>
 
             <LinearLayout
