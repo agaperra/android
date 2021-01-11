@@ -5,18 +5,20 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import android.view.Menu;
 import android.view.MenuItem;
 
+import android.widget.TextView;
 import android.widget.Toast;
 
 
 public class SettingsActivity extends AppCompatActivity {
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
