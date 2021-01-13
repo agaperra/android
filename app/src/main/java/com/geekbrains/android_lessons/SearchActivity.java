@@ -31,7 +31,6 @@ public class SearchActivity extends AppCompatActivity {
         searchCityView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(final String query) {
-                //вызовется при нажатии на лупу на клавиатуре
                 if (!data.trim().equals("")) {
                     Intent intentCity = new Intent(SearchActivity.this, MainActivity.class);
                     intentCity.putExtra("cityName", data);
@@ -43,7 +42,6 @@ public class SearchActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(final String newText) {
-                //вызовется при изменении ведённого текста
                 data = newText;
                 return true;
             }
