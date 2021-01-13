@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -33,6 +34,9 @@ public class MainActivity extends AppCompatActivity {
 
     private SharedPreferences sPrefs;
 
+    private final String url = "https://yandex.ru/search/?text=";
+    private String message = "";
+
 
     private void findViews() {
 
@@ -40,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         windForceParameterView = findViewById(R.id.windForceParameterView);
         humidityParameterView = findViewById(R.id.humidityParameterView);
         pressureParameterView = findViewById(R.id.pressureParameterView);
-        cityNameView=findViewById(R.id.cityNameView);
+        cityNameView = findViewById(R.id.cityNameView);
 
     }
 
@@ -55,10 +59,10 @@ public class MainActivity extends AppCompatActivity {
         sPrefs = PreferenceManager.getDefaultSharedPreferences(this);
         findViews();
         //для проверки работоспособности при перевороте экрана
-       updateValue(getValue(PREF_DEGREES),
-               getValue(PREF_WIND),
-               getValue(PREF_HUMID),
-               getValue(PREF_PRESS));
+        updateValue(getValue(PREF_DEGREES),
+                getValue(PREF_WIND),
+                getValue(PREF_HUMID),
+                getValue(PREF_PRESS));
 
 //при нажатии на текстовое поле "влажность" - увеличение всех вью на 1
         findViewById(R.id.humidityView).setOnClickListener(v -> {
@@ -68,26 +72,36 @@ public class MainActivity extends AppCompatActivity {
                     String.valueOf(Integer.parseInt(getValue(PREF_PRESS)) + 1));
         });
 
-
         Intent intent = getIntent();
-        if(intent.hasExtra("cityName")) {
-        String message = intent.getStringExtra("cityName");
-        cityNameView.setText(message);
+        if (intent.hasExtra("cityName")) {
+            message = intent.getStringExtra("cityName");
+            cityNameView.setText(message);
         }
+
+        //по нажатию на название города - открытие поискового запроса в яндексе
+        findViewById(R.id.cityNameView).setOnClickListener(v -> {
+            if (!message.trim().equals("")) {
+                Intent openURL = new Intent(android.content.Intent.ACTION_VIEW);
+                openURL.setData(Uri.parse(url + message));
+                startActivity(openURL);
+            }
+        });
+
+
     }
 
 
-    private void updateValue(String degrees,String wind, String humidity, String pressure) {
-        sPrefs.edit().putString( PREF_DEGREES, degrees).apply();
+    private void updateValue(String degrees, String wind, String humidity, String pressure) {
+        sPrefs.edit().putString(PREF_DEGREES, degrees).apply();
         degreesCountView.setText(degrees);
 
-        sPrefs.edit().putString( PREF_WIND, wind).apply();
+        sPrefs.edit().putString(PREF_WIND, wind).apply();
         windForceParameterView.setText(wind);
 
-        sPrefs.edit().putString( PREF_HUMID, humidity).apply();
+        sPrefs.edit().putString(PREF_HUMID, humidity).apply();
         humidityParameterView.setText(humidity);
 
-        sPrefs.edit().putString( PREF_PRESS, pressure).apply();
+        sPrefs.edit().putString(PREF_PRESS, pressure).apply();
         pressureParameterView.setText(pressure);
 
 
