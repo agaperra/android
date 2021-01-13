@@ -11,10 +11,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class SearchActivity extends AppCompatActivity {
+
+    private SearchView searchCityView;
+    private String data;
 
 
     @Override
@@ -23,8 +27,32 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search);
         Log.d("INFO: ", "onCreate");
         Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show();
+        findViews();
+        searchCityView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(final String query) {
+                //вызовется при нажатии на лупу на клавиатуре
+                if (!data.trim().equals("")) {
+                    Intent intentCity = new Intent(SearchActivity.this, MainActivity.class);
+                    intentCity.putExtra("cityName", data);
+                    startActivity(intentCity);
+                    return true;
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(final String newText) {
+                //вызовется при изменении ведённого текста
+                data = newText;
+                return true;
+            }
+        });
     }
 
+    private void findViews() {
+        searchCityView = findViewById(R.id.searchCityView);
+    }
 
 
     @Override

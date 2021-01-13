@@ -29,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String PREF_PRESS = "PREF_PRESS";
     private TextView pressureParameterView;
 
+    private TextView cityNameView;
+
     private SharedPreferences sPrefs;
 
 
@@ -38,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         windForceParameterView = findViewById(R.id.windForceParameterView);
         humidityParameterView = findViewById(R.id.humidityParameterView);
         pressureParameterView = findViewById(R.id.pressureParameterView);
+        cityNameView=findViewById(R.id.cityNameView);
 
     }
 
@@ -48,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Log.d("INFO: ", "onCreate");
         Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show();
+
         sPrefs = PreferenceManager.getDefaultSharedPreferences(this);
         findViews();
         //для проверки работоспособности при перевороте экрана
@@ -65,6 +69,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+        Intent intent = getIntent();
+        if(intent.hasExtra("cityName")) {
+        String message = intent.getStringExtra("cityName");
+        cityNameView.setText(message);
+        }
     }
 
 
