@@ -1,30 +1,27 @@
 package com.geekbrains.android_lessons;
 
 
-import androidx.annotation.Nullable;
+
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.MenuItemCompat;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.Window;
 import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 public class SearchActivity extends AppCompatActivity {
 
-    private SearchView actionSearch;
     private String data;
     private final int searchActivityRequestCode = 1234;
+    private TextView city1;
+    private TextView city2;
+    private TextView city3;
+    private TextView city4;
+    private TextView city5;
 
 
     @Override
@@ -35,10 +32,47 @@ public class SearchActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
+
+
+        findViews();
+        //заглушки, пока не получается сделать RecyclerView
+        city1.setOnClickListener(v->{
+            Intent intentCity = new Intent(SearchActivity.this, MainActivity.class);
+            intentCity.putExtra("cityName", city1.getText());
+            startActivityForResult(intentCity, searchActivityRequestCode);
+        });
+
+        city2.setOnClickListener(v->{
+            Intent intentCity = new Intent(SearchActivity.this, MainActivity.class);
+            intentCity.putExtra("cityName", city2.getText());
+            startActivityForResult(intentCity, searchActivityRequestCode);
+        });
+
+        city3.setOnClickListener(v->{
+            Intent intentCity = new Intent(SearchActivity.this, MainActivity.class);
+            intentCity.putExtra("cityName", city3.getText());
+            startActivityForResult(intentCity, searchActivityRequestCode);
+        });
+
+        city4.setOnClickListener(v->{
+            Intent intentCity = new Intent(SearchActivity.this, MainActivity.class);
+            intentCity.putExtra("cityName", city4.getText());
+            startActivityForResult(intentCity, searchActivityRequestCode);
+        });
+
+        city5.setOnClickListener(v->{
+            Intent intentCity = new Intent(SearchActivity.this, MainActivity.class);
+            intentCity.putExtra("cityName", city5.getText());
+            startActivityForResult(intentCity, searchActivityRequestCode);
+        });
     }
 
     private void findViews() {
-        //  actionSearch = findViewById(R.id.action_search);
+        city1=findViewById(R.id.City1);
+        city2=findViewById(R.id.City2);
+        city3=findViewById(R.id.City3);
+        city4=findViewById(R.id.City4);
+        city5=findViewById(R.id.City5);
     }
 
 
@@ -46,7 +80,7 @@ public class SearchActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.search, menu);
         setTitle("");
-        actionSearch = (SearchView)menu.findItem(R.id.action_search).getActionView();
+        SearchView actionSearch = (SearchView) menu.findItem(R.id.action_search).getActionView();
 
         actionSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -66,6 +100,8 @@ public class SearchActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+
         return true;
 
     }
@@ -87,4 +123,5 @@ public class SearchActivity extends AppCompatActivity {
         onBackPressed();
         return true;
     }
+
 }

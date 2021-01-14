@@ -1,6 +1,7 @@
 package com.geekbrains.android_lessons;
 
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
@@ -14,6 +15,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.Objects;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -38,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
     private String message = "";
 
     static String textKey = "textKey";
+    private static final int REQUEST_ACCESS_TYPE = 1;
+    public static final String ACCESS_MESSAGE = "Location";
 
 
     private void findViews() {
@@ -89,6 +94,18 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == REQUEST_ACCESS_TYPE) {
+            if (resultCode == RESULT_OK) {
+                String location = Objects.requireNonNull(data).getStringExtra(ACCESS_MESSAGE);
+                cityNameView.setText(location);
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
 
     private void updateValue(String degrees, String wind, String humidity, String pressure) {
         sPrefs.edit().putString(PREF_DEGREES, degrees).apply();
@@ -126,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.ic_menu:
 
                 Intent intentMenu = new Intent(this, SearchActivity.class);
-                startActivity(intentMenu);
+                startActivityForResult(intentMenu, REQUEST_ACCESS_TYPE);
                 return true;
             case R.id.ic_settings:
 
