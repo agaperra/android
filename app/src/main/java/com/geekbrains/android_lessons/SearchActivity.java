@@ -1,7 +1,10 @@
 package com.geekbrains.android_lessons;
 
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.MenuItemCompat;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -9,7 +12,9 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -17,82 +22,52 @@ import android.widget.Toast;
 
 public class SearchActivity extends AppCompatActivity {
 
-    private SearchView searchCityView;
+    private SearchView actionSearch;
     private String data;
+    private final int searchActivityRequestCode = 1234;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        Log.d("INFO: ", "onCreate");
-        Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show();
-        findViews();
-        searchCityView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
+    private void findViews() {
+        //  actionSearch = findViewById(R.id.action_search);
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.search, menu);
+        setTitle("");
+        actionSearch = (SearchView)menu.findItem(R.id.action_search).getActionView();
+
+        actionSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public boolean onQueryTextSubmit(final String query) {
+            public boolean onQueryTextSubmit(String query) {
                 if (!data.trim().equals("")) {
                     Intent intentCity = new Intent(SearchActivity.this, MainActivity.class);
                     intentCity.putExtra("cityName", data);
-                    startActivity(intentCity);
+                    startActivityForResult(intentCity, searchActivityRequestCode);
                     return true;
                 }
                 return false;
             }
 
             @Override
-            public boolean onQueryTextChange(final String newText) {
+            public boolean onQueryTextChange(String newText) {
                 data = newText;
                 return true;
             }
         });
-    }
+        return true;
 
-    private void findViews() {
-        searchCityView = findViewById(R.id.searchCityView);
-    }
-
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.d("INFO: ", "onStart");
-        Toast.makeText(this, "onStart", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.d("INFO: ", "onResume");
-        Toast.makeText(this, "onResume", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.d("INFO: ", "onPause");
-        Toast.makeText(this, "onPause", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.d("INFO: ", "onStop");
-        Toast.makeText(this, "onStop", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        Log.d("INFO: ", "onRestart");
-        Toast.makeText(this, "onRestart", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.d("INFO: ", "onDestroy");
-        Toast.makeText(this, "onDestroy", Toast.LENGTH_SHORT).show();
     }
 
 
@@ -105,5 +80,11 @@ public class SearchActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }

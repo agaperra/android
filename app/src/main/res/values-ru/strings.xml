@@ -29,5 +29,6 @@
     <string name="gPa">гПа</string>
     <string name="cels">С\u00B0</string>
     <string name="faringate">F\u00B0</string>
+    <string name="search">Поиск</string>
 
 </resources>

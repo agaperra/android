@@ -37,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
     private final String url = "https://yandex.ru/search/?text=";
     private String message = "";
 
+    static String textKey = "textKey";
+
 
     private void findViews() {
 
@@ -53,9 +55,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Log.d("INFO: ", "onCreate");
-        Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show();
-
         sPrefs = PreferenceManager.getDefaultSharedPreferences(this);
         findViews();
         //для проверки работоспособности при перевороте экрана
@@ -72,13 +71,14 @@ public class MainActivity extends AppCompatActivity {
                     String.valueOf(Integer.parseInt(getValue(PREF_PRESS)) + 1));
         });
 
+
         Intent intent = getIntent();
         if (intent.hasExtra("cityName")) {
             message = intent.getStringExtra("cityName");
             cityNameView.setText(message);
         }
 
-        //по нажатию на название города - открытие поискового запроса в яндексе
+//по нажатию на название города - открытие поискового запроса в яндексе
         findViewById(R.id.cityNameView).setOnClickListener(v -> {
             if (!message.trim().equals("")) {
                 Intent openURL = new Intent(android.content.Intent.ACTION_VIEW);
@@ -86,7 +86,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(openURL);
             }
         });
-
 
     }
 
@@ -117,48 +116,6 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.main, menu);
         setTitle("");
         return true;
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.d("INFO: ", "onStart");
-        Toast.makeText(this, "onStart", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.d("INFO: ", "onResume");
-        Toast.makeText(this, "onResume", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.d("INFO: ", "onPause");
-        Toast.makeText(this, "onPause", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.d("INFO: ", "onStop");
-        Toast.makeText(this, "onStop", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        Log.d("INFO: ", "onRestart");
-        Toast.makeText(this, "onRestart", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.d("INFO: ", "onDestroy");
-        Toast.makeText(this, "onDestroy", Toast.LENGTH_SHORT).show();
     }
 
 

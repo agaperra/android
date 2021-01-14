@@ -40,8 +40,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="40dp"
                 android:layout_marginStart="@dimen/margin10dp"
+                android:layout_marginTop="40dp"
                 android:layout_marginEnd="@dimen/margin10dp"
                 android:layout_marginBottom="@dimen/margin10dp"
                 android:orientation="vertical"
@@ -57,6 +57,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/margin10dp"
+
                     android:gravity="center"
                     android:text="@string/city"
                     android:textSize="@dimen/text_size_big"
@@ -170,13 +171,13 @@
                         tools:text="@string/pressure" />
                 </GridLayout>
             </LinearLayout>
-<!--            <androidx.recyclerview.widget.RecyclerView-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/headLayoutView" />-->
+            <!--            <androidx.recyclerview.widget.RecyclerView-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@+id/headLayoutView" />-->
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
