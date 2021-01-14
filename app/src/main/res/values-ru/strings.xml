@@ -36,6 +36,9 @@
     <string name="kazan">Казань</string>
     <string name="voronezh">Воронеж</string>
     <string name="sochi">Сочи</string>
+    <string name="update_time">Время обновления</string>
+    <string name="weather_icon">Погодная иконка</string>
+
 
 
 </resources>

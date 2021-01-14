@@ -35,7 +35,8 @@
     <string name="kazan">Kazan</string>
     <string name="voronezh">Voronezh</string>
     <string name="sochi">Sochi</string>
-
+    <string name="update_time">Update Time</string>
+    <string name="weather_icon">Weather icon</string>
 
 
 </resources>
