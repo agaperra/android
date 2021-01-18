@@ -39,7 +39,7 @@
     <string name="weather_icon">Weather icon</string>
     <string name="error">Error. Choose City.</string>
     <string name="option_fragment_name">Settings</string>
-    <string name="error_one">Sorry, search is not possible right now.</string>
+    <string name="error_one">Sorry, saving the search query is currently unavailable.</string>
 
 
 </resources>

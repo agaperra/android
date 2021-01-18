@@ -104,12 +104,12 @@ public class SearchFragment extends Fragment {
         actionSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-//                if (!data.trim().equals("")) {
-//                    Intent intentCity = new Intent(requireView().getContext(), MainActivity.class);
-//                    intentCity.putExtra("cityName", data);
-//                    startActivityForResult(intentCity, searchActivityRequestCode);
-//                    return true;
-//                }
+                if (!data.trim().equals("")) {
+                    Intent intentCity = new Intent(requireView().getContext(), MainActivity.class);
+                    intentCity.putExtra("cityName", data);
+                    startActivityForResult(intentCity, searchActivityRequestCode);
+                    return true;
+                }
                return false;
             }
 
@@ -129,8 +129,10 @@ public class SearchFragment extends Fragment {
 //            Intent intentCity = new Intent(requireView().getContext(), MainFragment.class);
 //            intentCity.putExtra("cityName", data);
 //            startActivityForResult(intentCity, searchActivityRequestCode);
+
+        //пробовала передать город в главный фрагмент - пока не получилось
         Toast.makeText(requireView().getContext(), R.string.error_one, Toast.LENGTH_SHORT).show();
-        Navigation.findNavController(requireView()).popBackStack();
+        //Navigation.findNavController(requireView()).popBackStack();
         return super.onOptionsItemSelected(item);
 
     }
