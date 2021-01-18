@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
     private final String url = "https://yandex.ru/search/?text=";
     private String message = "";
 
-    static String textKey = "textKey";
     private static final int REQUEST_CODE = 1;
     public static final String ACCESS_MESSAGE = "Location";
 
