@@ -10,13 +10,9 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import org.json.JSONObject;
 
 import java.util.Objects;
 
@@ -43,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private String message = "";
 
     static String textKey = "textKey";
-    private static final int REQUEST_ACCESS_TYPE = 1;
+    private static final int REQUEST_CODE = 1;
     public static final String ACCESS_MESSAGE = "Location";
 
 
@@ -100,7 +96,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode == REQUEST_ACCESS_TYPE) {
+
+        if (requestCode == REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 String location = Objects.requireNonNull(data).getStringExtra(ACCESS_MESSAGE);
                 cityNameView.setText(location);
@@ -147,8 +144,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.ic_menu:
 
                 Intent intentMenu = new Intent(this, SearchActivity.class);
-                startActivityForResult(intentMenu, REQUEST_ACCESS_TYPE);
+                startActivity(intentMenu);
                 return true;
+
             case R.id.ic_settings:
 
                 Intent intentSettings = new Intent(this, SettingsActivity.class);

@@ -1,9 +1,9 @@
 package com.geekbrains.android_lessons;
 
 
-
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class SearchActivity extends AppCompatActivity {
@@ -36,31 +37,31 @@ public class SearchActivity extends AppCompatActivity {
 
         findViews();
         //заглушки, пока не получается сделать RecyclerView
-        city1.setOnClickListener(v->{
+        city1.setOnClickListener(v -> {
             Intent intentCity = new Intent(SearchActivity.this, MainActivity.class);
             intentCity.putExtra("cityName", city1.getText());
             startActivityForResult(intentCity, searchActivityRequestCode);
         });
 
-        city2.setOnClickListener(v->{
+        city2.setOnClickListener(v -> {
             Intent intentCity = new Intent(SearchActivity.this, MainActivity.class);
             intentCity.putExtra("cityName", city2.getText());
             startActivityForResult(intentCity, searchActivityRequestCode);
         });
 
-        city3.setOnClickListener(v->{
+        city3.setOnClickListener(v -> {
             Intent intentCity = new Intent(SearchActivity.this, MainActivity.class);
             intentCity.putExtra("cityName", city3.getText());
             startActivityForResult(intentCity, searchActivityRequestCode);
         });
 
-        city4.setOnClickListener(v->{
+        city4.setOnClickListener(v -> {
             Intent intentCity = new Intent(SearchActivity.this, MainActivity.class);
             intentCity.putExtra("cityName", city4.getText());
             startActivityForResult(intentCity, searchActivityRequestCode);
         });
 
-        city5.setOnClickListener(v->{
+        city5.setOnClickListener(v -> {
             Intent intentCity = new Intent(SearchActivity.this, MainActivity.class);
             intentCity.putExtra("cityName", city5.getText());
             startActivityForResult(intentCity, searchActivityRequestCode);
@@ -68,11 +69,11 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void findViews() {
-        city1=findViewById(R.id.City1);
-        city2=findViewById(R.id.City2);
-        city3=findViewById(R.id.City3);
-        city4=findViewById(R.id.City4);
-        city5=findViewById(R.id.City5);
+        city1 = findViewById(R.id.City1);
+        city2 = findViewById(R.id.City2);
+        city3 = findViewById(R.id.City3);
+        city4 = findViewById(R.id.City4);
+        city5 = findViewById(R.id.City5);
     }
 
 
@@ -110,10 +111,12 @@ public class SearchActivity extends AppCompatActivity {
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.home:
-                this.finish();
-                return true;
+        if (!data.trim().equals("")) {
+            Intent intentCity = new Intent(SearchActivity.this, MainActivity.class);
+            intentCity.putExtra("cityName", data);
+            startActivityForResult(intentCity, searchActivityRequestCode);
+            super.onBackPressed();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
