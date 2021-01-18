@@ -8,22 +8,30 @@
         <item name="colorSecondary">@color/black</item>
         <item name="colorSecondaryVariant">@color/black</item>
         <item name="colorOnSecondary">@color/white</item>
-        <item name="colorAccent">@color/normal</item>
+<!--        <item name="colorAccent">@color/normal</item>-->
         <item name="android:windowContentOverlay">@null</item>
         <item name="windowActionBarOverlay">true</item>
         <item name="colorPrimary">@android:color/transparent</item>
 
     </style>
 
-    <style name="Theme.Android_Lessons_NoActionBar" parent="Theme.AppCompat.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/normal</item>
+
+
+
+    <style name="Theme.Android_Lessons_ActionBar" parent="Theme.AppCompat.DayNight.DarkActionBar">
+        <item name="colorPrimary">@color/grey</item>
         <item name="colorPrimaryVariant">@color/grey</item>
-        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnPrimary">@color/grey</item>
         <item name="android:textColor">@color/black</item>
         <item name="colorSecondary">@color/black</item>
         <item name="colorSecondaryVariant">@color/black</item>
-        <item name="colorOnSecondary">@color/white</item>
-        <item name="colorAccent">@color/normal</item>
+        <item name="colorOnSecondary">@color/grey</item>
+<!--        <item name="colorAccent">@color/normal</item>-->
+        <item name="android:actionBarStyle">@style/MyActionBarTheme</item>
+    </style>
+
+    <style name="MyActionBarTheme" parent="Theme.AppCompat.DayNight.DarkActionBar">
+        <item name="android:background">@color/grey</item>
     </style>
 
     <style name="MySwitch" parent="Theme.AppCompat.DayNight">

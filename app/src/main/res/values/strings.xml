@@ -15,7 +15,7 @@
     <string name="settings">Settings</string>
     <string name="find">Find</string>
     <string name="enter_city_name">Enter the City name</string>
-    <string name="top_10_cities">Top 10 Cities</string>
+    <string name="top_cities">Top Cities</string>
     <string name="select_the_additional_parameters_you_are_interested_in">Select the additional parameters you are interested in</string>
     <string name="theme">Theme</string>
     <string name="light_theme">Light</string>
@@ -28,5 +28,18 @@
     <string name="gPa">gPa</string>
     <string name="cels">С\u00B0</string>
     <string name="faringate">F\u00B0</string>
+    <string name="search">Search</string>
+    <string name="error_message">Error</string>
+    <string name="moscow">Moscow</string>
+    <string name="spb">St. Petersburg</string>
+    <string name="kazan">Kazan</string>
+    <string name="voronezh">Voronezh</string>
+    <string name="sochi">Sochi</string>
+    <string name="update_time">Update Time</string>
+    <string name="weather_icon">Weather icon</string>
+    <string name="error">Error. Choose City.</string>
+    <string name="option_fragment_name">Settings</string>
+    <string name="error_one">Sorry, saving the search query is currently unavailable.</string>
+
 
 </resources>

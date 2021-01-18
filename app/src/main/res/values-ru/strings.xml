@@ -16,7 +16,7 @@
     <string name="settings">Настройки</string>
     <string name="find">Найти</string>
     <string name="enter_city_name">Введите город</string>
-    <string name="top_10_cities">Топ 10 городов</string>
+    <string name="top_cities">Топ городов</string>
     <string name="select_the_additional_parameters_you_are_interested_in">Выберите интересующие вас дополнительные параметры</string>
     <string name="theme">Тема</string>
     <string name="light_theme">Светлая</string>
@@ -29,5 +29,19 @@
     <string name="gPa">гПа</string>
     <string name="cels">С\u00B0</string>
     <string name="faringate">F\u00B0</string>
+    <string name="search">Поиск</string>
+    <string name="error_message">Ошибка</string>
+    <string name="moscow">Москва</string>
+    <string name="spb">Санкт-Петербург</string>
+    <string name="kazan">Казань</string>
+    <string name="voronezh">Воронеж</string>
+    <string name="sochi">Сочи</string>
+    <string name="update_time">Время обновления</string>
+    <string name="weather_icon">Погодная иконка</string>
+    <string name="error">Ошибка. Выберите город.</string>
+    <string name="option_fragment_name">Настройки</string>
+    <string name="error_one">Извините, сохранение поискового запроса сейчас недоступно.</string>
+
+
 
 </resources>
