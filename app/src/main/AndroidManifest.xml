@@ -3,16 +3,13 @@
     package="com.geekbrains.android_lessons">
 
     <application
-
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Android_Lessons">
-        <activity android:name=".SettingsActivity" android:theme="@style/Theme.Android_Lessons_ActionBar" />
-        <activity android:name=".SearchActivity" android:theme="@style/Theme.Android_Lessons_ActionBar"/>
-        <activity android:name=".MainActivity" >
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

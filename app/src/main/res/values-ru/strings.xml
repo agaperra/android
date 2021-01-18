@@ -38,6 +38,9 @@
     <string name="sochi">Сочи</string>
     <string name="update_time">Время обновления</string>
     <string name="weather_icon">Погодная иконка</string>
+    <string name="error">Ошибка. Выберите город.</string>
+    <string name="option_fragment_name">Настройки</string>
+    <string name="error_one">Извините, поиск сейчас недоступен.</string>
 
 
 
