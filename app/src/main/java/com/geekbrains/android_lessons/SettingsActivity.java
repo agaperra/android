@@ -3,6 +3,7 @@ package com.geekbrains.android_lessons;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,7 +21,7 @@ public class SettingsActivity extends AppCompatActivity {
 //        Log.d("INFO: ", "onCreate");
 //        Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show();
 
-        ActionBar actionBar =getSupportActionBar();
+        ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
