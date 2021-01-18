@@ -92,13 +92,13 @@ public class MainFragment extends Fragment {
         });
 
 
-//        Intent intent = requireActivity().getIntent();
-//        if (intent.hasExtra("cityName")) {
-//            message = intent.getStringExtra("cityName");
-//            if(!message.equals("")) {
-//                cityNameView.setText(message);
-//            }
-//        }
+        Intent intent = requireActivity().getIntent();
+        if (intent.hasExtra("cityName")) {
+            message = intent.getStringExtra("cityName");
+            if(!message.equals("")) {
+                cityNameView.setText(message);
+            }
+        }
 
 //по нажатию на название города - открытие поискового запроса в яндексе
         view.findViewById(R.id.cityNameView).setOnClickListener(v -> {
