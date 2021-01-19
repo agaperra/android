@@ -13,7 +13,7 @@
         <action
             android:id="@+id/navigateToSearchFragment"
             app:destination="@id/searchFragment"
-            app:enterAnim="@animator/enter_from_right"
+            app:enterAnim="@animator/enter_from_left"
             app:exitAnim="@anim/nav_default_exit_anim" />
         <action
             android:id="@+id/navigateToSettingsFragment"

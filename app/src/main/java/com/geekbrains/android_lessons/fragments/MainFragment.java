@@ -3,26 +3,32 @@ package com.geekbrains.android_lessons.fragments;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.geekbrains.android_lessons.R;
 
-import java.io.IOException;
 import java.util.Objects;
 
 public class MainFragment extends Fragment {
@@ -41,12 +47,11 @@ public class MainFragment extends Fragment {
 
     private TextView cityNameView;
 
-    private SharedPreferences sPrefs;
+    public static SharedPreferences sPrefs;
 
     private final String url = "https://yandex.ru/search/?text=";
     private String message = "";
 
-    private final String key="text";
     private static final int REQUEST_CODE = 1;
     private static final int RESULT_OK = -1;
     public static final String ACCESS_MESSAGE = "Location";
@@ -58,6 +63,7 @@ public class MainFragment extends Fragment {
         windForceParameterView = v.findViewById(R.id.windForceParameterView);
         humidityParameterView = v.findViewById(R.id.humidityParameterView);
         pressureParameterView = v.findViewById(R.id.pressureParameterView);
+        ImageView searching = v.findViewById(R.id.search_in_internet);
         cityNameView = v.findViewById(R.id.cityNameView);
 
     }
@@ -70,6 +76,7 @@ public class MainFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         requireActivity().setTitle("");
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
         setHasOptionsMenu(true);
         setRetainInstance(true);
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
@@ -77,6 +84,7 @@ public class MainFragment extends Fragment {
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setHomeAsUpIndicator(R.drawable.ic_menu);
         sPrefs = PreferenceManager.getDefaultSharedPreferences(view.getContext());
         findViews(view);
+
         //для проверки работоспособности при перевороте экрана
         updateValue(getValue(PREF_DEGREES),
                 getValue(PREF_WIND),
@@ -95,13 +103,13 @@ public class MainFragment extends Fragment {
         Intent intent = requireActivity().getIntent();
         if (intent.hasExtra("cityName")) {
             message = intent.getStringExtra("cityName");
-            if(!message.equals("")) {
+            if (!message.equals("")) {
                 cityNameView.setText(message);
             }
         }
 
 //по нажатию на название города - открытие поискового запроса в яндексе
-        view.findViewById(R.id.cityNameView).setOnClickListener(v -> {
+        view.findViewById(R.id.search_in_internet).setOnClickListener(v -> {
             if (!message.trim().equals("")) {
                 Intent openURL = new Intent(android.content.Intent.ACTION_VIEW);
                 openURL.setData(Uri.parse(url + message));
@@ -109,6 +117,7 @@ public class MainFragment extends Fragment {
             }
         });
     }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

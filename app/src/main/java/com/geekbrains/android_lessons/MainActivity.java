@@ -3,6 +3,8 @@ package com.geekbrains.android_lessons;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.geekbrains.android_lessons.fragments.MainFragment;
+
 
 public class MainActivity extends AppCompatActivity {
 
