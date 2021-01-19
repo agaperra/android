@@ -41,7 +41,20 @@
     <string name="option_fragment_name">Settings</string>
     <string name="error_one">Sorry, saving the search query is currently unavailable.</string>
 
-
+    <string-array name="topCities">
+        <item>Moscow</item>
+        <item>St. Petersburg</item>
+        <item>Kazan</item>
+        <item>Sochi</item>
+        <item>Voronezh</item>
+        <item>Novgorod</item>
+        <item>Suzdal</item>
+        <item>Ekatirinburg</item>
+        <item>Vologda</item>
+        <item>Cyctyvkar</item>
+        <item>Samara</item>
+        <item>Kaliningrad</item>
+    </string-array>
 
 
 </resources>

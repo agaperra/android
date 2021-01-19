@@ -44,5 +44,20 @@
 
 
 
+    <string-array name="topCities">
+        <item>Москва</item>
+        <item>Санкт-Петербург</item>
+        <item>Казань</item>
+        <item>Сочи</item>
+        <item>Воронеж</item>
+        <item>Новгород</item>
+        <item>Суздаль</item>
+        <item>Екатиринбург</item>
+        <item>Вологда</item>
+        <item>Сыктывкар</item>
+        <item>Самара</item>
+        <item>Калининград</item>
+    </string-array>
+
 
 </resources>

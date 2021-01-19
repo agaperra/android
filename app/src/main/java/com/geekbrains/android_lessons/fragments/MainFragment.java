@@ -1,6 +1,7 @@
 package com.geekbrains.android_lessons.fragments;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -38,6 +39,7 @@ public class MainFragment extends Fragment {
 
     private static final String PREF_WIND = "PREF_WIND";
     private TextView windForceParameterView;
+    private TextView windForceView;
 
     private static final String PREF_HUMID = "PREF_HUMID";
     private TextView humidityParameterView;
@@ -65,7 +67,6 @@ public class MainFragment extends Fragment {
         pressureParameterView = v.findViewById(R.id.pressureParameterView);
         ImageView searching = v.findViewById(R.id.search_in_internet);
         cityNameView = v.findViewById(R.id.cityNameView);
-
     }
 
     @Override
@@ -92,7 +93,7 @@ public class MainFragment extends Fragment {
                 getValue(PREF_PRESS));
 
 //при нажатии на текстовое поле "влажность" - увеличение всех вью на 1
-        view.findViewById(R.id.humidityView).setOnClickListener(v -> {
+        view.findViewById(R.id.windForceView).setOnClickListener(v -> {
             updateValue(String.valueOf(Integer.parseInt(getValue(PREF_DEGREES)) + 1),
                     String.valueOf(Integer.parseInt(getValue(PREF_WIND)) + 1),
                     String.valueOf(Integer.parseInt(getValue(PREF_HUMID)) + 1),
