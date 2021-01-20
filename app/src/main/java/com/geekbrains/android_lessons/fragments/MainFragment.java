@@ -25,8 +25,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -163,6 +165,11 @@ public class MainFragment extends Fragment implements HoursClick, DateClick {
         recyclerView1.setLayoutManager(layoutManager1);
         recyclerView1.setAdapter(adapter);
 
+        DividerItemDecoration itemDecoration = new DividerItemDecoration(requireContext(),
+                LinearLayoutManager.VERTICAL);
+        itemDecoration.setDrawable(Objects.requireNonNull(
+                ContextCompat.getDrawable(requireContext(), R.drawable.decorator_line)));
+        recyclerView2.addItemDecoration(itemDecoration);
         recyclerView2.setLayoutManager(layoutManager2);
         recyclerView2.setAdapter(adapterWeek);
     }
