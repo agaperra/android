@@ -1,16 +1,11 @@
 package com.geekbrains.android_lessons.fragments;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,13 +27,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.geekbrains.android_lessons.R;
-import com.geekbrains.android_lessons.adapters.RecyclerCityAdapter;
+import com.geekbrains.android_lessons.WeekDay;
 import com.geekbrains.android_lessons.adapters.RecyclerHorizontalHoursAdapter;
 import com.geekbrains.android_lessons.adapters.RecyclerWeekDayAdapter;
 import com.geekbrains.android_lessons.interfaces.DateClick;
 import com.geekbrains.android_lessons.interfaces.HoursClick;
 
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -70,8 +63,8 @@ public class MainFragment extends Fragment implements HoursClick, DateClick {
     private static final int RESULT_OK = -1;
     public static final String ACCESS_MESSAGE = "Location";
 
-    private RecyclerView recyclerView1;
-    private RecyclerView recyclerView2;
+    private RecyclerView recyclerViewHours;
+    private RecyclerView recyclerViewDays;
     private List<String> hours;
     private List<String> weekday;
     private RecyclerWeekDayAdapter adapterWeek;
@@ -144,8 +137,8 @@ public class MainFragment extends Fragment implements HoursClick, DateClick {
 
     private void initViews(View v) {
 
-        recyclerView1 = v.findViewById(R.id.hoursRecycler);
-        recyclerView2= v.findViewById(R.id.recyclerWeekday);
+        recyclerViewHours = v.findViewById(R.id.hoursRecycler);
+        recyclerViewDays = v.findViewById(R.id.recyclerWeekday);
     }
 
     private void setupRecyclerView() {
@@ -160,19 +153,21 @@ public class MainFragment extends Fragment implements HoursClick, DateClick {
         hours= Arrays.asList(getResources().getStringArray(R.array.hours_in_a_day));
         adapter = new RecyclerHorizontalHoursAdapter(hours, this);
 
-        weekday= Arrays.asList(getResources().getStringArray(R.array.weekday));
-        adapterWeek = new RecyclerWeekDayAdapter(weekday, this);
+//        weekday= Arrays.asList(getResources().getStringArray(R.array.weekday));
+//        adapterWeek = new RecyclerWeekDayAdapter(weekday, this);
+        adapterWeek=new RecyclerWeekDayAdapter();
+        adapterWeek.addItems(WeekDay.getDays(8, requireActivity()));
 
-        recyclerView1.setLayoutManager(layoutManager1);
-        recyclerView1.setAdapter(adapter);
+        recyclerViewHours.setLayoutManager(layoutManager1);
+        recyclerViewHours.setAdapter(adapter);
 
         DividerItemDecoration itemDecoration = new DividerItemDecoration(requireContext(),
                 LinearLayoutManager.VERTICAL);
         itemDecoration.setDrawable(Objects.requireNonNull(
                 ContextCompat.getDrawable(requireContext(), R.drawable.decorator_line)));
-        recyclerView2.addItemDecoration(itemDecoration);
-        recyclerView2.setLayoutManager(layoutManager2);
-        recyclerView2.setAdapter(adapterWeek);
+        recyclerViewDays.addItemDecoration(itemDecoration);
+        recyclerViewDays.setLayoutManager(layoutManager2);
+        recyclerViewDays.setAdapter(adapterWeek);
     }
 
 

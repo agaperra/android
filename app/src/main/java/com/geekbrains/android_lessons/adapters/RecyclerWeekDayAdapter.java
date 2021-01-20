@@ -10,19 +10,22 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.geekbrains.android_lessons.R;
+import com.geekbrains.android_lessons.WeekDay;
 import com.geekbrains.android_lessons.fragments.MainFragment;
 import com.geekbrains.android_lessons.interfaces.DateClick;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecyclerWeekDayAdapter extends RecyclerView.Adapter<RecyclerWeekDayAdapter.ViewHolder> {
-    private List<String> data;
-    private DateClick onItemClickCallback;
+   // private List<String> data;
+    private final ArrayList<WeekDay> days = new ArrayList<>();
+   // private DateClick onItemClickCallback;
 
-    public RecyclerWeekDayAdapter(List<String> data, DateClick onItemClickCallback) {
-        this.data = data;
-        this.onItemClickCallback = onItemClickCallback;
-    }
+//    public RecyclerWeekDayAdapter(List<String> data, DateClick onItemClickCallback) {
+//        this.data = data;
+//        this.onItemClickCallback = onItemClickCallback;
+//    }
 
 //    private void setOnClickForItem(@NonNull RecyclerCityAdapter.ViewHolder holder, String text) {
 //        holder.nextCityItem.setOnClickListener(v -> {
@@ -42,19 +45,33 @@ public class RecyclerWeekDayAdapter extends RecyclerView.Adapter<RecyclerWeekDay
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerWeekDayAdapter.ViewHolder holder, int position) {
-        setItemText(holder, data.get(position));
+        holder.bind(position);
+       // setItemText(holder, data.get(position));
         //setOnClickForItem(holder, data.get(position));
     }
 
+
     @Override
     public int getItemCount() {
-        return data == null ? 0 : data.size();
+        return days.size();
     }
 
-
-    private void setItemText(@NonNull RecyclerWeekDayAdapter.ViewHolder holder, String text) {
-        holder.weekDay.setText(text);
+    public void addItems(ArrayList<WeekDay> arrayList) {
+        days.addAll(arrayList);
     }
+
+    public ArrayList<WeekDay> getItems() {
+        return days;
+    }
+
+    public void clearItems() {
+        days.clear();
+    }
+
+//
+//    private void setItemText(@NonNull RecyclerWeekDayAdapter.ViewHolder holder, String text) {
+//        holder.weekDay.setText(text);
+//    }
 
 //    private void setOnClickForItem(@NonNull ViewHolder holder, String text) {
 //        holder.layout.setOnClickListener(v -> {
@@ -76,6 +93,13 @@ public class RecyclerWeekDayAdapter extends RecyclerView.Adapter<RecyclerWeekDay
             weekDay = itemView.findViewById(R.id.weatherDayView);
             weatherIcon = itemView.findViewById(R.id.weatherIconWeekDay);
             degrees = itemView.findViewById(R.id.degreesWeekDay);
+        }
+
+        public void bind(int position) {
+            WeekDay day = days.get(position);
+
+            weekDay.setText(day.getDayOfWeek());
+            degrees.setText(day.getTemperature());
         }
     }
 }
