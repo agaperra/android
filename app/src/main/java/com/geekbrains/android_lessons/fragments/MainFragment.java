@@ -27,12 +27,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.geekbrains.android_lessons.R;
+import com.geekbrains.android_lessons.adapters.RecyclerCityAdapter;
+import com.geekbrains.android_lessons.adapters.RecyclerHorizontalHoursAdapter;
+import com.geekbrains.android_lessons.adapters.RecyclerWeekDayAdapter;
+import com.geekbrains.android_lessons.interfaces.DateClick;
+import com.geekbrains.android_lessons.interfaces.HoursClick;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
-public class MainFragment extends Fragment {
+public class MainFragment extends Fragment implements HoursClick, DateClick {
 
     private static final String PREF_DEGREES = "PREF_DEGREES";
     private TextView degreesCountView;
@@ -58,6 +67,13 @@ public class MainFragment extends Fragment {
     private static final int RESULT_OK = -1;
     public static final String ACCESS_MESSAGE = "Location";
 
+    private RecyclerView recyclerView1;
+    private RecyclerView recyclerView2;
+    private List<String> hours;
+    private List<String> weekday;
+    private RecyclerWeekDayAdapter adapterWeek;
+    private RecyclerHorizontalHoursAdapter adapter;
+
 
     private void findViews(View v) {
 
@@ -80,6 +96,10 @@ public class MainFragment extends Fragment {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
         setHasOptionsMenu(true);
         setRetainInstance(true);
+
+        initViews(view);
+        setupRecyclerView();
+
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setDisplayShowHomeEnabled(true);
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setHomeAsUpIndicator(R.drawable.ic_menu);
@@ -118,6 +138,35 @@ public class MainFragment extends Fragment {
             }
         });
     }
+
+    private void initViews(View v) {
+
+        recyclerView1 = v.findViewById(R.id.hoursRecycler);
+        recyclerView2= v.findViewById(R.id.recyclerWeekday);
+    }
+
+    private void setupRecyclerView() {
+        LinearLayoutManager layoutManager1 = new LinearLayoutManager(
+                requireContext(), LinearLayoutManager.HORIZONTAL, false
+        );
+        LinearLayoutManager layoutManager2 = new LinearLayoutManager(
+                requireContext(), LinearLayoutManager.VERTICAL, false
+        );
+        //GridLayoutManager layoutManager = new GridLayoutManager(getBaseContext(), 3);
+        //LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext());
+        hours= Arrays.asList(getResources().getStringArray(R.array.hours_in_a_day));
+        adapter = new RecyclerHorizontalHoursAdapter(hours, this);
+
+        weekday= Arrays.asList(getResources().getStringArray(R.array.weekday));
+        adapterWeek = new RecyclerWeekDayAdapter(weekday, this);
+
+        recyclerView1.setLayoutManager(layoutManager1);
+        recyclerView1.setAdapter(adapter);
+
+        recyclerView2.setLayoutManager(layoutManager2);
+        recyclerView2.setAdapter(adapterWeek);
+    }
+
 
 
     @Override
@@ -176,5 +225,10 @@ public class MainFragment extends Fragment {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onItemClicked(String itemText) {
+
     }
 }

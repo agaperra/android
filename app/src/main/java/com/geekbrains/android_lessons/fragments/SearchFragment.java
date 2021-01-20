@@ -40,15 +40,6 @@ public class SearchFragment extends Fragment implements CityClick {
     private RecyclerView recyclerView;
     private List<String> topCities;
     private RecyclerCityAdapter adapter;
-//    private ArrayList<String> listData
-//            = new ArrayList(Arrays.asList(R.array.topCities));
-private ArrayList<String> listData
-        = new ArrayList(Arrays.asList("Moscow","SPB","Kazan","Sochi","Voronezh", "Novgorod","Suzdal","Ekatirinburg","Vologda","Cycktyvkar","Samara","Kaliningrad"));
-//    private TextView city1;
-//    private TextView city2;
-//    private TextView city3;
-//    private TextView city4;
-//    private TextView city5;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
