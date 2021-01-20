@@ -39,6 +39,7 @@ import com.geekbrains.android_lessons.adapters.RecyclerWeekDayAdapter;
 import com.geekbrains.android_lessons.interfaces.DateClick;
 import com.geekbrains.android_lessons.interfaces.HoursClick;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;

@@ -33,7 +33,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/weatherIconTime"
-        android:text="@string/degrees"/>
+        android:text="@string/cels"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

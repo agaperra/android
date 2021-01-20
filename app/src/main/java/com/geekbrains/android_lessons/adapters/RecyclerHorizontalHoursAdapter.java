@@ -1,5 +1,6 @@
 package com.geekbrains.android_lessons.adapters;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +15,13 @@ import com.geekbrains.android_lessons.R;
 import com.geekbrains.android_lessons.interfaces.CityClick;
 import com.geekbrains.android_lessons.interfaces.HoursClick;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class RecyclerHorizontalHoursAdapter extends RecyclerView.Adapter<RecyclerHorizontalHoursAdapter.ViewHolder> {
-    private List<String> data;
-    private HoursClick onItemClickCallback;
+    private final List<String> data;
+    private final HoursClick onItemClickCallback;
 
     public RecyclerHorizontalHoursAdapter(List<String> data, HoursClick onItemClickCallback) {
         this.data = data;
@@ -44,6 +47,7 @@ public class RecyclerHorizontalHoursAdapter extends RecyclerView.Adapter<Recycle
     @Override
     public void onBindViewHolder(@NonNull RecyclerHorizontalHoursAdapter.ViewHolder holder, int position) {
         setItemText(holder, data.get(position));
+
         //setOnClickForItem(holder, data.get(position));
     }
 
@@ -53,7 +57,8 @@ public class RecyclerHorizontalHoursAdapter extends RecyclerView.Adapter<Recycle
     }
 
 
-    private void setItemText(@NonNull RecyclerHorizontalHoursAdapter.ViewHolder holder, String text) {
+    @SuppressLint("SetTextI18n")
+    private void setItemText(@NonNull ViewHolder holder, String text) {
         holder.time.setText(text);
     }
 

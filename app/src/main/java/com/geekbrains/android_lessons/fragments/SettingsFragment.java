@@ -36,7 +36,7 @@ public class SettingsFragment extends Fragment {
     private RadioGroup windGroup;
     private RadioGroup pressureGroup;
     private RadioButton theme_Dark, theme_Light, temp_Celsi, temp_Faring, wind_MS, wind_KMH, press_MM, press_GPA;
-    private SharedPreferences sPrefs = MainFragment.sPrefs;
+    private final SharedPreferences sPrefs = MainFragment.sPrefs;
     public static final String APP_PREFERENCES = "SETTINGS";
     final String KEY_RADIOBUTTON_INDEX = "SAVED_RADIO_BUTTON_INDEX";
 
@@ -50,7 +50,8 @@ public class SettingsFragment extends Fragment {
         requireActivity().setTitle("");
         setHasOptionsMenu(true);
         setRetainInstance(true);
-//        sPrefs = PreferenceManager.getDefaultSharedPreferences(view.getContext());
+
+        //sPrefs = PreferenceManager.getDefaultSharedPreferences(view.getContext());
         findViews(view);
 //        LoadPreferences(themeGroup);
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
