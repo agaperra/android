@@ -41,60 +41,206 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
                     android:text="@string/settings"
-                    android:textSize="@dimen/text_size_big" />
+                    android:textSize="@dimen/text_size_biggest" />
 
-                <com.google.android.material.switchmaterial.SwitchMaterial
-                    android:id="@+id/themeSwitch"
+
+
+
+                    <RadioGroup
+                        android:id="@+id/radioGroupTheme"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:id="@+id/themeRadioGroupView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/theme"
+                            android:layout_margin="@dimen/margin10dp"
+                            android:layout_gravity="center"/>
+                        <RadioButton
+                            android:id="@+id/radiobuttonTheme1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/dark_theme"
+                            android:gravity="center" />
+
+                        <RadioButton
+                            android:id="@+id/radiobuttonTheme2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/light_theme"
+                            android:gravity="center"/>
+
+                    </RadioGroup>
+
+<!--                <com.google.android.material.switchmaterial.SwitchMaterial-->
+<!--                    android:id="@+id/themeSwitch"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:layout_marginTop="@dimen/usually_margin"-->
+<!--                    android:checked="false"-->
+<!--                    android:layout_marginRight="@dimen/margin_big"-->
+<!--                    android:layout_marginLeft="@dimen/margin_big"-->
+<!--                    android:text="@string/theme"-->
+<!--                    android:textOff="@string/light_theme"-->
+<!--                    android:textOn="@string/dark_theme"-->
+<!--                    android:textSize="@dimen/text_size_big"-->
+<!--                    android:theme="@style/MySwitch" />-->
+
+                <RadioGroup
+                    android:id="@+id/radioGroupTemp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/usually_margin"
-                    android:checked="false"
-                    android:text="@string/theme"
-                    android:textOff="@string/light_theme"
-                    android:textOn="@string/dark_theme"
-                    android:textSize="@dimen/text_size_big"
-                    android:theme="@style/MySwitch" />
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                <!--хочу потом сделать квадратные переключатели с надписями-->
-                <com.google.android.material.switchmaterial.SwitchMaterial
-                    android:id="@+id/switchTemperature"
+                    <TextView
+                        android:id="@+id/tempRadioGroupView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/temperature"
+                        android:layout_margin="@dimen/margin10dp"
+                        android:layout_gravity="center"/>
+                    <RadioButton
+                        android:id="@+id/radiobuttonTemp1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/cels"
+                        android:gravity="center"/>
+
+                    <RadioButton
+                        android:id="@+id/radiobuttonTemp2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/faringate"
+                        android:gravity="center"/>
+
+                </RadioGroup>
+
+<!--                <com.google.android.material.switchmaterial.SwitchMaterial-->
+<!--                    android:id="@+id/switchTemperature"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:layout_marginTop="@dimen/usually_margin"-->
+<!--                    android:layout_marginRight="@dimen/margin_big"-->
+<!--                    android:layout_marginLeft="@dimen/margin_big"-->
+<!--                    android:checked="false"-->
+<!--                    android:text="@string/temperature"-->
+<!--                    android:textOff="@string/cels"-->
+<!--                    android:textOn="@string/faringate"-->
+<!--                    android:textSize="@dimen/text_size_big"-->
+<!--                    android:theme="@style/MySwitch" />-->
+
+                <RadioGroup
+                    android:id="@+id/radioGroupWind"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/usually_margin"
-                    android:checked="false"
-                    android:text="@string/temperature"
-                    android:textOff="@string/cels"
-                    android:textOn="@string/faringate"
-                    android:textSize="@dimen/text_size_big"
-                    android:theme="@style/MySwitch" />
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                <com.google.android.material.switchmaterial.SwitchMaterial
-                    android:id="@+id/switchWind"
+                    <TextView
+                        android:id="@+id/windRadioGroupView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/wind"
+                        android:layout_margin="@dimen/margin10dp"
+                        android:layout_gravity="center"/>
+                    <RadioButton
+                        android:id="@+id/radiobuttonWind1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/m_s"
+                        android:gravity="center"/>
+
+                    <RadioButton
+                        android:id="@+id/radiobuttonWind2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/km_h"
+                        android:gravity="center"/>
+
+                </RadioGroup>
+
+<!--                <com.google.android.material.switchmaterial.SwitchMaterial-->
+<!--                    android:id="@+id/switchWind"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:layout_marginTop="@dimen/usually_margin"-->
+<!--                    android:layout_marginRight="@dimen/margin_big"-->
+<!--                    android:layout_marginLeft="@dimen/margin_big"-->
+<!--                    android:checked="false"-->
+<!--                    android:text="@string/wind_force"-->
+<!--                    android:textOff="@string/m_s"-->
+<!--                    android:textOn="@string/km_h"-->
+<!--                    android:textSize="@dimen/text_size_big"-->
+<!--                    android:theme="@style/MySwitch" />-->
+
+                <RadioGroup
+                    android:id="@+id/radioGroupPressure"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/usually_margin"
-                    android:checked="false"
-                    android:text="@string/wind_force"
-                    android:textOff="@string/m_s"
-                    android:textOn="@string/km_h"
-                    android:textSize="@dimen/text_size_big"
-                    android:theme="@style/MySwitch" />
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                <com.google.android.material.switchmaterial.SwitchMaterial
-                    android:id="@+id/switchPressure"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/usually_margin"
-                    android:checked="false"
-                    android:text="@string/pressure"
-                    android:textOff="@string/mm_of_m_c"
-                    android:textOn="@string/gPa"
-                    android:textSize="@dimen/text_size_big"
-                    android:theme="@style/MySwitch" />
+                    <TextView
+                        android:id="@+id/pressRadioGroupView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/pressure"
+                        android:layout_margin="@dimen/margin10dp"
+                        android:layout_gravity="center"/>
+                    <RadioButton
+                        android:id="@+id/radiobuttonPress1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/gPa"
+                        android:gravity="center"/>
+
+                    <RadioButton
+                        android:id="@+id/radiobuttonPress2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/mm_of_m_c"
+                        android:gravity="center"/>
+
+                </RadioGroup>
+
+<!--                <com.google.android.material.switchmaterial.SwitchMaterial-->
+<!--                    android:id="@+id/switchPressure"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:layout_marginTop="@dimen/usually_margin"-->
+<!--                    android:layout_marginRight="@dimen/margin_big"-->
+<!--                    android:layout_marginLeft="@dimen/margin_big"-->
+<!--                    android:checked="false"-->
+<!--                    android:text="@string/pressure"-->
+<!--                    android:textOff="@string/mm_of_m_c"-->
+<!--                    android:textOn="@string/gPa"-->
+<!--                    android:textSize="@dimen/text_size_big"-->
+<!--                    android:theme="@style/MySwitch" />-->
 
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>

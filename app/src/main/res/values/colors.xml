@@ -8,5 +8,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#B6B6B6</color>
     <color name="grey_press">#858585</color>
+    <color name="red_my">#C33D3D</color>
 
 </resources>

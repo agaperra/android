@@ -64,54 +64,54 @@
                     android:text="@string/top_cities"
                     android:textSize="@dimen/text_size_biggest" />
 
-                <TextView
-                    android:id="@+id/City1"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="@dimen/margin20dp"
-                    android:gravity="center"
-                    android:text="@string/moscow"
-                    android:textSize="@dimen/text_size_big" />
-                <TextView
-                    android:id="@+id/City2"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="@dimen/margin20dp"
-                    android:gravity="center"
-                    android:text="@string/spb"
-                    android:textSize="@dimen/text_size_big" />
-                <TextView
-                    android:id="@+id/City3"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="@dimen/margin20dp"
-                    android:gravity="center"
-                    android:text="@string/kazan"
-                    android:textSize="@dimen/text_size_big" />
-                <TextView
-                    android:id="@+id/City4"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="@dimen/margin20dp"
-                    android:gravity="center"
-                    android:text="@string/voronezh"
-                    android:textSize="@dimen/text_size_big" />
-                <TextView
-                    android:id="@+id/City5"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="@dimen/margin20dp"
-                    android:gravity="center"
-                    android:text="@string/sochi"
-                    android:textSize="@dimen/text_size_big" />
+<!--                <TextView-->
+<!--                    android:id="@+id/City1"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_margin="@dimen/margin20dp"-->
+<!--                    android:gravity="center"-->
+<!--                    android:text="@string/moscow"-->
+<!--                    android:textSize="@dimen/text_size_big" />-->
+<!--                <TextView-->
+<!--                    android:id="@+id/City2"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_margin="@dimen/margin20dp"-->
+<!--                    android:gravity="center"-->
+<!--                    android:text="@string/spb"-->
+<!--                    android:textSize="@dimen/text_size_big" />-->
+<!--                <TextView-->
+<!--                    android:id="@+id/City3"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_margin="@dimen/margin20dp"-->
+<!--                    android:gravity="center"-->
+<!--                    android:text="@string/kazan"-->
+<!--                    android:textSize="@dimen/text_size_big" />-->
+<!--                <TextView-->
+<!--                    android:id="@+id/City4"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_margin="@dimen/margin20dp"-->
+<!--                    android:gravity="center"-->
+<!--                    android:text="@string/voronezh"-->
+<!--                    android:textSize="@dimen/text_size_big" />-->
+<!--                <TextView-->
+<!--                    android:id="@+id/City5"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_margin="@dimen/margin20dp"-->
+<!--                    android:gravity="center"-->
+<!--                    android:text="@string/sochi"-->
+<!--                    android:textSize="@dimen/text_size_big" />-->
 
 
 
-                <!--                <androidx.recyclerview.widget.RecyclerView-->
-                <!--                    android:id="@+id/top10_cities"-->
-                <!--                    android:layout_width="match_parent"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:layout_margin="@dimen/usually_margin" />-->
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/recyclerView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="@dimen/usually_margin" />
 
             </LinearLayout>
 

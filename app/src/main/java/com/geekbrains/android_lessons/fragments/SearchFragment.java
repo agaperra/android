@@ -1,19 +1,18 @@
 package com.geekbrains.android_lessons.fragments;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources.Theme;
-import android.net.Uri;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,23 +20,26 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.geekbrains.android_lessons.MainActivity;
 import com.geekbrains.android_lessons.R;
+import com.geekbrains.android_lessons.adapters.RecyclerCityAdapter;
+import com.geekbrains.android_lessons.interfaces.CityClick;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
-public class SearchFragment extends Fragment {
+public class SearchFragment extends Fragment implements CityClick {
     private String data;
     private final int searchActivityRequestCode = 1234;
-    private TextView city1;
-    private TextView city2;
-    private TextView city3;
-    private TextView city4;
-    private TextView city5;
+    private RecyclerView recyclerView;
+    private List<String> topCities;
+    private RecyclerCityAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -49,49 +51,29 @@ public class SearchFragment extends Fragment {
         requireActivity().setTitle("");
         setHasOptionsMenu(true);
         setRetainInstance(true);
+        initViews(view);
+        setupRecyclerView();
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setDisplayShowHomeEnabled(true);
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setHomeAsUpIndicator(R.drawable.back_line);
-        findViews(view);
-        //заглушки, пока не получается сделать RecyclerView
-        city1.setOnClickListener(v -> {
-            Intent intentCity = new Intent(view.getContext(), MainActivity.class);
-            intentCity.putExtra("cityName", city1.getText());
-            startActivityForResult(intentCity, searchActivityRequestCode);
-        });
 
-        city2.setOnClickListener(v -> {
-            Intent intentCity = new Intent(view.getContext(), MainActivity.class);
-            intentCity.putExtra("cityName", city2.getText());
-            startActivityForResult(intentCity, searchActivityRequestCode);
-        });
-
-        city3.setOnClickListener(v -> {
-            Intent intentCity = new Intent(view.getContext(), MainActivity.class);
-            intentCity.putExtra("cityName", city3.getText());
-            startActivityForResult(intentCity, searchActivityRequestCode);
-        });
-
-        city4.setOnClickListener(v -> {
-            Intent intentCity = new Intent(view.getContext(), MainActivity.class);
-            intentCity.putExtra("cityName", city4.getText());
-            startActivityForResult(intentCity, searchActivityRequestCode);
-        });
-
-        city5.setOnClickListener(v -> {
-            Intent intentCity = new Intent(view.getContext(), MainActivity.class);
-            intentCity.putExtra("cityName", city5.getText());
-            startActivityForResult(intentCity, searchActivityRequestCode);
-        });
 
     }
+    private void initViews(View v) {
+        recyclerView = v.findViewById(R.id.recyclerView);
+    }
 
-    private void findViews(View v) {
-        city1 = v.findViewById(R.id.City1);
-        city2 = v.findViewById(R.id.City2);
-        city3 = v.findViewById(R.id.City3);
-        city4 = v.findViewById(R.id.City4);
-        city5 = v.findViewById(R.id.City5);
+    private void setupRecyclerView() {
+        /*LinearLayoutManager layoutManager = new LinearLayoutManager(
+                getBaseContext(), LinearLayoutManager.HORIZONTAL, true
+        );*/
+        //GridLayoutManager layoutManager = new GridLayoutManager(getBaseContext(), 3);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext());
+        topCities = Arrays.asList(getResources().getStringArray(R.array.topCities));
+        adapter = new RecyclerCityAdapter(topCities, this);
+
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
     }
 
 
@@ -99,8 +81,8 @@ public class SearchFragment extends Fragment {
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
 
         inflater.inflate(R.menu.search, menu);
-        super.onCreateOptionsMenu(menu, inflater);
         SearchView actionSearch = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        super.onCreateOptionsMenu(menu, inflater);
         actionSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -122,6 +104,24 @@ public class SearchFragment extends Fragment {
 
     }
 
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        MenuItem actionSearch = menu.findItem(R.id.action_search);
+        SearchView mSearchView = (SearchView) actionSearch.getActionView();
+
+        int searchImgId = getResources().getIdentifier("android:id/search_button", null, null);
+        ImageView v = mSearchView.findViewById(searchImgId);
+        v.setImageResource(R.drawable.ic_search);
+
+        int searchExit = getResources().getIdentifier("android:id/search_close_btn", null, null);
+        ImageView k = mSearchView.findViewById(searchExit);
+        k.setImageResource(R.drawable.exit);
+
+        int id = mSearchView.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
+        TextView textView = (TextView) mSearchView.findViewById(id);
+        textView.setTextColor(Color.rgb(195,61,61));
+        super.onPrepareOptionsMenu(menu);
+    }
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -135,6 +135,12 @@ public class SearchFragment extends Fragment {
         //Navigation.findNavController(requireView()).popBackStack();
         return super.onOptionsItemSelected(item);
 
+    }
+    @Override
+    public void onItemClicked(String itemText) {
+        Intent intentCity = new Intent(getView().getContext(), MainActivity.class);
+        intentCity.putExtra("cityName", itemText);
+        startActivityForResult(intentCity, searchActivityRequestCode);
     }
 
 }
