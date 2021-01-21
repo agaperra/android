@@ -64,12 +64,13 @@
                             android:text="@string/theme"
                             android:layout_margin="@dimen/margin10dp"
                             android:layout_gravity="center"/>
+
                         <RadioButton
                             android:id="@+id/radiobuttonTheme1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/dark_theme"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:text="@string/dark_theme" />
 
                         <RadioButton
                             android:id="@+id/radiobuttonTheme2"

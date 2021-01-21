@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,13 +19,16 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.content.ContextCompat;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.geekbrains.android_lessons.Constants;
 import com.geekbrains.android_lessons.R;
+import com.geekbrains.android_lessons.SharedPreferencesManager;
 import com.geekbrains.android_lessons.WeekDay;
 import com.geekbrains.android_lessons.adapters.RecyclerHorizontalHoursAdapter;
 import com.geekbrains.android_lessons.adapters.RecyclerWeekDayAdapter;
@@ -39,36 +41,22 @@ import java.util.Objects;
 
 public class MainFragment extends Fragment implements HoursClick, DateClick {
 
-    private static final String PREF_DEGREES = "PREF_DEGREES";
     private TextView degreesCountView;
-
-    private static final String PREF_WIND = "PREF_WIND";
     private TextView windForceParameterView;
-    private TextView windForceView;
-
-    private static final String PREF_HUMID = "PREF_HUMID";
     private TextView humidityParameterView;
-
-    private static final String PREF_PRESS = "PREF_PRESS";
     private TextView pressureParameterView;
 
     private TextView cityNameView;
 
-    public static SharedPreferences sPrefs;
+    @SuppressLint("StaticFieldLeak")
+    public static SharedPreferencesManager sPrefs;
 
     private final String url = "https://yandex.ru/search/?text=";
     private String message = "";
 
-    private static final int REQUEST_CODE = 1;
-    private static final int RESULT_OK = -1;
-    public static final String ACCESS_MESSAGE = "Location";
-
     private RecyclerView recyclerViewHours;
     private RecyclerView recyclerViewDays;
-    private List<String> hours;
-    private List<String> weekday;
-    private RecyclerWeekDayAdapter adapterWeek;
-    private RecyclerHorizontalHoursAdapter adapter;
+
 
 
     private void findViews(View v) {
@@ -77,7 +65,6 @@ public class MainFragment extends Fragment implements HoursClick, DateClick {
         windForceParameterView = v.findViewById(R.id.windForceParameterView);
         humidityParameterView = v.findViewById(R.id.humidityParameterView);
         pressureParameterView = v.findViewById(R.id.pressureParameterView);
-        ImageView searching = v.findViewById(R.id.search_in_internet);
         cityNameView = v.findViewById(R.id.cityNameView);
     }
 
@@ -89,7 +76,6 @@ public class MainFragment extends Fragment implements HoursClick, DateClick {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         requireActivity().setTitle("");
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
         setHasOptionsMenu(true);
         setRetainInstance(true);
 
@@ -99,21 +85,33 @@ public class MainFragment extends Fragment implements HoursClick, DateClick {
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setDisplayShowHomeEnabled(true);
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setHomeAsUpIndicator(R.drawable.ic_menu);
-        sPrefs = PreferenceManager.getDefaultSharedPreferences(view.getContext());
+        sPrefs = new SharedPreferencesManager(requireContext());
         findViews(view);
 
+
+        int t = sPrefs.retrieveInt("theme", Constants.THEME_LIGHT);
+        switch (t) {
+            case 0:
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                break;
+            case 1:
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                break;
+        }
+
+
         //для проверки работоспособности при перевороте экрана
-        updateValue(getValue(PREF_DEGREES),
-                getValue(PREF_WIND),
-                getValue(PREF_HUMID),
-                getValue(PREF_PRESS));
+        updateValue(getValue(Constants.PREF_DEGREES),
+                getValue(Constants.PREF_WIND),
+                getValue(Constants.PREF_HUMID),
+                getValue(Constants.PREF_PRESS));
 
 //при нажатии на текстовое поле "влажность" - увеличение всех вью на 1
         view.findViewById(R.id.windForceView).setOnClickListener(v -> {
-            updateValue(String.valueOf(Integer.parseInt(getValue(PREF_DEGREES)) + 1),
-                    String.valueOf(Integer.parseInt(getValue(PREF_WIND)) + 1),
-                    String.valueOf(Integer.parseInt(getValue(PREF_HUMID)) + 1),
-                    String.valueOf(Integer.parseInt(getValue(PREF_PRESS)) + 1));
+            updateValue(String.valueOf(Integer.parseInt(getValue(Constants.PREF_DEGREES)) + 1),
+                    String.valueOf(Integer.parseInt(getValue(Constants.PREF_WIND)) + 1),
+                    String.valueOf(Integer.parseInt(getValue(Constants.PREF_HUMID)) + 1),
+                    String.valueOf(Integer.parseInt(getValue(Constants.PREF_PRESS)) + 1));
         });
 
 
@@ -135,6 +133,7 @@ public class MainFragment extends Fragment implements HoursClick, DateClick {
         });
     }
 
+
     private void initViews(View v) {
 
         recyclerViewHours = v.findViewById(R.id.hoursRecycler);
@@ -148,15 +147,12 @@ public class MainFragment extends Fragment implements HoursClick, DateClick {
         LinearLayoutManager layoutManager2 = new LinearLayoutManager(
                 requireContext(), LinearLayoutManager.VERTICAL, false
         );
-        //GridLayoutManager layoutManager = new GridLayoutManager(getBaseContext(), 3);
-        //LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext());
-        hours= Arrays.asList(getResources().getStringArray(R.array.hours_in_a_day));
-        adapter = new RecyclerHorizontalHoursAdapter(hours, this);
 
-//        weekday= Arrays.asList(getResources().getStringArray(R.array.weekday));
-//        adapterWeek = new RecyclerWeekDayAdapter(weekday, this);
-        adapterWeek=new RecyclerWeekDayAdapter();
-        adapterWeek.addItems(WeekDay.getDays(8, requireActivity()));
+        List<String> hours = Arrays.asList(getResources().getStringArray(R.array.hours_in_a_day));
+        RecyclerHorizontalHoursAdapter adapter = new RecyclerHorizontalHoursAdapter(hours, this);
+
+        RecyclerWeekDayAdapter adapterWeek = new RecyclerWeekDayAdapter();
+        adapterWeek.addItems(WeekDay.getDays(7, requireActivity()));
 
         recyclerViewHours.setLayoutManager(layoutManager1);
         recyclerViewHours.setAdapter(adapter);
@@ -171,13 +167,12 @@ public class MainFragment extends Fragment implements HoursClick, DateClick {
     }
 
 
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
-        if (requestCode == REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                String location = Objects.requireNonNull(data).getStringExtra(ACCESS_MESSAGE);
+        if (requestCode == Constants.REQUEST_CODE) {
+            if (resultCode == Constants.RESULT_OK) {
+                String location = Objects.requireNonNull(data).getStringExtra(Constants.ACCESS_MESSAGE);
                 cityNameView.setText(location);
             }
         } else {
@@ -185,25 +180,56 @@ public class MainFragment extends Fragment implements HoursClick, DateClick {
         }
     }
 
+    @SuppressLint("SetTextI18n")
+    public void checkSharedPreferences(String keyContainer, String tag, String parameter, TextView textView, int tag1, int tag2, int defaultConst){
+        sPrefs.getEditor().putString(keyContainer, parameter).apply();
+        switch (sPrefs.retrieveInt(tag, defaultConst)) {
+            case 0:
+                textView.setText(parameter+" "+getString(tag1));
+                break;
+            case 1:
+                textView.setText(parameter+" "+getString(tag2));
+                break;
+        }
+    }
 
+
+    @SuppressLint("SetTextI18n")
     private void updateValue(String degrees, String wind, String humidity, String pressure) {
-        sPrefs.edit().putString(PREF_DEGREES, degrees).apply();
-        degreesCountView.setText(degrees);
 
-        sPrefs.edit().putString(PREF_WIND, wind).apply();
-        windForceParameterView.setText(wind);
+        checkSharedPreferences(Constants.PREF_DEGREES,
+                "temperature",
+                degrees,
+                degreesCountView,
+                R.string.cels,
+                R.string.faringate,
+                Constants.POSTFIX_CELS);
 
-        sPrefs.edit().putString(PREF_HUMID, humidity).apply();
-        humidityParameterView.setText(humidity);
+        checkSharedPreferences(Constants.PREF_WIND,
+                "wind_force",
+                wind,
+                windForceParameterView,
+                R.string.km_h,
+                R.string.m_s,
+                Constants.WINDFORCE_MS);
 
-        sPrefs.edit().putString(PREF_PRESS, pressure).apply();
-        pressureParameterView.setText(pressure);
+        sPrefs.getEditor().putString(Constants.PREF_HUMID, humidity).apply();
+        humidityParameterView.setText(humidity+" %");
+
+
+        checkSharedPreferences(Constants.PREF_PRESS,
+                "pressure",
+                pressure,
+                pressureParameterView,
+                R.string.gPa,
+                R.string.mm_of_m_c,
+                Constants.PRESSURE_GPA);
 
 
     }
 
     private String getValue(String key) {
-        return sPrefs.getString(key, "0");
+        return sPrefs.retrieveString(key, "0");
     }
 
     @Override
@@ -234,4 +260,5 @@ public class MainFragment extends Fragment implements HoursClick, DateClick {
     public void onItemClicked(String itemText) {
 
     }
+
 }

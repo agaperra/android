@@ -20,8 +20,8 @@ import java.util.List;
 
 
 public class RecyclerCityAdapter extends RecyclerView.Adapter<RecyclerCityAdapter.ViewHolder> {
-    private List<String> data;
-    private CityClick onItemClickCallback;
+    private final List<String> data;
+    private final CityClick onItemClickCallback;
 
     public RecyclerCityAdapter(List<String> data, CityClick onItemClickCallback) {
         this.data = data;
@@ -29,7 +29,7 @@ public class RecyclerCityAdapter extends RecyclerView.Adapter<RecyclerCityAdapte
     }
 
     private void setOnClickForItem(@NonNull ViewHolder holder, String text) {
-        holder.nextCityItem.setOnClickListener(v -> {
+        holder.layout.setOnClickListener(v -> {
             if(onItemClickCallback != null) {
                 onItemClickCallback.onItemClicked(text);
             }

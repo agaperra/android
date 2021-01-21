@@ -10,9 +10,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,22 +19,22 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.geekbrains.android_lessons.Constants;
 import com.geekbrains.android_lessons.MainActivity;
 import com.geekbrains.android_lessons.R;
 import com.geekbrains.android_lessons.adapters.RecyclerCityAdapter;
 import com.geekbrains.android_lessons.interfaces.CityClick;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 public class SearchFragment extends Fragment implements CityClick {
     private String data;
-    private final int searchActivityRequestCode = 1234;
     private RecyclerView recyclerView;
     private List<String> topCities;
     private RecyclerCityAdapter adapter;
@@ -64,10 +62,6 @@ public class SearchFragment extends Fragment implements CityClick {
     }
 
     private void setupRecyclerView() {
-        /*LinearLayoutManager layoutManager = new LinearLayoutManager(
-                getBaseContext(), LinearLayoutManager.HORIZONTAL, true
-        );*/
-        //GridLayoutManager layoutManager = new GridLayoutManager(getBaseContext(), 3);
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext());
         topCities = Arrays.asList(getResources().getStringArray(R.array.topCities));
         adapter = new RecyclerCityAdapter(topCities, this);
@@ -89,7 +83,7 @@ public class SearchFragment extends Fragment implements CityClick {
                 if (!data.trim().equals("")) {
                     Intent intentCity = new Intent(requireView().getContext(), MainActivity.class);
                     intentCity.putExtra("cityName", data);
-                    startActivityForResult(intentCity, searchActivityRequestCode);
+                    startActivityForResult(intentCity, Constants.searchActivityRequestCode);
                     return true;
                 }
                return false;
@@ -118,7 +112,7 @@ public class SearchFragment extends Fragment implements CityClick {
         k.setImageResource(R.drawable.exit);
 
         int id = mSearchView.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
-        TextView textView = (TextView) mSearchView.findViewById(id);
+        TextView textView = mSearchView.findViewById(id);
         textView.setTextColor(Color.rgb(195,61,61));
         super.onPrepareOptionsMenu(menu);
     }
@@ -132,15 +126,15 @@ public class SearchFragment extends Fragment implements CityClick {
 
         //пробовала передать город в главный фрагмент - пока не получилось
         Toast.makeText(requireView().getContext(), R.string.error_one, Toast.LENGTH_SHORT).show();
-        //Navigation.findNavController(requireView()).popBackStack();
+        Navigation.findNavController(requireView()).popBackStack();
         return super.onOptionsItemSelected(item);
 
     }
     @Override
     public void onItemClicked(String itemText) {
-        Intent intentCity = new Intent(getView().getContext(), MainActivity.class);
+        Intent intentCity = new Intent(requireView().getContext(), MainActivity.class);
         intentCity.putExtra("cityName", itemText);
-        startActivityForResult(intentCity, searchActivityRequestCode);
+        startActivityForResult(intentCity, Constants.searchActivityRequestCode);
     }
 
 }

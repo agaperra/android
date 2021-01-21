@@ -28,13 +28,6 @@ public class RecyclerHorizontalHoursAdapter extends RecyclerView.Adapter<Recycle
         this.onItemClickCallback = onItemClickCallback;
     }
 
-//    private void setOnClickForItem(@NonNull RecyclerCityAdapter.ViewHolder holder, String text) {
-//        holder.nextCityItem.setOnClickListener(v -> {
-//            if(onItemClickCallback != null) {
-//                onItemClickCallback.onItemClicked(text);
-//            }
-//        });
-//    }
 
     @NonNull
     @Override
@@ -47,8 +40,6 @@ public class RecyclerHorizontalHoursAdapter extends RecyclerView.Adapter<Recycle
     @Override
     public void onBindViewHolder(@NonNull RecyclerHorizontalHoursAdapter.ViewHolder holder, int position) {
         setItemText(holder, data.get(position));
-
-        //setOnClickForItem(holder, data.get(position));
     }
 
     @Override
@@ -62,13 +53,6 @@ public class RecyclerHorizontalHoursAdapter extends RecyclerView.Adapter<Recycle
         holder.time.setText(text);
     }
 
-//    private void setOnClickForItem(@NonNull ViewHolder holder, String text) {
-//        holder.layout.setOnClickListener(v -> {
-//            if (onItemClickCallback != null) {
-//                onItemClickCallback.onItemClicked(text);
-//            }
-//        });
-//    }
 
     class ViewHolder extends RecyclerView.ViewHolder {
         ConstraintLayout layout;

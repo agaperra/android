@@ -11,8 +11,8 @@ import java.util.Locale;
 
 public class WeekDay implements Serializable {
 
-    private String temperature;
     private String dayOfWeek;
+    static Locale RUSSIA = new Locale("ru","RU");
 
     private static ArrayList<String> days;
 
@@ -20,7 +20,7 @@ public class WeekDay implements Serializable {
 
         ArrayList<WeekDay> arrayList = new ArrayList<>();
         days = new ArrayList<>(Arrays.asList(parent.getResources().getStringArray(R.array.weekday)));
-        new SimpleDateFormat("EEEE", new Locale("ru", "RF")).format(Calendar.getInstance().getTime());
+        new SimpleDateFormat("EEEE", RUSSIA).format(Calendar.getInstance().getTime());
 
         int shift = 0;
 
@@ -41,7 +41,6 @@ public class WeekDay implements Serializable {
 
     private void generateData(int shift, Activity parent) {
         dayOfWeek = getDayName(shift);
-        temperature = (int) (Math.random() * 40) + parent.getResources().getString(R.string.cels);
     }
 
     private String getDayName(int shift) {
@@ -50,10 +49,6 @@ public class WeekDay implements Serializable {
         return days.get(days.indexOf(currentDay) + shift);
     }
 
-
-    public String getTemperature() {
-        return temperature;
-    }
 
     public String getDayOfWeek() {
         return dayOfWeek;

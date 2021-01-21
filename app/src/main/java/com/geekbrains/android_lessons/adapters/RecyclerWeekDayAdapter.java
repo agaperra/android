@@ -18,22 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RecyclerWeekDayAdapter extends RecyclerView.Adapter<RecyclerWeekDayAdapter.ViewHolder> {
-   // private List<String> data;
     private final ArrayList<WeekDay> days = new ArrayList<>();
-   // private DateClick onItemClickCallback;
-
-//    public RecyclerWeekDayAdapter(List<String> data, DateClick onItemClickCallback) {
-//        this.data = data;
-//        this.onItemClickCallback = onItemClickCallback;
-//    }
-
-//    private void setOnClickForItem(@NonNull RecyclerCityAdapter.ViewHolder holder, String text) {
-//        holder.nextCityItem.setOnClickListener(v -> {
-//            if(onItemClickCallback != null) {
-//                onItemClickCallback.onItemClicked(text);
-//            }
-//        });
-//    }
 
     @NonNull
     @Override
@@ -46,8 +31,6 @@ public class RecyclerWeekDayAdapter extends RecyclerView.Adapter<RecyclerWeekDay
     @Override
     public void onBindViewHolder(@NonNull RecyclerWeekDayAdapter.ViewHolder holder, int position) {
         holder.bind(position);
-       // setItemText(holder, data.get(position));
-        //setOnClickForItem(holder, data.get(position));
     }
 
 
@@ -68,19 +51,6 @@ public class RecyclerWeekDayAdapter extends RecyclerView.Adapter<RecyclerWeekDay
         days.clear();
     }
 
-//
-//    private void setItemText(@NonNull RecyclerWeekDayAdapter.ViewHolder holder, String text) {
-//        holder.weekDay.setText(text);
-//    }
-
-//    private void setOnClickForItem(@NonNull ViewHolder holder, String text) {
-//        holder.layout.setOnClickListener(v -> {
-//            if (onItemClickCallback != null) {
-//                onItemClickCallback.onItemClicked(text);
-//            }
-//        });
-//    }
-
     class ViewHolder extends RecyclerView.ViewHolder {
         CardView layout;
         TextView date, weekDay, weatherIcon, degrees;
@@ -99,7 +69,6 @@ public class RecyclerWeekDayAdapter extends RecyclerView.Adapter<RecyclerWeekDay
             WeekDay day = days.get(position);
 
             weekDay.setText(day.getDayOfWeek());
-            degrees.setText(day.getTemperature());
         }
     }
 }
