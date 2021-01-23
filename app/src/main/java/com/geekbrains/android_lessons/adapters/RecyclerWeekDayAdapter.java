@@ -11,11 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.geekbrains.android_lessons.R;
 import com.geekbrains.android_lessons.WeekDay;
-import com.geekbrains.android_lessons.fragments.MainFragment;
-import com.geekbrains.android_lessons.interfaces.DateClick;
 
 import java.util.ArrayList;
-import java.util.List;
+
 
 public class RecyclerWeekDayAdapter extends RecyclerView.Adapter<RecyclerWeekDayAdapter.ViewHolder> {
     private final ArrayList<WeekDay> days = new ArrayList<>();
@@ -43,13 +41,13 @@ public class RecyclerWeekDayAdapter extends RecyclerView.Adapter<RecyclerWeekDay
         days.addAll(arrayList);
     }
 
-    public ArrayList<WeekDay> getItems() {
-        return days;
-    }
+//    public ArrayList<WeekDay> getItems() {
+//        return days;
+//    }
 
-    public void clearItems() {
-        days.clear();
-    }
+//    public void clearItems() {
+//        days.clear();
+//    }
 
     class ViewHolder extends RecyclerView.ViewHolder {
         CardView layout;

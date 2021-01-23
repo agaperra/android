@@ -1,7 +1,6 @@
 package com.geekbrains.android_lessons.fragments;
 
 import android.annotation.SuppressLint;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,21 +11,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.geekbrains.android_lessons.Constants;
 import com.geekbrains.android_lessons.R;
 import com.geekbrains.android_lessons.SharedPreferencesManager;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Objects;
 
@@ -38,7 +33,6 @@ public class SettingsFragment extends Fragment {
     private RadioGroup windGroup;
     private RadioGroup pressureGroup;
     private RadioButton theme_Dark, theme_Light, temp_Celsi, temp_Faring, wind_MS, wind_KMH, press_MM, press_GPA;
-    private int temp;
 
     public SharedPreferencesManager sPrefs = MainFragment.sPrefs;
 
@@ -50,7 +44,7 @@ public class SettingsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         requireActivity().setTitle("");
-        ((AppCompatActivity) requireActivity()).setSupportActionBar((Toolbar) view.findViewById(R.id.toolbar));
+        ((AppCompatActivity) requireActivity()).setSupportActionBar(view.findViewById(R.id.toolbar));
         setHasOptionsMenu(true);
         setRetainInstance(true);
 
@@ -91,7 +85,7 @@ public class SettingsFragment extends Fragment {
     }
 
     public void radioButtonsCheckEnter(String tag, int defValue, RadioButton... radioButtons) {
-        temp = sPrefs.retrieveInt(tag, defValue);
+        int temp = sPrefs.retrieveInt(tag, defValue);
         if (temp == 1) {
             radioButtons[1].setChecked(true);
         } else {
@@ -110,19 +104,13 @@ public class SettingsFragment extends Fragment {
     public void initListeners() {
 
         //degrees postfix listener
-        temperatureGroup.setOnCheckedChangeListener((radioGroup, checkedId) -> {
-            checkingRadiobutton(temp_Celsi, temp_Faring, "temperature", Constants.POSTFIX_CELS, Constants.POSTFIX_FARING);
-        });
+        temperatureGroup.setOnCheckedChangeListener((RadioGroup radioGroup, int checkedId) -> checkingRadiobutton(temp_Celsi, temp_Faring, "temperature", Constants.POSTFIX_CELS, Constants.POSTFIX_FARING));
 
         //wind force listener
-        windGroup.setOnCheckedChangeListener((radioGroup, checkedId) -> {
-            checkingRadiobutton(wind_MS, wind_KMH, "wind_force", Constants.WINDFORCE_MS, Constants.WINDFORCE_KMH);
-        });
+        windGroup.setOnCheckedChangeListener((RadioGroup radioGroup, int checkedId) -> checkingRadiobutton(wind_MS, wind_KMH, "wind_force", Constants.WINDFORCE_MS, Constants.WINDFORCE_KMH));
 
         //pressure listener
-        pressureGroup.setOnCheckedChangeListener((radioGroup, checkedId) -> {
-            checkingRadiobutton(press_MM, press_GPA, "pressure", Constants.PRESSURE_MM, Constants.PRESSURE_GPA);
-        });
+        pressureGroup.setOnCheckedChangeListener((RadioGroup radioGroup, int checkedId) -> checkingRadiobutton(press_MM, press_GPA, "pressure", Constants.PRESSURE_MM, Constants.PRESSURE_GPA));
     }
 
     public void checkingRadiobutton(RadioButton radioButton1, RadioButton radioButton2, String tag, int... tags) {

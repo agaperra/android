@@ -1,13 +1,8 @@
 package com.geekbrains.android_lessons;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.ThemeUtils;
-import androidx.appcompat.widget.Toolbar;
-
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 

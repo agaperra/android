@@ -4,28 +4,18 @@ import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.geekbrains.android_lessons.R;
-import com.geekbrains.android_lessons.interfaces.CityClick;
-import com.geekbrains.android_lessons.interfaces.HoursClick;
-
-import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Locale;
 
 public class RecyclerHorizontalHoursAdapter extends RecyclerView.Adapter<RecyclerHorizontalHoursAdapter.ViewHolder> {
     private final List<String> data;
-    private final HoursClick onItemClickCallback;
 
-    public RecyclerHorizontalHoursAdapter(List<String> data, HoursClick onItemClickCallback) {
+    public RecyclerHorizontalHoursAdapter(List<String> data) {
         this.data = data;
-        this.onItemClickCallback = onItemClickCallback;
     }
 
 
@@ -34,7 +24,7 @@ public class RecyclerHorizontalHoursAdapter extends RecyclerView.Adapter<Recycle
     public RecyclerHorizontalHoursAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.hours_weather_item, parent, false);
-        return new RecyclerHorizontalHoursAdapter.ViewHolder(view);
+        return new ViewHolder(view);
     }
 
     @Override
@@ -54,7 +44,7 @@ public class RecyclerHorizontalHoursAdapter extends RecyclerView.Adapter<Recycle
     }
 
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
         ConstraintLayout layout;
         TextView time;
         TextView icon;

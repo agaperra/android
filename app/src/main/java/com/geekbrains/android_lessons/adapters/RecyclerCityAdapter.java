@@ -3,7 +3,6 @@ package com.geekbrains.android_lessons.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,10 +11,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.geekbrains.android_lessons.R;
-import com.geekbrains.android_lessons.fragments.SearchFragment;
 import com.geekbrains.android_lessons.interfaces.CityClick;
 
-import java.util.ArrayList;
 import java.util.List;
 
 

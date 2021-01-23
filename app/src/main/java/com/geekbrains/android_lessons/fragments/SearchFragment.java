@@ -19,7 +19,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -38,8 +37,6 @@ import java.util.Objects;
 public class SearchFragment extends Fragment implements CityClick {
     private String data;
     private RecyclerView recyclerView;
-    private List<String> topCities;
-    private RecyclerCityAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -49,7 +46,7 @@ public class SearchFragment extends Fragment implements CityClick {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         requireActivity().setTitle("");
-        ((AppCompatActivity) requireActivity()).setSupportActionBar((Toolbar) view.findViewById(R.id.toolbar));
+        ((AppCompatActivity) requireActivity()).setSupportActionBar(view.findViewById(R.id.toolbar));
         setHasOptionsMenu(true);
         setRetainInstance(true);
         initViews(view);
@@ -66,8 +63,8 @@ public class SearchFragment extends Fragment implements CityClick {
 
     private void setupRecyclerView() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext());
-        topCities = Arrays.asList(getResources().getStringArray(R.array.topCities));
-        adapter = new RecyclerCityAdapter(topCities, this);
+        List<String> topCities = Arrays.asList(getResources().getStringArray(R.array.topCities));
+        RecyclerCityAdapter adapter = new RecyclerCityAdapter(topCities, this);
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);

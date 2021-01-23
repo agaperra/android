@@ -5,11 +5,9 @@ import android.app.Activity;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 public class WeekDay implements Serializable {
@@ -33,7 +31,7 @@ public class WeekDay implements Serializable {
 
         for (int i = 0; i < value; i++) {
             WeekDay day = new WeekDay();
-            day.generateData(shift, parent);
+            day.generateData(shift);
             arrayList.add(day);
             if (day.dayOfWeek.equals(days.get(days.size() - 1))) {
                 String rawString = new SimpleDateFormat("EEEE", Locale.forLanguageTag(Locale.getDefault().getLanguage())).format(Calendar.getInstance().getTime());
@@ -46,7 +44,7 @@ public class WeekDay implements Serializable {
         return arrayList;
     }
 
-    private void generateData(int shift, Activity parent) {
+    private void generateData(int shift) {
         Calendar now = Calendar.getInstance();
         int days;
         if (shift>=0) {

@@ -2,37 +2,27 @@ package com.geekbrains.android_lessons.fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.telephony.IccOpenLogicalChannelResponse;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.geekbrains.android_lessons.Constants;
-import com.geekbrains.android_lessons.DataContainer;
 import com.geekbrains.android_lessons.R;
 import com.geekbrains.android_lessons.SharedPreferencesManager;
 import com.geekbrains.android_lessons.WeekDay;
@@ -62,7 +52,6 @@ public class MainFragment extends Fragment implements HoursClick, DateClick {
 
     private RecyclerView recyclerViewHours;
     private RecyclerView recyclerViewDays;
-    private int position;
 
 
     private void findViews(View v) {
@@ -113,12 +102,10 @@ public class MainFragment extends Fragment implements HoursClick, DateClick {
                 getValue(Constants.PREF_PRESS));
 
 //при нажатии на текстовое поле "влажность" - увеличение всех вью на 1
-        view.findViewById(R.id.windForceView).setOnClickListener(v -> {
-            updateValue(String.valueOf(Integer.parseInt(getValue(Constants.PREF_DEGREES)) + 1),
-                    String.valueOf(Integer.parseInt(getValue(Constants.PREF_WIND)) + 1),
-                    String.valueOf(Integer.parseInt(getValue(Constants.PREF_HUMID)) + 1),
-                    String.valueOf(Integer.parseInt(getValue(Constants.PREF_PRESS)) + 1));
-        });
+        view.findViewById(R.id.windForceView).setOnClickListener(v -> updateValue(String.valueOf(Integer.parseInt(getValue(Constants.PREF_DEGREES)) + 1),
+                String.valueOf(Integer.parseInt(getValue(Constants.PREF_WIND)) + 1),
+                String.valueOf(Integer.parseInt(getValue(Constants.PREF_HUMID)) + 1),
+                String.valueOf(Integer.parseInt(getValue(Constants.PREF_PRESS)) + 1)));
 
 
         Intent intent = requireActivity().getIntent();
@@ -161,7 +148,7 @@ public class MainFragment extends Fragment implements HoursClick, DateClick {
         );
 
         List<String> hours = Arrays.asList(getResources().getStringArray(R.array.hours_in_a_day));
-        RecyclerHorizontalHoursAdapter adapter = new RecyclerHorizontalHoursAdapter(hours, this);
+        RecyclerHorizontalHoursAdapter adapter = new RecyclerHorizontalHoursAdapter(hours);
 
         RecyclerWeekDayAdapter adapterWeek = new RecyclerWeekDayAdapter();
         adapterWeek.addItems(WeekDay.getDays(7, requireActivity()));

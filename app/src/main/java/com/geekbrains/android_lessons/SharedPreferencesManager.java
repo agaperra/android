@@ -16,13 +16,10 @@ public class SharedPreferencesManager {
      */
     private SharedPreferences.Editor sEditor;
 
-    /**
-     * The class itself
-     */
-    private final Context context;
-
     public SharedPreferencesManager(Context context) {
-        this.context = context;
+        /**
+         * The class itself
+         */
         sPreferences = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
