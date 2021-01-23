@@ -3,8 +3,10 @@ package com.geekbrains.android_lessons.fragments;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.telephony.IccOpenLogicalChannelResponse;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -30,6 +32,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.geekbrains.android_lessons.Constants;
+import com.geekbrains.android_lessons.DataContainer;
 import com.geekbrains.android_lessons.R;
 import com.geekbrains.android_lessons.SharedPreferencesManager;
 import com.geekbrains.android_lessons.WeekDay;
@@ -49,7 +52,6 @@ public class MainFragment extends Fragment implements HoursClick, DateClick {
     private TextView windForceParameterView;
     private TextView humidityParameterView;
     private TextView pressureParameterView;
-
     private TextView cityNameView;
 
     @SuppressLint("StaticFieldLeak")
@@ -80,7 +82,7 @@ public class MainFragment extends Fragment implements HoursClick, DateClick {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         requireActivity().setTitle("");
-        ((AppCompatActivity) requireActivity()).setSupportActionBar((Toolbar) view.findViewById(R.id.toolbar));
+        ((AppCompatActivity) requireActivity()).setSupportActionBar(view.findViewById(R.id.toolbar));
         setHasOptionsMenu(true);
         setRetainInstance(true);
 
@@ -92,7 +94,6 @@ public class MainFragment extends Fragment implements HoursClick, DateClick {
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setHomeAsUpIndicator(R.drawable.ic_menu);
         sPrefs = new SharedPreferencesManager(requireContext());
         findViews(view);
-
 
         int t = sPrefs.retrieveInt("theme", Constants.THEME_LIGHT);
         switch (t) {
@@ -131,12 +132,14 @@ public class MainFragment extends Fragment implements HoursClick, DateClick {
 //по нажатию на название города - открытие поискового запроса в яндексе
         view.findViewById(R.id.search_in_internet).setOnClickListener(v -> {
             if (!message.trim().equals("")) {
-                Snackbar.make(requireView(), getString(R.string.open_url), Snackbar.LENGTH_LONG).
+                Snackbar snackbar=Snackbar.make(requireView(), getString(R.string.open_url), Snackbar.LENGTH_LONG).
                         setAction(getString(R.string.yes), ignored ->{
                             Intent openURL = new Intent(android.content.Intent.ACTION_VIEW);
                             openURL.setData(Uri.parse(url + message));
                             startActivity(openURL);
-                        }).show();
+                        });
+                snackbar.setTextColor(Color.WHITE);
+                snackbar.show();
             }
         });
     }
@@ -201,7 +204,8 @@ public class MainFragment extends Fragment implements HoursClick, DateClick {
 
 
     @SuppressLint("SetTextI18n")
-    private void updateValue(String degrees, String wind, String humidity, String pressure) {
+    private void updateValue( String degrees, String wind, String humidity, String pressure) {
+
 
         checkSharedPreferences(Constants.PREF_DEGREES,
                 "temperature",
