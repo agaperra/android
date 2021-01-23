@@ -2,6 +2,7 @@ package com.geekbrains.android_lessons.fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -47,6 +49,7 @@ public class SearchFragment extends Fragment implements CityClick {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         requireActivity().setTitle("");
+        ((AppCompatActivity) requireActivity()).setSupportActionBar((Toolbar) view.findViewById(R.id.toolbar));
         setHasOptionsMenu(true);
         setRetainInstance(true);
         initViews(view);
@@ -113,7 +116,14 @@ public class SearchFragment extends Fragment implements CityClick {
 
         int id = mSearchView.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
         TextView textView = mSearchView.findViewById(id);
-        textView.setTextColor(Color.rgb(195,61,61));
+        int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        if (currentNightMode == Configuration.UI_MODE_NIGHT_NO) {
+            textView.setTextColor(Color.rgb(195,61,61));
+        }
+        else if (currentNightMode == Configuration.UI_MODE_NIGHT_YES) {
+            textView.setTextColor(Color.parseColor("#E984FF"));
+        }
+
         super.onPrepareOptionsMenu(menu);
     }
     @SuppressLint("NonConstantResourceId")

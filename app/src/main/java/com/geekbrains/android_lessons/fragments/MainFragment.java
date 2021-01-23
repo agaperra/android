@@ -9,8 +9,10 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
@@ -34,6 +37,7 @@ import com.geekbrains.android_lessons.adapters.RecyclerHorizontalHoursAdapter;
 import com.geekbrains.android_lessons.adapters.RecyclerWeekDayAdapter;
 import com.geekbrains.android_lessons.interfaces.DateClick;
 import com.geekbrains.android_lessons.interfaces.HoursClick;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Arrays;
 import java.util.List;
@@ -56,6 +60,7 @@ public class MainFragment extends Fragment implements HoursClick, DateClick {
 
     private RecyclerView recyclerViewHours;
     private RecyclerView recyclerViewDays;
+    private int position;
 
 
     private void findViews(View v) {
@@ -75,6 +80,7 @@ public class MainFragment extends Fragment implements HoursClick, DateClick {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         requireActivity().setTitle("");
+        ((AppCompatActivity) requireActivity()).setSupportActionBar((Toolbar) view.findViewById(R.id.toolbar));
         setHasOptionsMenu(true);
         setRetainInstance(true);
 
@@ -125,12 +131,16 @@ public class MainFragment extends Fragment implements HoursClick, DateClick {
 //по нажатию на название города - открытие поискового запроса в яндексе
         view.findViewById(R.id.search_in_internet).setOnClickListener(v -> {
             if (!message.trim().equals("")) {
-                Intent openURL = new Intent(android.content.Intent.ACTION_VIEW);
-                openURL.setData(Uri.parse(url + message));
-                startActivity(openURL);
+                Snackbar.make(requireView(), getString(R.string.open_url), Snackbar.LENGTH_LONG).
+                        setAction(getString(R.string.yes), ignored ->{
+                            Intent openURL = new Intent(android.content.Intent.ACTION_VIEW);
+                            openURL.setData(Uri.parse(url + message));
+                            startActivity(openURL);
+                        }).show();
             }
         });
     }
+
 
 
     private void initViews(View v) {
@@ -156,14 +166,10 @@ public class MainFragment extends Fragment implements HoursClick, DateClick {
         recyclerViewHours.setLayoutManager(layoutManager1);
         recyclerViewHours.setAdapter(adapter);
 
-        DividerItemDecoration itemDecoration = new DividerItemDecoration(requireContext(),
-                LinearLayoutManager.VERTICAL);
-        itemDecoration.setDrawable(Objects.requireNonNull(
-                ContextCompat.getDrawable(requireContext(), R.drawable.decorator_line)));
-        recyclerViewDays.addItemDecoration(itemDecoration);
         recyclerViewDays.setLayoutManager(layoutManager2);
         recyclerViewDays.setAdapter(adapterWeek);
     }
+
 
 
     @Override

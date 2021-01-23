@@ -44,6 +44,13 @@
     <string name="time">Время</string>
     <string name="weekday">День недели</string>
     <string name="date">Дата</string>
+    <string name="night_mode">Ночная тема включена</string>
+    <string name="day_mode">Дневная тема включена</string>
+    <string name="chancel">Отмена</string>
+    <string name="no">Нет</string>
+    <string name="yes">Да</string>
+    <string name="exit_settings">Завершить настройку параметров?</string>
+    <string name="open_url">Открыть ссылку в браузере?</string>
 
 
     <string-array name="topCities">

@@ -43,6 +43,13 @@
     <string name="time">Time</string>
     <string name="weekday">Day in a week</string>
     <string name="date">Date</string>
+    <string name="night_mode">Night mode activated</string>
+    <string name="day_mode">Day mode activated</string>
+    <string name="chancel">Chancel</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="exit_settings">Finish setting up the parameters?</string>
+    <string name="open_url">Open URL in browser?</string>
 
     <string-array name="topCities">
         <item>Moscow</item>

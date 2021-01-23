@@ -18,12 +18,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.geekbrains.android_lessons.Constants;
 import com.geekbrains.android_lessons.R;
 import com.geekbrains.android_lessons.SharedPreferencesManager;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Objects;
 
@@ -47,6 +50,7 @@ public class SettingsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         requireActivity().setTitle("");
+        ((AppCompatActivity) requireActivity()).setSupportActionBar((Toolbar) view.findViewById(R.id.toolbar));
         setHasOptionsMenu(true);
         setRetainInstance(true);
 
@@ -56,6 +60,32 @@ public class SettingsFragment extends Fragment {
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setDisplayShowHomeEnabled(true);
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setHomeAsUpIndicator(R.drawable.back_line);
+
+        //theme group listener
+        themeGroup.setOnCheckedChangeListener((RadioGroup radioGroup, int checkedId) -> {
+            int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+            if (theme_Dark.isChecked()) {
+                if (currentNightMode == Configuration.UI_MODE_NIGHT_NO) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    new SharedPreferencesManager(requireContext()).storeInt("theme", Constants.THEME_DARK);
+//                    Snackbar.make(view, getString(R.string.night_mode), Snackbar.LENGTH_LONG).setAction(getString(R.string.chancel), ignored ->{
+//                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+//                        new SharedPreferencesManager(requireContext()).storeInt("theme", Constants.THEME_LIGHT);;
+//                    }).show();
+                }
+            }
+            if (theme_Light.isChecked()) {
+                if (currentNightMode == Configuration.UI_MODE_NIGHT_YES) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    new SharedPreferencesManager(requireContext()).storeInt("theme", Constants.THEME_LIGHT);
+//                    Snackbar.make(radioGroup, getString(R.string.day_mode), Snackbar.LENGTH_SHORT).setAction(getString(R.string.chancel), ignored ->{
+//                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+//                        new SharedPreferencesManager(requireContext()).storeInt("theme", Constants.THEME_DARK);;
+//                    }).show();
+
+                }
+            }
+        });
 
 
     }
@@ -78,26 +108,6 @@ public class SettingsFragment extends Fragment {
     }
 
     public void initListeners() {
-
-        //theme group listener
-        themeGroup.setOnCheckedChangeListener((radioGroup, checkedId) -> {
-            int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-            if (theme_Dark.isChecked()) {
-                if (currentNightMode == Configuration.UI_MODE_NIGHT_NO) {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    Toast.makeText(requireView().getContext(), "Ночная тема включена", Toast.LENGTH_SHORT).show();
-                    new SharedPreferencesManager(requireContext()).storeInt("theme", Constants.THEME_DARK);
-                }
-            }
-            if (theme_Light.isChecked()) {
-                if (currentNightMode == Configuration.UI_MODE_NIGHT_YES) {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    Toast.makeText(requireView().getContext(), "Дневная тема включена", Toast.LENGTH_SHORT).show();
-                    new SharedPreferencesManager(requireContext()).storeInt("theme", Constants.THEME_LIGHT);
-                }
-            }
-        });
-
 
         //degrees postfix listener
         temperatureGroup.setOnCheckedChangeListener((radioGroup, checkedId) -> {
@@ -156,8 +166,9 @@ public class SettingsFragment extends Fragment {
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
+        if (item.getItemId() == android.R.id.home || item.getItemId() == R.id.home) {
             Navigation.findNavController(requireView()).popBackStack();
+
             return true;
         }
         return super.onOptionsItemSelected(item);
