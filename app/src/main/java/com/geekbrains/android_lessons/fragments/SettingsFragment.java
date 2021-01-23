@@ -35,6 +35,7 @@ public class SettingsFragment extends Fragment {
     private RadioGroup windGroup;
     private RadioGroup pressureGroup;
     private RadioButton theme_Dark, theme_Light, temp_Celsi, temp_Faring, wind_MS, wind_KMH, press_MM, press_GPA;
+    private int temp;
 
     public SharedPreferencesManager sPrefs = MainFragment.sPrefs;
 
@@ -50,7 +51,7 @@ public class SettingsFragment extends Fragment {
         setRetainInstance(true);
 
         findViews(view);
-        setUpRadioButtons();
+        setUpRadioButton();
         initListeners();
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setDisplayShowHomeEnabled(true);
@@ -59,120 +60,68 @@ public class SettingsFragment extends Fragment {
 
     }
 
-    public void setUpRadioButtons() {
-        sPrefs=new SharedPreferencesManager(requireContext());
-        int t = sPrefs.retrieveInt("theme", Constants.THEME_LIGHT);
-        switch (t){
-            case 0:
-                theme_Light.setChecked(true);
-                break;
-            case 1:
-                theme_Dark.setChecked(true);
-                break;
+    public void radioButtonsCheckEnter(String tag, int defValue, RadioButton... radioButtons) {
+        temp = sPrefs.retrieveInt(tag, defValue);
+        if (temp == 1) {
+            radioButtons[1].setChecked(true);
+        } else {
+            radioButtons[0].setChecked(true);
         }
-        t = sPrefs.retrieveInt("temperature", Constants.POSTFIX_CELS);
-        switch (t){
-            case 0:
-                temp_Celsi.setChecked(true);
-                break;
-            case 1:
-                temp_Faring.setChecked(true);
-                break;
-        }
+    }
 
-        t = sPrefs.retrieveInt("wind_force", Constants.WINDFORCE_MS);
-        switch (t){
-            case 0:
-                wind_KMH.setChecked(true);
-                break;
-            case 1:
-                wind_MS.setChecked(true);
-                break;
-        }
+    public void setUpRadioButton() {
 
-        t = sPrefs.retrieveInt("pressure", Constants.PRESSURE_MM);
-        switch (t){
-            case 0:
-                press_GPA.setChecked(true);
-                break;
-            case 1:
-                press_MM.setChecked(true);
-                break;
-        }
+        radioButtonsCheckEnter("theme", Constants.THEME_LIGHT, theme_Light, theme_Dark);
+        radioButtonsCheckEnter("temperature", Constants.POSTFIX_CELS, temp_Celsi, temp_Faring);
+        radioButtonsCheckEnter("wind_force", Constants.WINDFORCE_MS, wind_MS, wind_KMH);
+        radioButtonsCheckEnter("pressure", Constants.PRESSURE_MM, press_MM, press_GPA);
     }
 
     public void initListeners() {
 
         //theme group listener
-        themeGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
-                int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-                if (theme_Dark.isChecked()) {
-                    switch (currentNightMode) {
-                        case Configuration.UI_MODE_NIGHT_NO:
-                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                            Toast.makeText(requireView().getContext(), "Ночная тема включена", Toast.LENGTH_SHORT).show();
-                            new SharedPreferencesManager(requireContext()).storeInt("theme", Constants.THEME_DARK);
-                            break;
-                        case Configuration.UI_MODE_NIGHT_YES:
-                            break;
-                    }
+        themeGroup.setOnCheckedChangeListener((radioGroup, checkedId) -> {
+            int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+            if (theme_Dark.isChecked()) {
+                if (currentNightMode == Configuration.UI_MODE_NIGHT_NO) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    Toast.makeText(requireView().getContext(), "Ночная тема включена", Toast.LENGTH_SHORT).show();
+                    new SharedPreferencesManager(requireContext()).storeInt("theme", Constants.THEME_DARK);
                 }
-                if (theme_Light.isChecked()) {
-                    switch (currentNightMode) {
-                        case Configuration.UI_MODE_NIGHT_NO:
-                            break;
-                        case Configuration.UI_MODE_NIGHT_YES:
-                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                            Toast.makeText(requireView().getContext(), "Дневная тема включена", Toast.LENGTH_SHORT).show();
-                            new SharedPreferencesManager(requireContext()).storeInt("theme", Constants.THEME_LIGHT);
-                            break;
-                    }
+            }
+            if (theme_Light.isChecked()) {
+                if (currentNightMode == Configuration.UI_MODE_NIGHT_YES) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    Toast.makeText(requireView().getContext(), "Дневная тема включена", Toast.LENGTH_SHORT).show();
+                    new SharedPreferencesManager(requireContext()).storeInt("theme", Constants.THEME_LIGHT);
                 }
             }
         });
 
 
         //degrees postfix listener
-        temperatureGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
-                if (temp_Celsi.isChecked()) {
-                    new SharedPreferencesManager(requireContext()).storeInt("temperature", Constants.POSTFIX_CELS);
-                }
-                if (temp_Faring.isChecked()) {
-                    new SharedPreferencesManager(requireContext()).storeInt("temperature", Constants.POSTFIX_FARING);
-                }
-            }
+        temperatureGroup.setOnCheckedChangeListener((radioGroup, checkedId) -> {
+            checkingRadiobutton(temp_Celsi, temp_Faring, "temperature", Constants.POSTFIX_CELS, Constants.POSTFIX_FARING);
         });
 
         //wind force listener
-        windGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
-                if (wind_KMH.isChecked()) {
-                    new SharedPreferencesManager(requireContext()).storeInt("wind_force", Constants.WINDFORCE_KMH);
-                }
-                if (wind_MS.isChecked()) {
-                    new SharedPreferencesManager(requireContext()).storeInt("wind_force", Constants.WINDFORCE_MS);
-                }
-            }
+        windGroup.setOnCheckedChangeListener((radioGroup, checkedId) -> {
+            checkingRadiobutton(wind_MS, wind_KMH, "wind_force", Constants.WINDFORCE_MS, Constants.WINDFORCE_KMH);
         });
-
 
         //pressure listener
-        pressureGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
-                if (press_GPA.isChecked()) {
-                    new SharedPreferencesManager(requireContext()).storeInt("pressure", Constants.PRESSURE_GPA);
-                }
-                if (press_MM.isChecked()) {
-                    new SharedPreferencesManager(requireContext()).storeInt("pressure", Constants.PRESSURE_MM);
-                }
-            }
+        pressureGroup.setOnCheckedChangeListener((radioGroup, checkedId) -> {
+            checkingRadiobutton(press_MM, press_GPA, "pressure", Constants.PRESSURE_MM, Constants.PRESSURE_GPA);
         });
+    }
+
+    public void checkingRadiobutton(RadioButton radioButton1, RadioButton radioButton2, String tag, int... tags) {
+        if (radioButton1.isChecked()) {
+            new SharedPreferencesManager(requireContext()).storeInt(tag, tags[0]);
+        }
+        if (radioButton2.isChecked()) {
+            new SharedPreferencesManager(requireContext()).storeInt(tag, tags[1]);
+        }
     }
 
     @Override

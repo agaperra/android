@@ -15,8 +15,8 @@ public class Constants {
     public final static int THEME_DARK = 1;
     public final static int POSTFIX_CELS = 0;
     public final static int POSTFIX_FARING = 1;
-    public final static int WINDFORCE_KMH = 0;
-    public final static int WINDFORCE_MS = 1;
-    public final static int PRESSURE_GPA = 0;
-    public final static int PRESSURE_MM = 1;
+    public final static int WINDFORCE_MS = 0;
+    public final static int WINDFORCE_KMH = 1;
+    public final static int PRESSURE_MM = 0;
+    public final static int PRESSURE_GPA = 1;
 }

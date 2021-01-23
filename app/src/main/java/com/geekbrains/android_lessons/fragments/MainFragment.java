@@ -58,7 +58,6 @@ public class MainFragment extends Fragment implements HoursClick, DateClick {
     private RecyclerView recyclerViewDays;
 
 
-
     private void findViews(View v) {
 
         degreesCountView = v.findViewById(R.id.degreesCountView);
@@ -181,14 +180,14 @@ public class MainFragment extends Fragment implements HoursClick, DateClick {
     }
 
     @SuppressLint("SetTextI18n")
-    public void checkSharedPreferences(String keyContainer, String tag, String parameter, TextView textView, int tag1, int tag2, int defaultConst){
+    public void checkSharedPreferences(String keyContainer, String tag, String parameter, TextView textView, int defaultConst, double multi, double shift, int... tags) {
         sPrefs.getEditor().putString(keyContainer, parameter).apply();
         switch (sPrefs.retrieveInt(tag, defaultConst)) {
             case 0:
-                textView.setText(parameter+" "+getString(tag1));
+                textView.setText(parameter + " " + getString(tags[0]));
                 break;
             case 1:
-                textView.setText(parameter+" "+getString(tag2));
+                textView.setText((Integer.parseInt(parameter) * multi + shift) + " " + getString(tags[1]));
                 break;
         }
     }
@@ -201,29 +200,33 @@ public class MainFragment extends Fragment implements HoursClick, DateClick {
                 "temperature",
                 degrees,
                 degreesCountView,
+                Constants.POSTFIX_CELS,
+                1.8,
+                32,
                 R.string.cels,
-                R.string.faringate,
-                Constants.POSTFIX_CELS);
+                R.string.faringate);
 
         checkSharedPreferences(Constants.PREF_WIND,
                 "wind_force",
                 wind,
                 windForceParameterView,
-                R.string.km_h,
+                Constants.WINDFORCE_MS,
+                3.6,0,
                 R.string.m_s,
-                Constants.WINDFORCE_MS);
+                R.string.km_h);
 
         sPrefs.getEditor().putString(Constants.PREF_HUMID, humidity).apply();
-        humidityParameterView.setText(humidity+" %");
+        humidityParameterView.setText(humidity + " %");
 
 
         checkSharedPreferences(Constants.PREF_PRESS,
                 "pressure",
                 pressure,
                 pressureParameterView,
-                R.string.gPa,
+                Constants.PRESSURE_MM,
+                1.333,0,
                 R.string.mm_of_m_c,
-                Constants.PRESSURE_GPA);
+                R.string.gPa);
 
 
     }

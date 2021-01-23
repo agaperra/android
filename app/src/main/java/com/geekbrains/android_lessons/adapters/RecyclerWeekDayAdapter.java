@@ -69,6 +69,7 @@ public class RecyclerWeekDayAdapter extends RecyclerView.Adapter<RecyclerWeekDay
             WeekDay day = days.get(position);
 
             weekDay.setText(day.getDayOfWeek());
+            date.setText(day.getDay());
         }
     }
 }

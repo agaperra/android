@@ -1,23 +1,30 @@
 package com.geekbrains.android_lessons;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class WeekDay implements Serializable {
 
     private String dayOfWeek;
+    @SuppressLint("SimpleDateFormat")
+    private final SimpleDateFormat simpleDateFormat=new SimpleDateFormat("dd MMMM", RUSSIA);
+    private String date;
     static Locale RUSSIA = new Locale("ru","RU");
 
     private static ArrayList<String> days;
 
     public static ArrayList<WeekDay> getDays(int value, Activity parent) {
 
+        //Locale.setDefault(RUSSIA);
         ArrayList<WeekDay> arrayList = new ArrayList<>();
         days = new ArrayList<>(Arrays.asList(parent.getResources().getStringArray(R.array.weekday)));
         new SimpleDateFormat("EEEE", RUSSIA).format(Calendar.getInstance().getTime());
@@ -40,6 +47,16 @@ public class WeekDay implements Serializable {
     }
 
     private void generateData(int shift, Activity parent) {
+        Calendar now = Calendar.getInstance();
+        int days;
+        if (shift>=0) {
+            days = (Calendar.SATURDAY - now.get(Calendar.DAY_OF_WEEK) + shift) % 7;
+        }
+        else{
+            days = (Calendar.SATURDAY - now.get(Calendar.DAY_OF_WEEK) + shift+7) % 7;
+        }
+        now.add(Calendar.DAY_OF_YEAR, days);
+        date = simpleDateFormat.format(now.getTime());
         dayOfWeek = getDayName(shift);
     }
 
@@ -53,5 +70,7 @@ public class WeekDay implements Serializable {
     public String getDayOfWeek() {
         return dayOfWeek;
     }
+
+    public String  getDay(){return date;}
 }
 
