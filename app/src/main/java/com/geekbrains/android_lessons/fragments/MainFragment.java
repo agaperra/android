@@ -179,7 +179,7 @@ public class MainFragment extends Fragment implements HoursClick, DateClick {
         }
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "DefaultLocale"})
     public void checkSharedPreferences(String keyContainer, String tag, String parameter, TextView textView, int defaultConst, double multi, double shift, int... tags) {
         sPrefs.getEditor().putString(keyContainer, parameter).apply();
         switch (sPrefs.retrieveInt(tag, defaultConst)) {
@@ -187,7 +187,8 @@ public class MainFragment extends Fragment implements HoursClick, DateClick {
                 textView.setText(parameter + " " + getString(tags[0]));
                 break;
             case 1:
-                textView.setText((Integer.parseInt(parameter) * multi + shift) + " " + getString(tags[1]));
+                double value=Integer.parseInt(parameter) * multi + shift;
+                textView.setText( String.format("%.1f",value)+ " " + getString(tags[1]));
                 break;
         }
     }
