@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.geekbrains.android_lessons.Constants;
+import com.geekbrains.android_lessons.Hours;
 import com.geekbrains.android_lessons.R;
 import com.geekbrains.android_lessons.SharedPreferencesManager;
 import com.geekbrains.android_lessons.WeekDay;
@@ -147,8 +148,9 @@ public class MainFragment extends Fragment implements HoursClick, DateClick {
                 requireContext(), LinearLayoutManager.VERTICAL, false
         );
 
-        List<String> hours = Arrays.asList(getResources().getStringArray(R.array.hours_in_a_day));
-        RecyclerHorizontalHoursAdapter adapter = new RecyclerHorizontalHoursAdapter(hours);
+        //List<String> hours = Arrays.asList(getResources().getStringArray(R.array.hours_in_a_day));
+        RecyclerHorizontalHoursAdapter adapter = new RecyclerHorizontalHoursAdapter();
+        adapter.addItems(Hours.getHours(24,requireActivity()));
 
         RecyclerWeekDayAdapter adapterWeek = new RecyclerWeekDayAdapter();
         adapterWeek.addItems(WeekDay.getDays(7, requireActivity()));

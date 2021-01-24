@@ -46,7 +46,7 @@ public class WeekDay implements Serializable {
 
     private void generateData(int shift) {
         Calendar now = Calendar.getInstance();
-        int days;
+        int days ;
         if (shift>=0) {
             days = (Calendar.SATURDAY - now.get(Calendar.DAY_OF_WEEK) + shift) % 7;
         }
