@@ -2,6 +2,9 @@ package com.geekbrains.android_lessons;
 
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
 public class Constants {
     public static final String PREF_DEGREES = "PREF_DEGREES";
     public static final String PREF_WIND = "PREF_WIND";
@@ -19,4 +22,7 @@ public class Constants {
     public final static int WINDFORCE_KMH = 1;
     public final static int PRESSURE_MM = 0;
     public final static int PRESSURE_GPA = 1;
+    public static final SimpleDateFormat dateFormat=new SimpleDateFormat("dd MMMM", Locale.forLanguageTag(Locale.getDefault().getLanguage()));
+    public static final SimpleDateFormat weekDayFormat=new SimpleDateFormat("EEEE", Locale.forLanguageTag(Locale.getDefault().getLanguage()));
+    public static final SimpleDateFormat hoursFormat=new SimpleDateFormat("HH:00", Locale.forLanguageTag(Locale.getDefault().getLanguage()));
 }

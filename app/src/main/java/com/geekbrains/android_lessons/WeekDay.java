@@ -13,10 +13,9 @@ import java.util.Locale;
 public class WeekDay implements Serializable {
 
     private String dayOfWeek;
-    @SuppressLint("SimpleDateFormat")
-    private final SimpleDateFormat simpleDateFormat=new SimpleDateFormat("dd MMMM", RUSSIA);
+    private final SimpleDateFormat dateFormat=Constants.dateFormat;
+    private static final SimpleDateFormat weekDayFormat=Constants.weekDayFormat;
     private String date;
-    static Locale RUSSIA = new Locale("ru","RU");
 
     private static ArrayList<String> days;
 
@@ -25,7 +24,6 @@ public class WeekDay implements Serializable {
         //Locale.setDefault(RUSSIA);
         ArrayList<WeekDay> arrayList = new ArrayList<>();
         days = new ArrayList<>(Arrays.asList(parent.getResources().getStringArray(R.array.weekday)));
-        new SimpleDateFormat("EEEE", RUSSIA).format(Calendar.getInstance().getTime());
 
         int shift = 0;
 
@@ -34,7 +32,7 @@ public class WeekDay implements Serializable {
             day.generateData(shift);
             arrayList.add(day);
             if (day.dayOfWeek.equals(days.get(days.size() - 1))) {
-                String rawString = new SimpleDateFormat("EEEE", Locale.forLanguageTag(Locale.getDefault().getLanguage())).format(Calendar.getInstance().getTime());
+                String rawString = weekDayFormat.format(Calendar.getInstance().getTime());
                 String currentDay = rawString.substring(0, 1).toUpperCase() + rawString.substring(1);
                 shift = -days.indexOf(currentDay);
                 continue;
@@ -53,12 +51,12 @@ public class WeekDay implements Serializable {
         else {
             now.add(Calendar.DAY_OF_MONTH, shift+7);
         }
-        date = simpleDateFormat.format(now.getTime());
+        date = dateFormat.format(now.getTime());
         dayOfWeek = getDayName(shift);
     }
 
     private String getDayName(int shift) {
-        String rawString = new SimpleDateFormat("EEEE", Locale.forLanguageTag(Locale.getDefault().getLanguage())).format(Calendar.getInstance().getTime());
+        String rawString = weekDayFormat.format(Calendar.getInstance().getTime());
         String currentDay = rawString.substring(0, 1).toUpperCase() + rawString.substring(1);
         return days.get(days.indexOf(currentDay) + shift);
     }

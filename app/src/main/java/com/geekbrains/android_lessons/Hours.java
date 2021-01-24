@@ -14,8 +14,7 @@ public class Hours implements Serializable {
 
     private String hourInADay;
     @SuppressLint({"SimpleDateFormat", "ConstantLocale"})
-    private static final SimpleDateFormat simpleDateFormat=new SimpleDateFormat("HH:00", Locale.forLanguageTag(Locale.getDefault().getLanguage()));
-    static Locale RUSSIA = new Locale("ru","RU");
+    private static final SimpleDateFormat hoursFormat=Constants.hoursFormat;
 
     private static ArrayList<String> hours;
 
@@ -30,7 +29,7 @@ public class Hours implements Serializable {
             day.generateData(shift);
             arrayList.add(day);
             if (day.hourInADay.equals(hours.get(hours.size() - 1))) {
-                shift = -hours.indexOf(simpleDateFormat.format(Calendar.getInstance().getTime()));
+                shift = -hours.indexOf(hoursFormat.format(Calendar.getInstance().getTime()));
                 continue;
             }
             shift++;
@@ -43,7 +42,7 @@ public class Hours implements Serializable {
     }
 
     private String getHourTime(int shift) {
-        return hours.get(hours.indexOf(simpleDateFormat.format(Calendar.getInstance().getTime())) + shift);
+        return hours.get(hours.indexOf(hoursFormat.format(Calendar.getInstance().getTime())) + shift);
     }
 
 
