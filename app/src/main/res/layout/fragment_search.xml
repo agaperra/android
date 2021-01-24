@@ -42,10 +42,7 @@
             android:id="@+id/TopCitiesView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_big"
             android:layout_marginTop="55dp"
-            android:layout_marginEnd="@dimen/margin_big"
-            android:layout_marginBottom="@dimen/margin_big"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -65,7 +62,7 @@
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/usually_margin" />
+                android:layout_marginTop="@dimen/usually_margin" />
 
         </LinearLayout>
 

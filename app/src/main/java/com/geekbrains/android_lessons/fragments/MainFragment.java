@@ -3,6 +3,7 @@ package com.geekbrains.android_lessons.fragments;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -41,6 +42,10 @@ public class MainFragment extends Fragment implements DateClick {
     private TextView humidityParameterView;
     private TextView pressureParameterView;
     private TextView cityNameView;
+    private TextView typeWeather;
+    private TextView timeView;
+    private TextView weatherIcon;
+    private Typeface weatherFont;
 
     @SuppressLint("StaticFieldLeak")
     public static SharedPreferencesManager sPrefs;
@@ -52,6 +57,7 @@ public class MainFragment extends Fragment implements DateClick {
     private RecyclerView recyclerViewDays;
 
 
+
     private void findViews(View v) {
 
         degreesCountView = v.findViewById(R.id.degreesCountView);
@@ -59,12 +65,22 @@ public class MainFragment extends Fragment implements DateClick {
         humidityParameterView = v.findViewById(R.id.humidityParameterView);
         pressureParameterView = v.findViewById(R.id.pressureParameterView);
         cityNameView = v.findViewById(R.id.cityNameView);
+        typeWeather=v.findViewById(R.id.weatherTypeView);
+        timeView=v.findViewById(R.id.updateTime);
+        weatherIcon=v.findViewById(R.id.weather_icon);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_main, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+        findViews(rootView);
+        weatherIcon.setTypeface(weatherFont);
+        return rootView;
     }
+
+
+
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -82,6 +98,7 @@ public class MainFragment extends Fragment implements DateClick {
         sPrefs = new SharedPreferencesManager(requireContext());
         findViews(view);
 
+
         int t = sPrefs.retrieveInt(Constants.tag_theme, Constants.THEME_LIGHT);
         switch (t) {
             case 0:
@@ -94,13 +111,16 @@ public class MainFragment extends Fragment implements DateClick {
 
 
         //для проверки работоспособности при перевороте экрана
-        updateValue(getValue(Constants.PREF_DEGREES),
+        updateValue(getCityName(Constants.tag_cityName),
+                getValue(Constants.PREF_DEGREES),
                 getValue(Constants.PREF_WIND),
                 getValue(Constants.PREF_HUMID),
                 getValue(Constants.PREF_PRESS));
 
 //при нажатии на текстовое поле "влажность" - увеличение всех вью на 1
-        view.findViewById(R.id.windForceView).setOnClickListener(v -> updateValue(String.valueOf(Integer.parseInt(getValue(Constants.PREF_DEGREES)) + 1),
+        view.findViewById(R.id.windForceView).setOnClickListener(v ->
+                updateValue(getCityName(Constants.tag_cityName),
+                        String.valueOf(Integer.parseInt(getValue(Constants.PREF_DEGREES)) + 1),
                 String.valueOf(Integer.parseInt(getValue(Constants.PREF_WIND)) + 1),
                 String.valueOf(Integer.parseInt(getValue(Constants.PREF_HUMID)) + 1),
                 String.valueOf(Integer.parseInt(getValue(Constants.PREF_PRESS)) + 1)));
@@ -189,8 +209,10 @@ public class MainFragment extends Fragment implements DateClick {
 
 
     @SuppressLint("SetTextI18n")
-    private void updateValue( String degrees, String wind, String humidity, String pressure) {
+    private void updateValue( String cityName,String degrees, String wind, String humidity, String pressure) {
 
+        sPrefs.getEditor().putString(Constants.tag_cityName,cityName ).apply();
+        cityNameView.setText(cityName);
 
         checkSharedPreferences(Constants.PREF_DEGREES,
                 Constants.tag_temp,
@@ -230,6 +252,9 @@ public class MainFragment extends Fragment implements DateClick {
 
     private String getValue(String key) {
         return sPrefs.retrieveString(key, "0");
+    }
+    private String getCityName(String key) {
+        return sPrefs.retrieveString(key, getString(R.string.city));
     }
 
     @Override
