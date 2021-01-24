@@ -46,14 +46,13 @@ public class WeekDay implements Serializable {
 
     private void generateData(int shift) {
         Calendar now = Calendar.getInstance();
-        int days ;
+
         if (shift>=0) {
-            days = (Calendar.SATURDAY - now.get(Calendar.DAY_OF_WEEK) + shift) % 7;
+            now.add(Calendar.DAY_OF_MONTH, shift);
         }
-        else{
-            days = (Calendar.SATURDAY - now.get(Calendar.DAY_OF_WEEK) + shift+7) % 7;
+        else {
+            now.add(Calendar.DAY_OF_MONTH, shift+7);
         }
-        now.add(Calendar.DAY_OF_YEAR, days);
         date = simpleDateFormat.format(now.getTime());
         dayOfWeek = getDayName(shift);
     }
