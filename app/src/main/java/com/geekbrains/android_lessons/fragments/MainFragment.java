@@ -30,14 +30,11 @@ import com.geekbrains.android_lessons.WeekDay;
 import com.geekbrains.android_lessons.adapters.RecyclerHorizontalHoursAdapter;
 import com.geekbrains.android_lessons.adapters.RecyclerWeekDayAdapter;
 import com.geekbrains.android_lessons.interfaces.DateClick;
-import com.geekbrains.android_lessons.interfaces.HoursClick;
 import com.google.android.material.snackbar.Snackbar;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 
-public class MainFragment extends Fragment implements HoursClick, DateClick {
+public class MainFragment extends Fragment implements DateClick {
 
     private TextView degreesCountView;
     private TextView windForceParameterView;
@@ -85,7 +82,7 @@ public class MainFragment extends Fragment implements HoursClick, DateClick {
         sPrefs = new SharedPreferencesManager(requireContext());
         findViews(view);
 
-        int t = sPrefs.retrieveInt("theme", Constants.THEME_LIGHT);
+        int t = sPrefs.retrieveInt(Constants.tag_theme, Constants.THEME_LIGHT);
         switch (t) {
             case 0:
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
@@ -110,8 +107,8 @@ public class MainFragment extends Fragment implements HoursClick, DateClick {
 
 
         Intent intent = requireActivity().getIntent();
-        if (intent.hasExtra("cityName")) {
-            message = intent.getStringExtra("cityName");
+        if (intent.hasExtra(Constants.tag_cityName)) {
+            message = intent.getStringExtra(Constants.tag_cityName);
             if (!message.equals("")) {
                 cityNameView.setText(message);
             }
@@ -148,7 +145,6 @@ public class MainFragment extends Fragment implements HoursClick, DateClick {
                 requireContext(), LinearLayoutManager.VERTICAL, false
         );
 
-        //List<String> hours = Arrays.asList(getResources().getStringArray(R.array.hours_in_a_day));
         RecyclerHorizontalHoursAdapter adapter = new RecyclerHorizontalHoursAdapter();
         adapter.addItems(Hours.getHours(24,requireActivity()));
 
@@ -197,7 +193,7 @@ public class MainFragment extends Fragment implements HoursClick, DateClick {
 
 
         checkSharedPreferences(Constants.PREF_DEGREES,
-                "temperature",
+                Constants.tag_temp,
                 degrees,
                 degreesCountView,
                 Constants.POSTFIX_CELS,
@@ -207,7 +203,7 @@ public class MainFragment extends Fragment implements HoursClick, DateClick {
                 R.string.faringate);
 
         checkSharedPreferences(Constants.PREF_WIND,
-                "wind_force",
+                Constants.tag_wind,
                 wind,
                 windForceParameterView,
                 Constants.WINDFORCE_MS,
@@ -220,11 +216,12 @@ public class MainFragment extends Fragment implements HoursClick, DateClick {
 
 
         checkSharedPreferences(Constants.PREF_PRESS,
-                "pressure",
+                Constants.tag_pressure,
                 pressure,
                 pressureParameterView,
                 Constants.PRESSURE_MM,
-                1.333,0,
+                1.333,
+                0,
                 R.string.mm_of_m_c,
                 R.string.gPa);
 

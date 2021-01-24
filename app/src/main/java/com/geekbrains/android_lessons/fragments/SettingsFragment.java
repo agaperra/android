@@ -61,22 +61,13 @@ public class SettingsFragment extends Fragment {
             if (theme_Dark.isChecked()) {
                 if (currentNightMode == Configuration.UI_MODE_NIGHT_NO) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    new SharedPreferencesManager(requireContext()).storeInt("theme", Constants.THEME_DARK);
-//                    Snackbar.make(view, getString(R.string.night_mode), Snackbar.LENGTH_LONG).setAction(getString(R.string.chancel), ignored ->{
-//                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-//                        new SharedPreferencesManager(requireContext()).storeInt("theme", Constants.THEME_LIGHT);;
-//                    }).show();
+                    new SharedPreferencesManager(requireContext()).storeInt(Constants.tag_theme, Constants.THEME_DARK);
                 }
             }
             if (theme_Light.isChecked()) {
                 if (currentNightMode == Configuration.UI_MODE_NIGHT_YES) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    new SharedPreferencesManager(requireContext()).storeInt("theme", Constants.THEME_LIGHT);
-//                    Snackbar.make(radioGroup, getString(R.string.day_mode), Snackbar.LENGTH_SHORT).setAction(getString(R.string.chancel), ignored ->{
-//                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-//                        new SharedPreferencesManager(requireContext()).storeInt("theme", Constants.THEME_DARK);;
-//                    }).show();
-
+                    new SharedPreferencesManager(requireContext()).storeInt(Constants.tag_theme, Constants.THEME_LIGHT);
                 }
             }
         });
@@ -95,22 +86,22 @@ public class SettingsFragment extends Fragment {
 
     public void setUpRadioButton() {
 
-        radioButtonsCheckEnter("theme", Constants.THEME_LIGHT, theme_Light, theme_Dark);
-        radioButtonsCheckEnter("temperature", Constants.POSTFIX_CELS, temp_Celsi, temp_Faring);
-        radioButtonsCheckEnter("wind_force", Constants.WINDFORCE_MS, wind_MS, wind_KMH);
-        radioButtonsCheckEnter("pressure", Constants.PRESSURE_MM, press_MM, press_GPA);
+        radioButtonsCheckEnter(Constants.tag_theme, Constants.THEME_LIGHT, theme_Light, theme_Dark);
+        radioButtonsCheckEnter(Constants.tag_temp, Constants.POSTFIX_CELS, temp_Celsi, temp_Faring);
+        radioButtonsCheckEnter(Constants.tag_wind, Constants.WINDFORCE_MS, wind_MS, wind_KMH);
+        radioButtonsCheckEnter(Constants.tag_pressure, Constants.PRESSURE_MM, press_MM, press_GPA);
     }
 
     public void initListeners() {
 
         //degrees postfix listener
-        temperatureGroup.setOnCheckedChangeListener((RadioGroup radioGroup, int checkedId) -> checkingRadiobutton(temp_Celsi, temp_Faring, "temperature", Constants.POSTFIX_CELS, Constants.POSTFIX_FARING));
+        temperatureGroup.setOnCheckedChangeListener((RadioGroup radioGroup, int checkedId) -> checkingRadiobutton(temp_Celsi, temp_Faring, Constants.tag_temp, Constants.POSTFIX_CELS, Constants.POSTFIX_FARING));
 
         //wind force listener
-        windGroup.setOnCheckedChangeListener((RadioGroup radioGroup, int checkedId) -> checkingRadiobutton(wind_MS, wind_KMH, "wind_force", Constants.WINDFORCE_MS, Constants.WINDFORCE_KMH));
+        windGroup.setOnCheckedChangeListener((RadioGroup radioGroup, int checkedId) -> checkingRadiobutton(wind_MS, wind_KMH, Constants.tag_wind, Constants.WINDFORCE_MS, Constants.WINDFORCE_KMH));
 
         //pressure listener
-        pressureGroup.setOnCheckedChangeListener((RadioGroup radioGroup, int checkedId) -> checkingRadiobutton(press_MM, press_GPA, "pressure", Constants.PRESSURE_MM, Constants.PRESSURE_GPA));
+        pressureGroup.setOnCheckedChangeListener((RadioGroup radioGroup, int checkedId) -> checkingRadiobutton(press_MM, press_GPA, Constants.tag_pressure, Constants.PRESSURE_MM, Constants.PRESSURE_GPA));
     }
 
     public void checkingRadiobutton(RadioButton radioButton1, RadioButton radioButton2, String tag, int... tags) {

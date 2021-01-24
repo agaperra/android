@@ -82,7 +82,7 @@ public class SearchFragment extends Fragment implements CityClick {
             public boolean onQueryTextSubmit(String query) {
                 if (!data.trim().equals("")) {
                     Intent intentCity = new Intent(requireView().getContext(), MainActivity.class);
-                    intentCity.putExtra("cityName", data);
+                    intentCity.putExtra(Constants.tag_cityName, data);
                     startActivityForResult(intentCity, Constants.searchActivityRequestCode);
                     return true;
                 }
@@ -140,7 +140,7 @@ public class SearchFragment extends Fragment implements CityClick {
     @Override
     public void onItemClicked(String itemText) {
         Intent intentCity = new Intent(requireView().getContext(), MainActivity.class);
-        intentCity.putExtra("cityName", itemText);
+        intentCity.putExtra(Constants.tag_cityName, itemText);
         startActivityForResult(intentCity, Constants.searchActivityRequestCode);
     }
 
