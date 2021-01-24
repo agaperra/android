@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 import com.geekbrains.android_lessons.R;
+import com.geekbrains.android_lessons.interfaces.HoursClick;
 import java.util.List;
 
 public class RecyclerHorizontalHoursAdapter extends RecyclerView.Adapter<RecyclerHorizontalHoursAdapter.ViewHolder> {
@@ -24,7 +25,7 @@ public class RecyclerHorizontalHoursAdapter extends RecyclerView.Adapter<Recycle
     public RecyclerHorizontalHoursAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.hours_weather_item, parent, false);
-        return new ViewHolder(view);
+        return new RecyclerHorizontalHoursAdapter.ViewHolder(view);
     }
 
     @Override
@@ -44,7 +45,7 @@ public class RecyclerHorizontalHoursAdapter extends RecyclerView.Adapter<Recycle
     }
 
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
         ConstraintLayout layout;
         TextView time;
         TextView icon;
