@@ -61,13 +61,13 @@ public class SettingsFragment extends Fragment {
             if (theme_Dark.isChecked()) {
                 if (currentNightMode == Configuration.UI_MODE_NIGHT_NO) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    new SharedPreferencesManager(requireContext()).storeInt(Constants.tag_theme, Constants.THEME_DARK);
+                    sPrefs.storeInt(Constants.tag_theme, Constants.THEME_DARK);
                 }
             }
             if (theme_Light.isChecked()) {
                 if (currentNightMode == Configuration.UI_MODE_NIGHT_YES) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    new SharedPreferencesManager(requireContext()).storeInt(Constants.tag_theme, Constants.THEME_LIGHT);
+                    sPrefs.storeInt(Constants.tag_theme, Constants.THEME_LIGHT);
                 }
             }
         });
@@ -106,10 +106,10 @@ public class SettingsFragment extends Fragment {
 
     public void checkingRadiobutton(RadioButton radioButton1, RadioButton radioButton2, String tag, int... tags) {
         if (radioButton1.isChecked()) {
-            new SharedPreferencesManager(requireContext()).storeInt(tag, tags[0]);
+            sPrefs.storeInt(tag, tags[0]);
         }
         if (radioButton2.isChecked()) {
-            new SharedPreferencesManager(requireContext()).storeInt(tag, tags[1]);
+            sPrefs.storeInt(tag, tags[1]);
         }
     }
 

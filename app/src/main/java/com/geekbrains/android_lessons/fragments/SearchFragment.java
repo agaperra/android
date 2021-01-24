@@ -27,6 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.geekbrains.android_lessons.Constants;
 import com.geekbrains.android_lessons.MainActivity;
 import com.geekbrains.android_lessons.R;
+import com.geekbrains.android_lessons.SharedPreferencesManager;
 import com.geekbrains.android_lessons.adapters.RecyclerCityAdapter;
 import com.geekbrains.android_lessons.interfaces.CityClick;
 
@@ -37,6 +38,7 @@ import java.util.Objects;
 public class SearchFragment extends Fragment implements CityClick {
     private String data;
     private RecyclerView recyclerView;
+    public SharedPreferencesManager sPrefs = MainFragment.sPrefs;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -57,6 +59,7 @@ public class SearchFragment extends Fragment implements CityClick {
 
 
     }
+
     private void initViews(View v) {
         recyclerView = v.findViewById(R.id.recyclerView);
     }
@@ -86,7 +89,7 @@ public class SearchFragment extends Fragment implements CityClick {
                     startActivityForResult(intentCity, Constants.searchActivityRequestCode);
                     return true;
                 }
-               return false;
+                return false;
             }
 
             @Override
@@ -115,28 +118,28 @@ public class SearchFragment extends Fragment implements CityClick {
         TextView textView = mSearchView.findViewById(id);
         int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
         if (currentNightMode == Configuration.UI_MODE_NIGHT_NO) {
-            textView.setTextColor(Color.rgb(195,61,61));
-        }
-        else if (currentNightMode == Configuration.UI_MODE_NIGHT_YES) {
+            textView.setTextColor(Color.parseColor("#451883"));
+        } else if (currentNightMode == Configuration.UI_MODE_NIGHT_YES) {
             textView.setTextColor(Color.parseColor("#E984FF"));
         }
 
         super.onPrepareOptionsMenu(menu);
     }
+
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-//
-//            Intent intentCity = new Intent(requireView().getContext(), MainFragment.class);
-//            intentCity.putExtra("cityName", data);
-//            startActivityForResult(intentCity, searchActivityRequestCode);
 
-        //пробовала передать город в главный фрагмент - пока не получилось
         Toast.makeText(requireView().getContext(), R.string.error_one, Toast.LENGTH_SHORT).show();
+//        if (!data.trim().equals("")) {
+//            Intent intentCity = new Intent(requireView().getContext(), MainFragment.class);
+//            intentCity.putExtra(Constants.tag_cityName, data);
+//            startActivityForResult(intentCity, Constants.searchActivityRequestCode);
+//        }
         Navigation.findNavController(requireView()).popBackStack();
         return super.onOptionsItemSelected(item);
-
     }
+
     @Override
     public void onItemClicked(String itemText) {
         Intent intentCity = new Intent(requireView().getContext(), MainActivity.class);
