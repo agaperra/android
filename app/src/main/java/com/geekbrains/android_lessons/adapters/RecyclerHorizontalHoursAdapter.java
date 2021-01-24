@@ -1,40 +1,20 @@
 package com.geekbrains.android_lessons.adapters;
 
-import android.annotation.SuppressLint;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
-
+import com.geekbrains.android_lessons.Hours;
 import com.geekbrains.android_lessons.R;
-import com.geekbrains.android_lessons.interfaces.CityClick;
-import com.geekbrains.android_lessons.interfaces.HoursClick;
-
-import java.text.SimpleDateFormat;
-import java.util.List;
-import java.util.Locale;
+import java.util.ArrayList;
 
 public class RecyclerHorizontalHoursAdapter extends RecyclerView.Adapter<RecyclerHorizontalHoursAdapter.ViewHolder> {
-    private final List<String> data;
-    private final HoursClick onItemClickCallback;
 
-    public RecyclerHorizontalHoursAdapter(List<String> data, HoursClick onItemClickCallback) {
-        this.data = data;
-        this.onItemClickCallback = onItemClickCallback;
-    }
-
-//    private void setOnClickForItem(@NonNull RecyclerCityAdapter.ViewHolder holder, String text) {
-//        holder.nextCityItem.setOnClickListener(v -> {
-//            if(onItemClickCallback != null) {
-//                onItemClickCallback.onItemClicked(text);
-//            }
-//        });
-//    }
+    private final ArrayList<Hours> hours = new ArrayList<>();
 
     @NonNull
     @Override
@@ -46,29 +26,19 @@ public class RecyclerHorizontalHoursAdapter extends RecyclerView.Adapter<Recycle
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerHorizontalHoursAdapter.ViewHolder holder, int position) {
-        setItemText(holder, data.get(position));
-
-        //setOnClickForItem(holder, data.get(position));
+        holder.bind(position);
     }
+
 
     @Override
     public int getItemCount() {
-        return data == null ? 0 : data.size();
+        return hours.size();
     }
 
-
-    @SuppressLint("SetTextI18n")
-    private void setItemText(@NonNull ViewHolder holder, String text) {
-        holder.time.setText(text);
+    public void addItems(ArrayList<Hours> arrayList) {
+        hours.addAll(arrayList);
     }
 
-//    private void setOnClickForItem(@NonNull ViewHolder holder, String text) {
-//        holder.layout.setOnClickListener(v -> {
-//            if (onItemClickCallback != null) {
-//                onItemClickCallback.onItemClicked(text);
-//            }
-//        });
-//    }
 
     class ViewHolder extends RecyclerView.ViewHolder {
         ConstraintLayout layout;
@@ -82,6 +52,12 @@ public class RecyclerHorizontalHoursAdapter extends RecyclerView.Adapter<Recycle
             time = itemView.findViewById(R.id.timeTextView);
             icon = itemView.findViewById(R.id.weatherIconTime);
             degrees = itemView.findViewById(R.id.degreesCountTime);
+        }
+
+        public void bind(int position) {
+            Hours hour = hours.get(position);
+
+            time.setText(hour.getHourInADay());
         }
     }
 }

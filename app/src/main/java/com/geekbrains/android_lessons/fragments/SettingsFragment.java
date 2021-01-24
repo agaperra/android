@@ -1,11 +1,8 @@
 package com.geekbrains.android_lessons.fragments;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,17 +11,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import com.geekbrains.android_lessons.Constants;
 import com.geekbrains.android_lessons.R;
+import com.geekbrains.android_lessons.SharedPreferencesManager;
 
 import java.util.Objects;
 
@@ -36,9 +33,8 @@ public class SettingsFragment extends Fragment {
     private RadioGroup windGroup;
     private RadioGroup pressureGroup;
     private RadioButton theme_Dark, theme_Light, temp_Celsi, temp_Faring, wind_MS, wind_KMH, press_MM, press_GPA;
-    private final SharedPreferences sPrefs = MainFragment.sPrefs;
-    public static final String APP_PREFERENCES = "SETTINGS";
-    final String KEY_RADIOBUTTON_INDEX = "SAVED_RADIO_BUTTON_INDEX";
+
+    public SharedPreferencesManager sPrefs = MainFragment.sPrefs;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -48,73 +44,74 @@ public class SettingsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         requireActivity().setTitle("");
+        ((AppCompatActivity) requireActivity()).setSupportActionBar(view.findViewById(R.id.toolbar));
         setHasOptionsMenu(true);
         setRetainInstance(true);
 
-        //sPrefs = PreferenceManager.getDefaultSharedPreferences(view.getContext());
         findViews(view);
-//        LoadPreferences(themeGroup);
+        setUpRadioButton();
+        initListeners();
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setDisplayShowHomeEnabled(true);
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setHomeAsUpIndicator(R.drawable.back_line);
 
-
-        themeGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
-                int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-                if(theme_Dark.isChecked()) {
-                    switch (currentNightMode) {
-                        case Configuration.UI_MODE_NIGHT_NO:
-                            //todo включение ночной темы
-                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                            Toast.makeText(requireView().getContext(), "Ночная тема включена", Toast.LENGTH_SHORT).show();
-                        case Configuration.UI_MODE_NIGHT_YES:
-                            // todo ничего не делать
-                    }
-//                    int checkedIndex = radioGroup.indexOfChild(theme_Dark);
-//                    SavePreferences(KEY_RADIOBUTTON_INDEX, checkedIndex);
-                }
-                if(theme_Light.isChecked()) {
-                    switch (currentNightMode) {
-                        case Configuration.UI_MODE_NIGHT_NO:
-                            //todo ничего не делать
-                        case Configuration.UI_MODE_NIGHT_YES:
-                            // todo включение светлой темы
-                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                            Toast.makeText(requireView().getContext(), "Дневная тема включена", Toast.LENGTH_SHORT).show();
-                    }
-//                    int checkedIndex = radioGroup.indexOfChild(theme_Light);
-//                    SavePreferences(KEY_RADIOBUTTON_INDEX, checkedIndex);
+        //theme group listener
+        themeGroup.setOnCheckedChangeListener((RadioGroup radioGroup, int checkedId) -> {
+            int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+            if (theme_Dark.isChecked()) {
+                if (currentNightMode == Configuration.UI_MODE_NIGHT_NO) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    new SharedPreferencesManager(requireContext()).storeInt(Constants.tag_theme, Constants.THEME_DARK);
                 }
             }
-
+            if (theme_Light.isChecked()) {
+                if (currentNightMode == Configuration.UI_MODE_NIGHT_YES) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    new SharedPreferencesManager(requireContext()).storeInt(Constants.tag_theme, Constants.THEME_LIGHT);
+                }
+            }
         });
+
+
     }
 
-//    private void SavePreferences(String key, int value) {
-//        sPrefs.edit().putInt(key, value).apply();
-//    }
-//
-//    private void LoadPreferences(RadioGroup radioGroup) {
-//        int savedRadioIndex = sPrefs.getInt(
-//                KEY_RADIOBUTTON_INDEX, 0);
-//        RadioButton savedCheckedRadioButton = (RadioButton) radioGroup.getChildAt(savedRadioIndex);
-//        savedCheckedRadioButton.setChecked(true);
-//    }
-
-    public void checkTheme(RadioButton radioButton, int currentNightMode) {
-            switch (currentNightMode) {
-                case Configuration.UI_MODE_NIGHT_NO:
-                    //todo включение ночной темы
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    Toast.makeText(requireView().getContext(), "Ночная тема включена", Toast.LENGTH_SHORT).show();
-                case Configuration.UI_MODE_NIGHT_YES:
-                    // todo включение светлой темы
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    Toast.makeText(requireView().getContext(), "Дневная тема включена", Toast.LENGTH_SHORT).show();
-            }
+    public void radioButtonsCheckEnter(String tag, int defValue, RadioButton... radioButtons) {
+        int temp = sPrefs.retrieveInt(tag, defValue);
+        if (temp == 1) {
+            radioButtons[1].setChecked(true);
+        } else {
+            radioButtons[0].setChecked(true);
         }
+    }
+
+    public void setUpRadioButton() {
+
+        radioButtonsCheckEnter(Constants.tag_theme, Constants.THEME_LIGHT, theme_Light, theme_Dark);
+        radioButtonsCheckEnter(Constants.tag_temp, Constants.POSTFIX_CELS, temp_Celsi, temp_Faring);
+        radioButtonsCheckEnter(Constants.tag_wind, Constants.WINDFORCE_MS, wind_MS, wind_KMH);
+        radioButtonsCheckEnter(Constants.tag_pressure, Constants.PRESSURE_MM, press_MM, press_GPA);
+    }
+
+    public void initListeners() {
+
+        //degrees postfix listener
+        temperatureGroup.setOnCheckedChangeListener((RadioGroup radioGroup, int checkedId) -> checkingRadiobutton(temp_Celsi, temp_Faring, Constants.tag_temp, Constants.POSTFIX_CELS, Constants.POSTFIX_FARING));
+
+        //wind force listener
+        windGroup.setOnCheckedChangeListener((RadioGroup radioGroup, int checkedId) -> checkingRadiobutton(wind_MS, wind_KMH, Constants.tag_wind, Constants.WINDFORCE_MS, Constants.WINDFORCE_KMH));
+
+        //pressure listener
+        pressureGroup.setOnCheckedChangeListener((RadioGroup radioGroup, int checkedId) -> checkingRadiobutton(press_MM, press_GPA, Constants.tag_pressure, Constants.PRESSURE_MM, Constants.PRESSURE_GPA));
+    }
+
+    public void checkingRadiobutton(RadioButton radioButton1, RadioButton radioButton2, String tag, int... tags) {
+        if (radioButton1.isChecked()) {
+            new SharedPreferencesManager(requireContext()).storeInt(tag, tags[0]);
+        }
+        if (radioButton2.isChecked()) {
+            new SharedPreferencesManager(requireContext()).storeInt(tag, tags[1]);
+        }
+    }
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
@@ -148,8 +145,9 @@ public class SettingsFragment extends Fragment {
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
+        if (item.getItemId() == android.R.id.home || item.getItemId() == R.id.home) {
             Navigation.findNavController(requireView()).popBackStack();
+
             return true;
         }
         return super.onOptionsItemSelected(item);

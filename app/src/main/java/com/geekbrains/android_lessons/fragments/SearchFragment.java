@@ -2,6 +2,7 @@ package com.geekbrains.android_lessons.fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,9 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,25 +20,23 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.geekbrains.android_lessons.Constants;
 import com.geekbrains.android_lessons.MainActivity;
 import com.geekbrains.android_lessons.R;
 import com.geekbrains.android_lessons.adapters.RecyclerCityAdapter;
 import com.geekbrains.android_lessons.interfaces.CityClick;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 public class SearchFragment extends Fragment implements CityClick {
     private String data;
-    private final int searchActivityRequestCode = 1234;
     private RecyclerView recyclerView;
-    private List<String> topCities;
-    private RecyclerCityAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -49,6 +46,7 @@ public class SearchFragment extends Fragment implements CityClick {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         requireActivity().setTitle("");
+        ((AppCompatActivity) requireActivity()).setSupportActionBar(view.findViewById(R.id.toolbar));
         setHasOptionsMenu(true);
         setRetainInstance(true);
         initViews(view);
@@ -64,13 +62,9 @@ public class SearchFragment extends Fragment implements CityClick {
     }
 
     private void setupRecyclerView() {
-        /*LinearLayoutManager layoutManager = new LinearLayoutManager(
-                getBaseContext(), LinearLayoutManager.HORIZONTAL, true
-        );*/
-        //GridLayoutManager layoutManager = new GridLayoutManager(getBaseContext(), 3);
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext());
-        topCities = Arrays.asList(getResources().getStringArray(R.array.topCities));
-        adapter = new RecyclerCityAdapter(topCities, this);
+        List<String> topCities = Arrays.asList(getResources().getStringArray(R.array.topCities));
+        RecyclerCityAdapter adapter = new RecyclerCityAdapter(topCities, this);
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
@@ -88,8 +82,8 @@ public class SearchFragment extends Fragment implements CityClick {
             public boolean onQueryTextSubmit(String query) {
                 if (!data.trim().equals("")) {
                     Intent intentCity = new Intent(requireView().getContext(), MainActivity.class);
-                    intentCity.putExtra("cityName", data);
-                    startActivityForResult(intentCity, searchActivityRequestCode);
+                    intentCity.putExtra(Constants.tag_cityName, data);
+                    startActivityForResult(intentCity, Constants.searchActivityRequestCode);
                     return true;
                 }
                return false;
@@ -118,8 +112,15 @@ public class SearchFragment extends Fragment implements CityClick {
         k.setImageResource(R.drawable.exit);
 
         int id = mSearchView.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
-        TextView textView = (TextView) mSearchView.findViewById(id);
-        textView.setTextColor(Color.rgb(195,61,61));
+        TextView textView = mSearchView.findViewById(id);
+        int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        if (currentNightMode == Configuration.UI_MODE_NIGHT_NO) {
+            textView.setTextColor(Color.rgb(195,61,61));
+        }
+        else if (currentNightMode == Configuration.UI_MODE_NIGHT_YES) {
+            textView.setTextColor(Color.parseColor("#E984FF"));
+        }
+
         super.onPrepareOptionsMenu(menu);
     }
     @SuppressLint("NonConstantResourceId")
@@ -132,15 +133,15 @@ public class SearchFragment extends Fragment implements CityClick {
 
         //пробовала передать город в главный фрагмент - пока не получилось
         Toast.makeText(requireView().getContext(), R.string.error_one, Toast.LENGTH_SHORT).show();
-        //Navigation.findNavController(requireView()).popBackStack();
+        Navigation.findNavController(requireView()).popBackStack();
         return super.onOptionsItemSelected(item);
 
     }
     @Override
     public void onItemClicked(String itemText) {
-        Intent intentCity = new Intent(getView().getContext(), MainActivity.class);
-        intentCity.putExtra("cityName", itemText);
-        startActivityForResult(intentCity, searchActivityRequestCode);
+        Intent intentCity = new Intent(requireView().getContext(), MainActivity.class);
+        intentCity.putExtra(Constants.tag_cityName, itemText);
+        startActivityForResult(intentCity, Constants.searchActivityRequestCode);
     }
 
 }

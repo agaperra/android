@@ -37,13 +37,20 @@
     <string name="voronezh">Воронеж</string>
     <string name="sochi">Сочи</string>
     <string name="update_time">Время обновления</string>
-    <string name="weather_icon">Погодная иконка</string>
+    <string name="weather_icon">Иконка</string>
     <string name="error">Ошибка. Выберите город.</string>
     <string name="option_fragment_name">Настройки</string>
     <string name="error_one">Извините, сохранение поискового запроса сейчас недоступно.</string>
     <string name="time">Время</string>
     <string name="weekday">День недели</string>
     <string name="date">Дата</string>
+    <string name="night_mode">Ночная тема включена</string>
+    <string name="day_mode">Дневная тема включена</string>
+    <string name="chancel">Отмена</string>
+    <string name="no">Нет</string>
+    <string name="yes">Да</string>
+    <string name="exit_settings">Завершить настройку параметров?</string>
+    <string name="open_url">Открыть ссылку в браузере?</string>
 
 
     <string-array name="topCities">

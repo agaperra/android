@@ -36,13 +36,20 @@
     <string name="voronezh">Voronezh</string>
     <string name="sochi">Sochi</string>
     <string name="update_time">Update Time</string>
-    <string name="weather_icon">Weather icon</string>
+    <string name="weather_icon">Icon</string>
     <string name="error">Error. Choose City.</string>
     <string name="option_fragment_name">Settings</string>
     <string name="error_one">Sorry, saving the search query is currently unavailable.</string>
     <string name="time">Time</string>
     <string name="weekday">Day in a week</string>
     <string name="date">Date</string>
+    <string name="night_mode">Night mode activated</string>
+    <string name="day_mode">Day mode activated</string>
+    <string name="chancel">Chancel</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="exit_settings">Finish setting up the parameters?</string>
+    <string name="open_url">Open URL in browser?</string>
 
     <string-array name="topCities">
         <item>Moscow</item>
