@@ -66,7 +66,6 @@ public class MainFragment extends Fragment implements DateClick {
     private TextView cityNameView;
     private TextView typeWeather;
     private TextView timeView;
-    private ImageView weatherIcon;
     private TextView feelsLike;
     private Typeface weatherFont;
 
@@ -115,7 +114,6 @@ public class MainFragment extends Fragment implements DateClick {
         cityNameView = v.findViewById(R.id.cityNameView);
         typeWeather = v.findViewById(R.id.weatherTypeView);
         timeView = v.findViewById(R.id.updateTime);
-        weatherIcon = v.findViewById(R.id.weather_icon);
         //recyclerViewHours = v.findViewById(R.id.hoursRecycler);
         recyclerViewDays = v.findViewById(R.id.recyclerWeekday);
         feelsLike=v.findViewById(R.id.feelsLike);
@@ -229,24 +227,6 @@ public class MainFragment extends Fragment implements DateClick {
 
         updateAllParameters();
     }
-
-//    public static Bitmap getBitmapFromURL(String src) {
-//        try {
-//           // Log.e("src",src);
-//            URL url = new URL(src);
-//            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-//            connection.setDoInput(true);
-//            connection.connect();
-//            InputStream input = connection.getInputStream();
-//            Bitmap myBitmap = BitmapFactory.decodeStream(input);
-//            Log.e("Bitmap","returned");
-//            return myBitmap;
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            Log.e("Exception",e.getMessage());
-//            return null;
-//        }
-//    }
 
 
     public void updateAllParameters(){
