@@ -150,13 +150,13 @@
                             app:layout_constraintTop_toTopOf="parent"
                             tools:text="@string/degrees" />
 
-                        <TextView
+                        <ImageView
                             android:id="@+id/weather_icon"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
                             android:gravity="center"
-                            android:text="@string/weather_icon"
+                            tools:text="@string/weather_icon"
                             app:layout_constraintBottom_toBottomOf="@+id/degreesCountView"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/degreesCountView"

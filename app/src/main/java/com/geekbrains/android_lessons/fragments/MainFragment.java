@@ -2,9 +2,12 @@ package com.geekbrains.android_lessons.fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,6 +19,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -40,6 +44,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -61,7 +66,7 @@ public class MainFragment extends Fragment implements DateClick {
     private TextView cityNameView;
     private TextView typeWeather;
     private TextView timeView;
-    private TextView weatherIcon;
+    private ImageView weatherIcon;
     private TextView feelsLike;
     private Typeface weatherFont;
 
@@ -74,6 +79,31 @@ public class MainFragment extends Fragment implements DateClick {
     //private RecyclerView recyclerViewHours;
     private RecyclerView recyclerViewDays;
     private SwipeRefreshLayout mSwipeRefreshLayout;
+
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error_", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
+        }
+    }
 
 
     private void findViews(View v) {
@@ -137,6 +167,7 @@ public class MainFragment extends Fragment implements DateClick {
                         View customSnackView = getLayoutInflater().inflate(R.layout.rounded, null);
                         snackbar.getView().setBackgroundColor(Color.TRANSPARENT);
                         Snackbar.SnackbarLayout snackbarLayout = (Snackbar.SnackbarLayout) snackbar.getView();
+
                         snackbarLayout.setPadding(20, 20, 20, 20);
                         snackbarLayout.addView(customSnackView, 0);
                         snackbar.show();
@@ -187,15 +218,36 @@ public class MainFragment extends Fragment implements DateClick {
         timeView.setText(String.format("%s", updatedOn));
         sPrefs.storeString(Constants.tag_time, String.format("%s", updatedOn));
 
-//        String  icon = weatherRequest.getWeather()[0].getIcon();
-//        weatherIcon.setBackground(Drawable.createFromPath(Constants.iconURL+icon+".png"));
-//        sPrefs.storeString(Constants.PREF_ICON, icon);
+        String  icon = weatherRequest.getWeather()[0].getIcon();
+        String iconUrl = "http://openweathermap.org/img/wn/" + icon + "@4x.png";
+        new DownloadImageTask((ImageView) requireView().findViewById(R.id.weather_icon)).execute(iconUrl);
+        //Picasso.with(requireView().getContext()).load(iconUrl).into(weatherIcon);
+        sPrefs.storeString(Constants.PREF_ICON, icon);
 
         feelsLike.setText(String.format("%.2f", weatherRequest.getMain().getFeels_like()));
         sPrefs.storeString(Constants.PREF_FEEL, String.format("%.2f", weatherRequest.getMain().getFeels_like()));
 
         updateAllParameters();
     }
+
+//    public static Bitmap getBitmapFromURL(String src) {
+//        try {
+//           // Log.e("src",src);
+//            URL url = new URL(src);
+//            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+//            connection.setDoInput(true);
+//            connection.connect();
+//            InputStream input = connection.getInputStream();
+//            Bitmap myBitmap = BitmapFactory.decodeStream(input);
+//            Log.e("Bitmap","returned");
+//            return myBitmap;
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            Log.e("Exception",e.getMessage());
+//            return null;
+//        }
+//    }
+
 
     public void updateAllParameters(){
         updateValue(getCityName(Constants.tag_cityName),
@@ -205,7 +257,8 @@ public class MainFragment extends Fragment implements DateClick {
                 getValue(Constants.PREF_PRESS),
                 getValue(Constants.PREF_TYPE),
                 getValue(Constants.tag_time),
-                getValue(Constants.PREF_FEEL));
+                getValue(Constants.PREF_FEEL),
+                getValue(Constants.PREF_ICON));
     }
 
 
@@ -385,6 +438,11 @@ public class MainFragment extends Fragment implements DateClick {
                 -273.15,
                 getString(R.string.kelvin),
                 getString(R.string.cels));
+
+        String iconUrl = "http://openweathermap.org/img/wn/" + parameters[8] + "@4x.png";
+        new DownloadImageTask((ImageView) requireView().findViewById(R.id.weather_icon)).execute(iconUrl);
+        //Picasso.with(requireView().getContext()).load(iconUrl).into(weatherIcon);
+        sPrefs.getEditor().putString(Constants.PREF_ICON,parameters[8]).apply();
 
 
 

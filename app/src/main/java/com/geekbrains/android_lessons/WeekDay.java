@@ -11,6 +11,7 @@ import java.util.Calendar;
 public class WeekDay implements Serializable {
 
     private String dayOfWeek;
+    private double degrees;
     private final SimpleDateFormat dateFormat=Constants.dateFormat;
     private static final SimpleDateFormat weekDayFormat=Constants.weekDayFormat;
     private String date;
@@ -66,5 +67,24 @@ public class WeekDay implements Serializable {
     }
 
     public String  getDay(){return date;}
+
+//
+//    @SuppressLint("DefaultLocale")
+//    public void displayWeather(AllList list) {
+//
+//
+//        degreesCountView.setText(String.format("%.2f", list.getList()[0].getMain().getTemp()));
+//        sPrefs.storeString(Constants.PREF_DEGREES, String.format("%.2f", list.getList()[0].getMain().getTemp()));
+//
+//        DateFormat df = DateFormat.getDateTimeInstance();
+//        String updatedOn = df.format(new Date(1000 * list.getList()[0].getDT()));
+//        timeView.setText(String.format("%s", updatedOn));
+//        sPrefs.storeString(Constants.tag_time, String.format("%s", updatedOn));
+//
+//
+//        feelsLike.setText(String.format("%.2f", list.getList()[0].getMain().getFeels_like()));
+//        sPrefs.storeString(Constants.PREF_FEEL, String.format("%.2f", list.getList()[0].getMain().getFeels_like()));
+//
+//    }
 }
 
