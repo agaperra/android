@@ -41,13 +41,6 @@ public class RecyclerWeekDayAdapter extends RecyclerView.Adapter<RecyclerWeekDay
         days.addAll(arrayList);
     }
 
-//    public ArrayList<WeekDay> getItems() {
-//        return days;
-//    }
-
-//    public void clearItems() {
-//        days.clear();
-//    }
 
     class ViewHolder extends RecyclerView.ViewHolder {
         CardView layout;

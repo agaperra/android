@@ -1,6 +1,7 @@
 package com.geekbrains.android_lessons;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 
@@ -21,6 +22,17 @@ public class SharedPreferencesManager {
          * The class itself
          */
         sPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+    }
+
+    public SharedPreferencesManager(Activity activity){
+        sPreferences= activity.getPreferences(Activity.MODE_PRIVATE);
+    }
+    public String getCity(){
+        return sPreferences.getString(Constants.tag_cityName, "Moscow, RU");
+    }
+
+    void setCity(String city){
+        sPreferences.edit().putString(Constants.tag_cityName, city).apply();
     }
 
     public SharedPreferences.Editor getEditor() {

@@ -1,7 +1,6 @@
 package com.geekbrains.android_lessons.fragments;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -14,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,7 +23,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.geekbrains.android_lessons.Constants;
-import com.geekbrains.android_lessons.MainActivity;
 import com.geekbrains.android_lessons.R;
 import com.geekbrains.android_lessons.SharedPreferencesManager;
 import com.geekbrains.android_lessons.adapters.RecyclerCityAdapter;
@@ -84,9 +81,8 @@ public class SearchFragment extends Fragment implements CityClick {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 if (!data.trim().equals("")) {
-                    Intent intentCity = new Intent(requireView().getContext(), MainActivity.class);
-                    intentCity.putExtra(Constants.tag_cityName, data);
-                    startActivityForResult(intentCity, Constants.searchActivityRequestCode);
+                    sPrefs.storeString(Constants.tag_cityName,data);
+                    Navigation.findNavController(requireView()).popBackStack();
                     return true;
                 }
                 return false;
@@ -130,7 +126,7 @@ public class SearchFragment extends Fragment implements CityClick {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        Toast.makeText(requireView().getContext(), R.string.error_one, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(requireView().getContext(), R.string.error_one, Toast.LENGTH_SHORT).show();
 //        if (!data.trim().equals("")) {
 //            Intent intentCity = new Intent(requireView().getContext(), MainFragment.class);
 //            intentCity.putExtra(Constants.tag_cityName, data);
@@ -142,9 +138,11 @@ public class SearchFragment extends Fragment implements CityClick {
 
     @Override
     public void onItemClicked(String itemText) {
-        Intent intentCity = new Intent(requireView().getContext(), MainActivity.class);
-        intentCity.putExtra(Constants.tag_cityName, itemText);
-        startActivityForResult(intentCity, Constants.searchActivityRequestCode);
+        sPrefs.storeString(Constants.tag_cityName,itemText);
+        Navigation.findNavController(requireView()).popBackStack();
+//        Intent intentCity = new Intent(requireView().getContext(), MainActivity.class);
+//        intentCity.putExtra(Constants.tag_cityName, itemText);
+//        startActivityForResult(intentCity, Constants.searchActivityRequestCode);
     }
 
 }

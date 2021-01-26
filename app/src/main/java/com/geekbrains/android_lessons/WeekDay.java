@@ -1,6 +1,5 @@
 package com.geekbrains.android_lessons;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 
 import java.io.Serializable;
@@ -8,7 +7,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Locale;
 
 public class WeekDay implements Serializable {
 
@@ -53,6 +51,7 @@ public class WeekDay implements Serializable {
         }
         date = dateFormat.format(now.getTime());
         dayOfWeek = getDayName(shift);
+
     }
 
     private String getDayName(int shift) {
