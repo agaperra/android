@@ -168,18 +168,17 @@
                             android:text="@string/feels"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="@+id/degreesCountView"
-                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintStart_toStartOf="@+id/degreesCountView"
                             app:layout_constraintTop_toBottomOf="@+id/degreesCountView" />
 
                         <TextView
                             android:id="@+id/feelsLike"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/margin10dp"
                             android:text="@string/feels"
                             app:layout_constraintBottom_toBottomOf="@+id/feelslikeText"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/feelslikeText"
+                            app:layout_constraintStart_toEndOf="@+id/degreesCountView"
                             app:layout_constraintTop_toTopOf="@+id/feelslikeText" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 

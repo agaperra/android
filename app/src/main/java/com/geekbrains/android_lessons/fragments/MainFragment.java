@@ -201,8 +201,8 @@ public class MainFragment extends Fragment implements DateClick {
         typeWeather.setText(weatherStatus);
         sPrefs.storeString(Constants.PREF_TYPE, weatherStatus);
 
-        degreesCountView.setText(String.format("%.2f", weatherRequest.getMain().getTemp()));
-        sPrefs.storeString(Constants.PREF_DEGREES, String.format("%.2f", weatherRequest.getMain().getTemp()));
+        degreesCountView.setText(String.format("%.0f", weatherRequest.getMain().getTemp()));
+        sPrefs.storeString(Constants.PREF_DEGREES, String.format("%.0f", weatherRequest.getMain().getTemp()));
 
         pressureParameterView.setText(String.format("%d", weatherRequest.getMain().getPressure()));
         sPrefs.storeString(Constants.PREF_PRESS, String.format("%d", weatherRequest.getMain().getPressure()));
@@ -210,8 +210,8 @@ public class MainFragment extends Fragment implements DateClick {
         humidityParameterView.setText(String.format("%d", weatherRequest.getMain().getHumidity()));
         sPrefs.storeString(Constants.PREF_HUMID, String.format("%d", weatherRequest.getMain().getHumidity()));
 
-        windForceParameterView.setText(String.format("%.2f", weatherRequest.getWind().getSpeed()));
-        sPrefs.storeString(Constants.PREF_WIND, String.format("%.2f", weatherRequest.getWind().getSpeed()));
+        windForceParameterView.setText(String.format("%.0f", weatherRequest.getWind().getSpeed()));
+        sPrefs.storeString(Constants.PREF_WIND, String.format("%.0f", weatherRequest.getWind().getSpeed()));
 
         DateFormat df = DateFormat.getDateTimeInstance();
         String updatedOn = df.format(new Date(1000 * weatherRequest.getDate()));
@@ -239,8 +239,8 @@ public class MainFragment extends Fragment implements DateClick {
         //Picasso.with(requireView().getContext()).load(iconUrl).into(weatherIcon);
         sPrefs.storeString(Constants.PREF_ICON, icon);
 
-        feelsLike.setText(String.format("%.2f", weatherRequest.getMain().getFeels_like()));
-        sPrefs.storeString(Constants.PREF_FEEL, String.format("%.2f", weatherRequest.getMain().getFeels_like()));
+        feelsLike.setText(String.format("%.0f", weatherRequest.getMain().getFeels_like()));
+        sPrefs.storeString(Constants.PREF_FEEL, String.format("%.0f", weatherRequest.getMain().getFeels_like()));
 
         updateAllParameters();
     }
@@ -345,9 +345,10 @@ public class MainFragment extends Fragment implements DateClick {
                         Locale.forLanguageTag(Locale.getDefault().getLanguage())+
                         Constants.weatherKey);
                 updateAllParameters();
+                setupRecyclerView();
                 mSwipeRefreshLayout.setRefreshing(false);
 
-            }, 1000);
+            }, 5000);
         });
 
         int t = sPrefs.retrieveInt(Constants.tag_theme, Constants.THEME_LIGHT);
@@ -383,7 +384,7 @@ public class MainFragment extends Fragment implements DateClick {
         );
 
         RecyclerWeekDayAdapter adapterWeek = new RecyclerWeekDayAdapter();
-        adapterWeek.addItems(WeekDay.getDays(7, requireActivity()));
+        adapterWeek.addItems(WeekDay.getDays(5, requireActivity()));
 
         recyclerViewDays.setLayoutManager(layoutManager2);
         recyclerViewDays.setAdapter(adapterWeek);
@@ -402,7 +403,7 @@ public class MainFragment extends Fragment implements DateClick {
     }
 
     @SuppressLint({"SetTextI18n", "DefaultLocale"})
-    public void checkSharedPreferences(String keyContainer, String tag, String parameter, TextView textView, int defaultConst, double multi, double shift, String... tags) {
+    public static void checkSharedPreferences(String keyContainer, String tag, String parameter, TextView textView, int defaultConst, double multi, double shift, String... tags) {
         sPrefs.getEditor().putString(keyContainer, parameter).apply();
         switch (sPrefs.retrieveInt(tag, defaultConst)) {
             case 0:
@@ -411,7 +412,7 @@ public class MainFragment extends Fragment implements DateClick {
             case 1:
                 parameter = parameter.replaceAll(",", ".");
                 double value = Double.parseDouble(parameter) * multi + shift;
-                textView.setText(String.format("%.2f", value) + " " + tags[1]);
+                textView.setText(String.format("%.0f", value) + " " + tags[1]);
                 break;
 
         }
