@@ -153,13 +153,13 @@ public class RecyclerWeekDayAdapter extends RecyclerView.Adapter<RecyclerWeekDay
             if(shift<=list.getList().length) {
                 switch (sPrefs.retrieveInt(Constants.tag_temp, Constants.POSTFIX_KELVIN)) {
                     case 0:
-                        degrees.setText(String.format("%.0f", list.getList()[shift].getMain().getTemp()) + "K\u00B0");
+                        degrees.setText(String.format("%.1f", list.getList()[shift].getMain().getTemp()) + "K\u00B0");
                         break;
                     case 1:
                         String parameter = String.valueOf(list.getList()[shift].getMain().getTemp());
                         parameter = parameter.replaceAll(",", ".");
                         double value = Double.parseDouble(parameter) - 273.15;
-                        degrees.setText(String.format("%.0f", value) + "С\u00B0");
+                        degrees.setText(String.format("%.1f", value) + "С\u00B0");
                         break;
                 }
                 String icon = list.getList()[shift].getWeather()[0].getIcon();
