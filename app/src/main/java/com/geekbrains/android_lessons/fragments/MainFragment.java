@@ -7,10 +7,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,7 +20,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
@@ -35,26 +31,17 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.geekbrains.android_lessons.Constants;
 import com.geekbrains.android_lessons.R;
 import com.geekbrains.android_lessons.SharedPreferencesManager;
-import com.geekbrains.android_lessons.WeekDay;
 import com.geekbrains.android_lessons.adapters.RecyclerWeekDayAdapter;
+import com.geekbrains.android_lessons.getWeather;
 import com.geekbrains.android_lessons.interfaces.DateClick;
+import com.geekbrains.android_lessons.model.AllList;
 import com.geekbrains.android_lessons.model.WeatherRequest;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.gson.Gson;
 
-import java.io.BufferedReader;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.util.Date;
-import java.util.Locale;
 import java.util.Objects;
-import java.util.stream.Collectors;
-
-import javax.net.ssl.HttpsURLConnection;
 
 public class MainFragment extends Fragment implements DateClick {
 
@@ -72,6 +59,8 @@ public class MainFragment extends Fragment implements DateClick {
     private String message = "";
     private RecyclerView recyclerViewDays;
     private SwipeRefreshLayout mSwipeRefreshLayout;
+    public static WeatherRequest list;
+
 
     public static class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         @SuppressLint("StaticFieldLeak")
@@ -99,7 +88,6 @@ public class MainFragment extends Fragment implements DateClick {
         }
     }
 
-
     private void findViews(View v) {
 
         degreesCountView = v.findViewById(R.id.degreesCountView);
@@ -117,108 +105,55 @@ public class MainFragment extends Fragment implements DateClick {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root=inflater.inflate(R.layout.fragment_main, container, false);
-        sPrefs = new SharedPreferencesManager(requireContext());
-        findViews(root);
-        setData(Constants.urlWeatherStatic +
-                        URLEncoder.encode(getCityName()) +
-                        Constants.lang+
-                        Locale.forLanguageTag(Locale.getDefault().getLanguage())+
-                        Constants.weatherKey);
         return root;
     }
 
-    public void setData(String url) {
-        try {
-            final URL uri = new URL(url);
-            System.out.println(uri);
-            final Handler handler = new Handler(Looper.getMainLooper()); // Запоминаем основной поток
-            new Thread(new Runnable() {
-                @RequiresApi(api = Build.VERSION_CODES.N)
-                public void run() {
-                    HttpsURLConnection urlConnection = null;
-                    try {
-                        urlConnection = (HttpsURLConnection) uri.openConnection();
-                        urlConnection.setRequestMethod("GET"); // установка метода получения данных -GET
-                        urlConnection.setReadTimeout(10000); // установка таймаута - 10 00 миллисекунд
-                        BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream())); // читаем  данные в поток
-                        String result = getLines(in);
-                        // преобразование данных запроса в модель
-                        Gson gson = new Gson();
-                        final WeatherRequest weatherRequest = gson.fromJson(result, WeatherRequest.class);
-                        // Возвращаемся к основному потоку
-                        handler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                displayWeather(weatherRequest);
-                            }
-                        });
-                    } catch (Exception e) {
-                        //Log.e(Constants.TAG, getString(R.string.fall), e);
+    public void error(){
+        Snackbar snackbar = Snackbar.make(requireView(), getString(R.string.error), Snackbar.LENGTH_LONG).
+                setAction(getString(R.string.update), ignored -> {
+                    getWeather.getWeather( this);
+                    getWeather.getWeatherForecast(this);
+//                    setData(Constants.urlWeatherStatic +
+//                            URLEncoder.encode(getCityName())+Constants.final_url);
+                });
+        @SuppressLint("InflateParams")
+        View customSnackView = getLayoutInflater().inflate(R.layout.rounded, null);
+        snackbar.getView().setBackgroundColor(Color.TRANSPARENT);
+        Snackbar.SnackbarLayout snackbarLayout = (Snackbar.SnackbarLayout) snackbar.getView();
 
-                        Snackbar snackbar = Snackbar.make(requireView(), getString(R.string.error), Snackbar.LENGTH_LONG).
-                                setAction(getString(R.string.update), ignored -> {
-                                    setData(Constants.urlWeatherStatic +
-                                            URLEncoder.encode(getCityName()) +
-                                            Constants.lang+
-                                            Locale.forLanguageTag(Locale.getDefault().getLanguage())+
-                                            Constants.weatherKey);
-                                });
-                        @SuppressLint("InflateParams")
-                        View customSnackView = getLayoutInflater().inflate(R.layout.rounded, null);
-                        snackbar.getView().setBackgroundColor(Color.TRANSPARENT);
-                        Snackbar.SnackbarLayout snackbarLayout = (Snackbar.SnackbarLayout) snackbar.getView();
-
-                        snackbarLayout.setPadding(20, 20, 20, 20);
-                        snackbarLayout.addView(customSnackView, 0);
-                        snackbar.show();
-                        e.printStackTrace();
-                    } finally {
-                        if (null != urlConnection) {
-                            urlConnection.disconnect();
-                        }
-                    }
-                }
-            }).start();
-        } catch (MalformedURLException e) {
-            Log.e(Constants.TAG, getString(R.string.fall), e);
-            e.printStackTrace();
-        }
-    }
-
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    public String getLines(BufferedReader in) {
-        return in.lines().collect(Collectors.joining("\n"));
+        snackbarLayout.setPadding(20, 20, 20, 20);
+        snackbarLayout.addView(customSnackView, 0);
+        snackbar.show();
     }
 
     @SuppressLint("DefaultLocale")
-    public void displayWeather(WeatherRequest weatherRequest) {
-        cityNameView.setText(weatherRequest.getName());
-        sPrefs.storeString(Constants.tag_cityName, weatherRequest.getName());
+    public void displayWeather(WeatherRequest list) {
+        cityNameView.setText(list.getName());
+        sPrefs.storeString(Constants.tag_cityName, list.getName());
 
-        String status = String.valueOf(weatherRequest.getWeather()[0].getDescription());
+        String status = String.valueOf(list.getWeather()[0].getDescription());
         String weatherStatus = status.substring(0, 1).toUpperCase() + status.substring(1);
         typeWeather.setText(weatherStatus);
         sPrefs.storeString(Constants.PREF_TYPE, weatherStatus);
 
-        degreesCountView.setText(String.format("%.0f", weatherRequest.getMain().getTemp()));
-        sPrefs.storeString(Constants.PREF_DEGREES, String.format("%.0f", weatherRequest.getMain().getTemp()));
+        degreesCountView.setText(String.format("%.0f", list.getMain().getTemp()));
+        sPrefs.storeString(Constants.PREF_DEGREES, String.format("%.0f", list.getMain().getTemp()));
 
-        pressureParameterView.setText(String.format("%d", weatherRequest.getMain().getPressure()));
-        sPrefs.storeString(Constants.PREF_PRESS, String.format("%d", weatherRequest.getMain().getPressure()));
+        pressureParameterView.setText(String.format("%d", list.getMain().getPressure()));
+        sPrefs.storeString(Constants.PREF_PRESS, String.format("%d", list.getMain().getPressure()));
 
-        humidityParameterView.setText(String.format("%d", weatherRequest.getMain().getHumidity()));
-        sPrefs.storeString(Constants.PREF_HUMID, String.format("%d", weatherRequest.getMain().getHumidity()));
+        humidityParameterView.setText(String.format("%d", list.getMain().getHumidity()));
+        sPrefs.storeString(Constants.PREF_HUMID, String.format("%d", list.getMain().getHumidity()));
 
-        windForceParameterView.setText(String.format("%.0f", weatherRequest.getWind().getSpeed()));
-        sPrefs.storeString(Constants.PREF_WIND, String.format("%.0f", weatherRequest.getWind().getSpeed()));
+        windForceParameterView.setText(String.format("%.0f", list.getWind().getSpeed()));
+        sPrefs.storeString(Constants.PREF_WIND, String.format("%.0f", list.getWind().getSpeed()));
 
         DateFormat df = DateFormat.getDateTimeInstance();
-        String updatedOn = df.format(new Date(1000 * weatherRequest.getDate()));
+        String updatedOn = df.format(new Date(1000 * list.getDate()));
         timeView.setText(String.format("%s", updatedOn));
         sPrefs.storeString(Constants.tag_time, String.format("%s", updatedOn));
 
-        String  icon = weatherRequest.getWeather()[0].getIcon();
+        String  icon = list.getWeather()[0].getIcon();
 
         int t = sPrefs.retrieveInt(Constants.tag_theme, Constants.THEME_LIGHT);
         setBackgroundMode(icon);
@@ -239,8 +174,8 @@ public class MainFragment extends Fragment implements DateClick {
         //Picasso.with(requireView().getContext()).load(iconUrl).into(weatherIcon);
         sPrefs.storeString(Constants.PREF_ICON, icon);
 
-        feelsLike.setText(String.format("%.0f", weatherRequest.getMain().getFeels_like()));
-        sPrefs.storeString(Constants.PREF_FEEL, String.format("%.0f", weatherRequest.getMain().getFeels_like()));
+        feelsLike.setText(String.format("%.0f", list.getMain().getFeels_like()));
+        sPrefs.storeString(Constants.PREF_FEEL, String.format("%.0f", list.getMain().getFeels_like()));
 
         updateAllParameters();
     }
@@ -309,14 +244,17 @@ public class MainFragment extends Fragment implements DateClick {
                 getValue(Constants.PREF_ICON));
     }
 
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         requireActivity().setTitle("");
         ((AppCompatActivity) requireActivity()).setSupportActionBar(view.findViewById(R.id.toolbar));
         setHasOptionsMenu(true);
         setRetainInstance(true);
-        setupRecyclerView();
+        sPrefs = new SharedPreferencesManager(requireContext());
+        findViews(view);
+
+        getWeather.getWeather(this);
+        getWeather.getWeatherForecast(this);
         Intent intent = requireActivity().getIntent();
         if (intent.hasExtra(Constants.tag_cityName)) {
             message = intent.getStringExtra(Constants.tag_cityName);
@@ -338,18 +276,13 @@ public class MainFragment extends Fragment implements DateClick {
 
             mSwipeRefreshLayout.setRefreshing(true);
             // ждем 3 секунды и прячем прогресс
-            mSwipeRefreshLayout.postDelayed(() -> {
-                setData(Constants.urlWeatherStatic +
-                        URLEncoder.encode(getCityName()) +
-                        Constants.lang+
-                        Locale.forLanguageTag(Locale.getDefault().getLanguage())+
-                        Constants.weatherKey);
+            mSwipeRefreshLayout.postOnAnimationDelayed(() -> {
+                getWeather.getWeather(this);
+                getWeather.getWeatherForecast(this);
                 updateAllParameters();
-                setupRecyclerView();
                 mSwipeRefreshLayout.setRefreshing(false);
 
-            }, 5000);
-        });
+            }, 1000);});
 
         int t = sPrefs.retrieveInt(Constants.tag_theme, Constants.THEME_LIGHT);
         switch (t) {
@@ -377,14 +310,14 @@ public class MainFragment extends Fragment implements DateClick {
         });
     }
 
-    private void setupRecyclerView() {
+    public void setupRecyclerView(WeatherRequest[] list) {
 
         LinearLayoutManager layoutManager2 = new LinearLayoutManager(
                 requireContext(), LinearLayoutManager.VERTICAL, false
         );
 
-        RecyclerWeekDayAdapter adapterWeek = new RecyclerWeekDayAdapter();
-        adapterWeek.addItems(WeekDay.getDays(5, requireActivity()));
+        RecyclerWeekDayAdapter adapterWeek = new RecyclerWeekDayAdapter(list);
+        adapterWeek.addItems(AllList.getDays(5, requireActivity()));
 
         recyclerViewDays.setLayoutManager(layoutManager2);
         recyclerViewDays.setAdapter(adapterWeek);

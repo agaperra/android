@@ -35,12 +35,11 @@ public class Constants {
     public static final SimpleDateFormat dateFormat=new SimpleDateFormat("dd MMMM", Locale.forLanguageTag(Locale.getDefault().getLanguage()));
     public static final SimpleDateFormat weekDayFormat=new SimpleDateFormat("EEEE", Locale.forLanguageTag(Locale.getDefault().getLanguage()));
     @SuppressLint("ConstantLocale")
-    public static final Locale Loc =  Locale.forLanguageTag(Locale.getDefault().getLanguage());
-    //public static final SimpleDateFormat hoursFormat=new SimpleDateFormat("HH:00", Locale.forLanguageTag(Locale.getDefault().getLanguage()));
     public static final String urlWeatherStatic = "https://api.openweathermap.org/data/2.5/weather?q=";
     public static final String urlWeather7Days="https://api.openweathermap.org/data/2.5/forecast?q=";
     public static final String lang="&lang=";
-    public static final String weatherKey = "&appid=f891788985f9d3e80fa727b9851e7c1b";
+    public static final String weatherKey = "&appid=";
     public static final String TAG = "WEATHER";
     public static final String url = "https://yandex.ru/search/?text=";
+    public static final String final_url=Constants.lang+Locale.forLanguageTag(Locale.getDefault().getLanguage())+Constants.weatherKey+BuildConfig.WEATHER_API_KEY;
 }
