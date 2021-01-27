@@ -13,6 +13,7 @@ public class Constants {
     public static final String PREF_TYPE = "PREF_TYPE";
     public static final String PREF_ICON = "PREF_ICON";
     public static final String PREF_FEEL = "PREF_FEEL";
+    public static final String PREF_BACK = "PREF_BACK";
     public static final String tag_temp="temperature";
     public static final String tag_wind="wind_force";
     public static final String tag_pressure="pressure";
@@ -41,4 +42,5 @@ public class Constants {
     public static final String lang="&lang=";
     public static final String weatherKey = "&appid=f891788985f9d3e80fa727b9851e7c1b";
     public static final String TAG = "WEATHER";
+    public static final String url = "https://yandex.ru/search/?text=";
 }

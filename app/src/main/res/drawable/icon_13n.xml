@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="1000dp"
+    android:height="1003dp"
+    android:viewportWidth="1000"
+    android:viewportHeight="1003">
+
+    <path
+        android:fillColor="#62aad1"
+        android:pathData="M 0 0 H 1000 V 35 H 0 V 0 Z" />
+    <path
+        android:fillColor="#63aad1"
+        android:pathData="M 0 30.25 H 1000 V 65.25 H 0 V 30.25 Z" />
+    <path
+        android:fillColor="#64aad0"
+        android:pathData="M 0 60.5 H 1000 V 95.5 H 0 V 60.5 Z" />
+    <path
+        android:fillColor="#65aad0"
+        android:pathData="M 0 90.75 H 1000 V 125.75 H 0 V 90.75 Z" />
+    <path
+        android:fillColor="#66aacf"
+        android:pathData="M 0 121 H 1000 V 156 H 0 V 121 Z" />
+    <path
+        android:fillColor="#67a9cf"
+        android:pathData="M 0 151.25 H 1000 V 186.25 H 0 V 151.25 Z" />
+    <path
+        android:fillColor="#68a9ce"
+        android:pathData="M 0 181.5 H 1000 V 216.5 H 0 V 181.5 Z" />
+    <path
+        android:fillColor="#69a9cd"
+        android:pathData="M 0 211.75 H 1000 V 246.75 H 0 V 211.75 Z" />
+    <path
+        android:fillColor="#6aa9cd"
+        android:pathData="M 0 242 H 1000 V 277 H 0 V 242 Z" />
+    <path
+        android:fillColor="#6ba9cd"
+        android:pathData="M 0 272.25 H 1000 V 307.25 H 0 V 272.25 Z" />
+    <path
+        android:fillColor="#6ca9cc"
+        android:pathData="M 0 302.5 H 1000 V 337.5 H 0 V 302.5 Z" />
+    <path
+        android:fillColor="#6da9cb"
+        android:pathData="M 0 332.75 H 1000 V 367.75 H 0 V 332.75 Z" />
+    <path
+        android:fillColor="#6ea9cb"
+        android:pathData="M 0 363 H 1000 V 398 H 0 V 363 Z" />
+    <path
+        android:fillColor="#6fa8cb"
+        android:pathData="M 0 393.25 H 1000 V 428.25 H 0 V 393.25 Z" />
+    <path
+        android:fillColor="#70a8ca"
+        android:pathData="M 0 423.5 H 1000 V 458.5 H 0 V 423.5 Z" />
+    <path
+        android:fillColor="#71a8ca"
+        android:pathData="M 0 453.75 H 1000 V 488.75 H 0 V 453.75 Z" />
+    <path
+        android:fillColor="#72a8c9"
+        android:pathData="M 0 484 H 1000 V 519 H 0 V 484 Z" />
+    <path
+        android:fillColor="#72a8c9"
+        android:pathData="M 0 514.25 H 1000 V 549.25 H 0 V 514.25 Z" />
+    <path
+        android:fillColor="#73a8c8"
+        android:pathData="M 0 544.5 H 1000 V 579.5 H 0 V 544.5 Z" />
+    <path
+        android:fillColor="#74a8c7"
+        android:pathData="M 0 574.75 H 1000 V 609.75 H 0 V 574.75 Z" />
+    <path
+        android:fillColor="#75a8c7"
+        android:pathData="M 0 605 H 1000 V 640 H 0 V 605 Z" />
+    <path
+        android:fillColor="#76a7c7"
+        android:pathData="M 0 635.25 H 1000 V 670.25 H 0 V 635.25 Z" />
+    <path
+        android:fillColor="#77a7c6"
+        android:pathData="M 0 665.5 H 1000 V 700.5 H 0 V 665.5 Z" />
+    <path
+        android:fillColor="#78a7c5"
+        android:pathData="M 0 695.75 H 1000 V 730.75 H 0 V 695.75 Z" />
+    <path
+        android:fillColor="#79a7c5"
+        android:pathData="M 0 726 H 1000 V 761 H 0 V 726 Z" />
+    <path
+        android:fillColor="#7aa7c5"
+        android:pathData="M 0 756.25 H 1000 V 791.25 H 0 V 756.25 Z" />
+    <path
+        android:fillColor="#7ba7c4"
+        android:pathData="M 0 786.5 H 1000 V 821.5 H 0 V 786.5 Z" />
+    <path
+        android:fillColor="#7ca7c3"
+        android:pathData="M 0 816.75 H 1000 V 851.75 H 0 V 816.75 Z" />
+    <path
+        android:fillColor="#7da7c3"
+        android:pathData="M 0 847 H 1000 V 882 H 0 V 847 Z" />
+    <path
+        android:fillColor="#7ea6c3"
+        android:pathData="M 0 877.25 H 1000 V 912.25 H 0 V 877.25 Z" />
+    <path
+        android:fillColor="#7fa6c2"
+        android:pathData="M 0 907.5 H 1000 V 942.5 H 0 V 907.5 Z" />
+    <path
+        android:fillColor="#80a6c2"
+        android:pathData="M 0 937.75 H 1000 V 972.75 H 0 V 937.75 Z" />
+    <path
+        android:fillColor="#81a6c1"
+        android:pathData="M 0 968 H 1000 V 1003 H 0 V 968 Z" />
+</vector>

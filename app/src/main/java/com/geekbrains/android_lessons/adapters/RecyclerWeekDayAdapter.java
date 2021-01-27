@@ -3,6 +3,7 @@ package com.geekbrains.android_lessons.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.geekbrains.android_lessons.R;
 import com.geekbrains.android_lessons.WeekDay;
+import com.geekbrains.android_lessons.fragments.MainFragment;
 
 import java.util.ArrayList;
 
@@ -44,7 +46,8 @@ public class RecyclerWeekDayAdapter extends RecyclerView.Adapter<RecyclerWeekDay
 
     class ViewHolder extends RecyclerView.ViewHolder {
         CardView layout;
-        TextView date, weekDay, weatherIcon, degrees;
+        TextView date, weekDay,  degrees;
+        ImageView weatherIcon;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -59,7 +62,9 @@ public class RecyclerWeekDayAdapter extends RecyclerView.Adapter<RecyclerWeekDay
         public void bind(int position) {
             WeekDay day = days.get(position);
 
-            //degrees.setText(day.getDegrees());
+            String s=day.getIcon();
+            new MainFragment.DownloadImageTask(weatherIcon).execute(s);
+           degrees.setText(day.getDegrees());
             weekDay.setText(day.getDayOfWeek());
             date.setText(day.getDay());
         }

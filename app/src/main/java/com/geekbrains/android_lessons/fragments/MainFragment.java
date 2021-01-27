@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -67,19 +66,15 @@ public class MainFragment extends Fragment implements DateClick {
     private TextView typeWeather;
     private TextView timeView;
     private TextView feelsLike;
-    private Typeface weatherFont;
-
-    @SuppressLint("StaticFieldLeak")
+    private ImageView background;
     public static SharedPreferencesManager sPrefs;
-
-    private final String url = "https://yandex.ru/search/?text=";
+    private final String url = Constants.url;
     private String message = "";
-
-    //private RecyclerView recyclerViewHours;
     private RecyclerView recyclerViewDays;
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+    public static class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        @SuppressLint("StaticFieldLeak")
         ImageView bmImage;
 
         public DownloadImageTask(ImageView bmImage) {
@@ -114,24 +109,27 @@ public class MainFragment extends Fragment implements DateClick {
         cityNameView = v.findViewById(R.id.cityNameView);
         typeWeather = v.findViewById(R.id.weatherTypeView);
         timeView = v.findViewById(R.id.updateTime);
-        //recyclerViewHours = v.findViewById(R.id.hoursRecycler);
         recyclerViewDays = v.findViewById(R.id.recyclerWeekday);
         feelsLike=v.findViewById(R.id.feelsLike);
+        background=v.findViewById(R.id.backgroundView);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_main, container, false);
+        View root=inflater.inflate(R.layout.fragment_main, container, false);
+        sPrefs = new SharedPreferencesManager(requireContext());
+        findViews(root);
+        setData(Constants.urlWeatherStatic +
+                        URLEncoder.encode(getCityName()) +
+                        Constants.lang+
+                        Locale.forLanguageTag(Locale.getDefault().getLanguage())+
+                        Constants.weatherKey);
+        return root;
     }
 
-    public void setData() {
+    public void setData(String url) {
         try {
-            final URL uri = new URL(
-                    Constants.urlWeatherStatic +
-                            URLEncoder.encode(getCityName(Constants.tag_cityName)) +
-                            Constants.lang+
-                            Locale.forLanguageTag(Locale.getDefault().getLanguage())+
-                            Constants.weatherKey);
+            final URL uri = new URL(url);
             System.out.println(uri);
             final Handler handler = new Handler(Looper.getMainLooper()); // Запоминаем основной поток
             new Thread(new Runnable() {
@@ -144,7 +142,6 @@ public class MainFragment extends Fragment implements DateClick {
                         urlConnection.setReadTimeout(10000); // установка таймаута - 10 00 миллисекунд
                         BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream())); // читаем  данные в поток
                         String result = getLines(in);
-                        System.out.println(result);
                         // преобразование данных запроса в модель
                         Gson gson = new Gson();
                         final WeatherRequest weatherRequest = gson.fromJson(result, WeatherRequest.class);
@@ -160,8 +157,13 @@ public class MainFragment extends Fragment implements DateClick {
 
                         Snackbar snackbar = Snackbar.make(requireView(), getString(R.string.error), Snackbar.LENGTH_LONG).
                                 setAction(getString(R.string.update), ignored -> {
-                                    setData();
+                                    setData(Constants.urlWeatherStatic +
+                                            URLEncoder.encode(getCityName()) +
+                                            Constants.lang+
+                                            Locale.forLanguageTag(Locale.getDefault().getLanguage())+
+                                            Constants.weatherKey);
                                 });
+                        @SuppressLint("InflateParams")
                         View customSnackView = getLayoutInflater().inflate(R.layout.rounded, null);
                         snackbar.getView().setBackgroundColor(Color.TRANSPARENT);
                         Snackbar.SnackbarLayout snackbarLayout = (Snackbar.SnackbarLayout) snackbar.getView();
@@ -217,6 +219,21 @@ public class MainFragment extends Fragment implements DateClick {
         sPrefs.storeString(Constants.tag_time, String.format("%s", updatedOn));
 
         String  icon = weatherRequest.getWeather()[0].getIcon();
+
+        int t = sPrefs.retrieveInt(Constants.tag_theme, Constants.THEME_LIGHT);
+        setBackgroundMode(icon);
+        switch (t) {
+            case 0:
+                if (icon.contains("d")){
+                icon=icon.replaceAll("d", "n");
+                }
+                break;
+            case 1:
+                if (icon.contains("n")){
+                    icon=icon.replaceAll("n", "d");
+                }
+                break;
+        }
         String iconUrl = "http://openweathermap.org/img/wn/" + icon + "@4x.png";
         new DownloadImageTask((ImageView) requireView().findViewById(R.id.weather_icon)).execute(iconUrl);
         //Picasso.with(requireView().getContext()).load(iconUrl).into(weatherIcon);
@@ -228,9 +245,60 @@ public class MainFragment extends Fragment implements DateClick {
         updateAllParameters();
     }
 
+    public void setBackgroundMode(String icon){
+        String tmp="01";
+        String mode="d";
+        if (icon.contains("d")){
+            mode="d";
+            tmp=icon.replaceAll("d","");
+        }else if (icon.contains("n")){
+            mode="n";
+            tmp=icon.replaceAll("n","");
+        }
+        switch (tmp){
+            case "01":
+                check(mode, R.drawable.icon_01d, R.drawable.icon_01n);
+                break;
+            case "02":
+                check(mode, R.drawable.icon_02d, R.drawable.icon_02n);
+                break;
+            case "03":
+                check(mode, R.drawable.icon_03d, R.drawable.icon_03d);
+                break;
+            case "04":
+                check(mode, R.drawable.icon_04d, R.drawable.icon_04d);
+                break;
+            case "09":
+                check(mode, R.drawable.icon_09d, R.drawable.icon_09n);
+                break;
+            case "10":
+                check(mode, R.drawable.icon_10d, R.drawable.icon_10n);
+                break;
+            case "11":
+                check(mode, R.drawable.icon_11d, R.drawable.icon_11n);
+                break;
+            case "13":
+                check(mode, R.drawable.icon_13d, R.drawable.icon_13n);
+                break;
+            case "50":
+                check(mode, R.drawable.icon_50d, R.drawable.icon_50n);
+                break;
+        }
+
+
+    }
+
+    public void check(String mode,int... tags){
+        if (mode.equals("d")){
+            background.setImageResource(tags[0]);
+        }
+        else if (mode.equals("n")){
+            background.setImageResource(tags[1]);
+        }
+    }
 
     public void updateAllParameters(){
-        updateValue(getCityName(Constants.tag_cityName),
+        updateValue(getCityName(),
                 getValue(Constants.PREF_DEGREES),
                 getValue(Constants.PREF_WIND),
                 getValue(Constants.PREF_HUMID),
@@ -244,15 +312,10 @@ public class MainFragment extends Fragment implements DateClick {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        //weatherFont = Typeface.createFromAsset(requireActivity().getAssets(), "res/font/weathericons.ttf");
-
         requireActivity().setTitle("");
         ((AppCompatActivity) requireActivity()).setSupportActionBar(view.findViewById(R.id.toolbar));
         setHasOptionsMenu(true);
         setRetainInstance(true);
-
-        sPrefs = new SharedPreferencesManager(requireContext());
-        findViews(view);
         setupRecyclerView();
         Intent intent = requireActivity().getIntent();
         if (intent.hasExtra(Constants.tag_cityName)) {
@@ -260,11 +323,9 @@ public class MainFragment extends Fragment implements DateClick {
             if (!message.equals("")) {
                 sPrefs.storeString(Constants.tag_cityName, message);
                 cityNameView.setText(message);
-                setData();
 
             }
         }
-        setData();
         updateAllParameters();
 
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
@@ -273,22 +334,20 @@ public class MainFragment extends Fragment implements DateClick {
 
         mSwipeRefreshLayout = view.findViewById(R.id.refresh);
 
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
+        mSwipeRefreshLayout.setOnRefreshListener(() -> {
 
-                mSwipeRefreshLayout.setRefreshing(true);
-                // ждем 3 секунды и прячем прогресс
-                mSwipeRefreshLayout.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        setData();
-                        updateAllParameters();
-                        mSwipeRefreshLayout.setRefreshing(false);
+            mSwipeRefreshLayout.setRefreshing(true);
+            // ждем 3 секунды и прячем прогресс
+            mSwipeRefreshLayout.postDelayed(() -> {
+                setData(Constants.urlWeatherStatic +
+                        URLEncoder.encode(getCityName()) +
+                        Constants.lang+
+                        Locale.forLanguageTag(Locale.getDefault().getLanguage())+
+                        Constants.weatherKey);
+                updateAllParameters();
+                mSwipeRefreshLayout.setRefreshing(false);
 
-                    }
-                }, 1000);
-            }
+            }, 1000);
         });
 
         int t = sPrefs.retrieveInt(Constants.tag_theme, Constants.THEME_LIGHT);
@@ -315,10 +374,7 @@ public class MainFragment extends Fragment implements DateClick {
                 snackbar.show();
             }
         });
-
-
     }
-
 
     private void setupRecyclerView() {
 
@@ -326,15 +382,12 @@ public class MainFragment extends Fragment implements DateClick {
                 requireContext(), LinearLayoutManager.VERTICAL, false
         );
 
-
         RecyclerWeekDayAdapter adapterWeek = new RecyclerWeekDayAdapter();
         adapterWeek.addItems(WeekDay.getDays(7, requireActivity()));
 
         recyclerViewDays.setLayoutManager(layoutManager2);
         recyclerViewDays.setAdapter(adapterWeek);
     }
-
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
@@ -363,7 +416,6 @@ public class MainFragment extends Fragment implements DateClick {
 
         }
     }
-
 
     @SuppressLint("SetTextI18n")
     private void updateValue(String... parameters) {
@@ -409,20 +461,29 @@ public class MainFragment extends Fragment implements DateClick {
         sPrefs.getEditor().putString(Constants.tag_time, parameters[6]).apply();
         timeView.setText(parameters[6]);
 
-        checkSharedPreferences(Constants.PREF_FEEL,
-                Constants.tag_temp,
-                parameters[7],
-                feelsLike,
-                Constants.POSTFIX_KELVIN,
-                1,
-                -273.15,
-                getString(R.string.kelvin),
-                getString(R.string.cels));
+        checkSharedPreferences(Constants.PREF_FEEL, Constants.tag_temp, parameters[7], feelsLike, Constants.POSTFIX_KELVIN, 1, -273.15, getString(R.string.kelvin), getString(R.string.cels));
 
+
+        int t = sPrefs.retrieveInt(Constants.tag_theme, Constants.THEME_LIGHT);
+        setBackgroundMode(parameters[8]);
+        switch (t) {
+            case 0:
+                if (parameters[8].contains("d")){
+                    parameters[8]=parameters[8].replaceAll("d", "n");
+                }
+                break;
+            case 1:
+                if (parameters[8].contains("n")){
+                    parameters[8]=parameters[8].replaceAll("n", "d");
+                }
+                break;
+        }
         String iconUrl = "http://openweathermap.org/img/wn/" + parameters[8] + "@4x.png";
         new DownloadImageTask((ImageView) requireView().findViewById(R.id.weather_icon)).execute(iconUrl);
         //Picasso.with(requireView().getContext()).load(iconUrl).into(weatherIcon);
         sPrefs.getEditor().putString(Constants.PREF_ICON,parameters[8]).apply();
+
+
 
 
 
@@ -432,8 +493,8 @@ public class MainFragment extends Fragment implements DateClick {
         return sPrefs.retrieveString(key, "0");
     }
 
-    private String getCityName(String key) {
-        return sPrefs.retrieveString(key, getString(R.string.moscow));
+    public String getCityName() {
+        return sPrefs.retrieveString(Constants.tag_cityName, getString(R.string.moscow));
     }
 
     @Override
@@ -444,7 +505,6 @@ public class MainFragment extends Fragment implements DateClick {
         menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         super.onCreateOptionsMenu(menu, inflater);
     }
-
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -459,10 +519,7 @@ public class MainFragment extends Fragment implements DateClick {
         }
         return super.onOptionsItemSelected(item);
     }
-
     @Override
-    public void onItemClicked(String itemText) {
-
-    }
+    public void onItemClicked(String itemText) { }
 
 }
