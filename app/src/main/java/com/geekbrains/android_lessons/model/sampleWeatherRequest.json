@@ -1,0 +1,43 @@
+{
+  "coord":{
+    "lon":40.4414,
+    "lat":56.4281
+  },
+  "weather":[
+    {
+      "id":804,
+      "main":"Clouds",
+      "description":"overcast clouds",
+      "icon":"04n"
+    }
+  ],
+  "base":"stations",
+  "main":{
+    "temp":274.24,
+    "feels_like":267.69,
+    "temp_min":274.24,
+    "temp_max":274.24,
+    "pressure":1011,
+    "humidity":97,
+    "sea_level":1011,
+    "grnd_level":996
+  },
+  "visibility":2199,
+  "wind":{
+    "speed":6.66,
+    "deg":154
+  },
+  "clouds":{
+    "all":100
+  },
+  "dt":1611675072,
+  "sys":{
+    "country":"RU",
+    "sunrise":1611638754,
+    "sunset":1611668123
+  },
+  "timezone":10800,
+  "id":485824,
+  "name":"Suzdal",
+  "cod":200
+}

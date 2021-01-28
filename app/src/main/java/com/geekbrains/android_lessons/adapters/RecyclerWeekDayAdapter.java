@@ -1,22 +1,37 @@
 package com.geekbrains.android_lessons.adapters;
 
+import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.geekbrains.android_lessons.Constants;
 import com.geekbrains.android_lessons.R;
-import com.geekbrains.android_lessons.WeekDay;
+import com.geekbrains.android_lessons.SharedPreferencesManager;
+import com.geekbrains.android_lessons.fragments.MainFragment;
+import com.geekbrains.android_lessons.model.AllList;
+import com.geekbrains.android_lessons.model.WeatherRequest;
 
 import java.util.ArrayList;
 
 
 public class RecyclerWeekDayAdapter extends RecyclerView.Adapter<RecyclerWeekDayAdapter.ViewHolder> {
-    private final ArrayList<WeekDay> days = new ArrayList<>();
+    private final ArrayList<AllList> days = new ArrayList<>();
+    private static final SharedPreferencesManager sPrefs= MainFragment.sPrefs;
+    private int shift=0;
+    private static WeatherRequest[] list;
+
+    public RecyclerWeekDayAdapter(WeatherRequest[] list) {
+        RecyclerWeekDayAdapter.list =list;
+    }
+
 
     @NonNull
     @Override
@@ -37,21 +52,15 @@ public class RecyclerWeekDayAdapter extends RecyclerView.Adapter<RecyclerWeekDay
         return days.size();
     }
 
-    public void addItems(ArrayList<WeekDay> arrayList) {
+    public void addItems(ArrayList<AllList> arrayList) {
         days.addAll(arrayList);
     }
 
-//    public ArrayList<WeekDay> getItems() {
-//        return days;
-//    }
-
-//    public void clearItems() {
-//        days.clear();
-//    }
 
     class ViewHolder extends RecyclerView.ViewHolder {
         CardView layout;
-        TextView date, weekDay, weatherIcon, degrees;
+        TextView date, weekDay,  degrees;
+        ImageView weatherIcon;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -63,11 +72,38 @@ public class RecyclerWeekDayAdapter extends RecyclerView.Adapter<RecyclerWeekDay
             degrees = itemView.findViewById(R.id.degreesWeekDay);
         }
 
-        public void bind(int position) {
-            WeekDay day = days.get(position);
 
+
+        @SuppressLint({"DefaultLocale", "SetTextI18n"})
+        public void bind(int position) {
+            AllList day = days.get(position);
             weekDay.setText(day.getDayOfWeek());
             date.setText(day.getDay());
+
+
+            if(shift<=list.length) {
+                switch (sPrefs.retrieveInt(Constants.tag_temp, Constants.POSTFIX_KELVIN)) {
+                    case 0:
+                        degrees.setText(String.format("%.1f", list[shift].getMain().getTemp()) + "K\u00B0");
+                        break;
+                    case 1:
+                        String parameter = String.valueOf(list[shift].getMain().getTemp());
+                        parameter = parameter.replaceAll(",", ".");
+                        double value = Double.parseDouble(parameter) - 273.15;
+                        degrees.setText(String.format("%.1f", value) + "С\u00B0");
+                        break;
+                }
+                String icon = list[shift].getWeather()[0].getIcon();
+                new MainFragment.DownloadImageTask(weatherIcon).execute("http://openweathermap.org/img/wn/" + icon + "@4x.png");
+                int t = sPrefs.retrieveInt(Constants.tag_theme, Constants.THEME_LIGHT);
+                if (t==1) {
+                    weatherIcon.setColorFilter(Color.WHITE);
+                }
+
+                shift += 7;
+            }
         }
+
     }
+
 }

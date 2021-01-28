@@ -32,7 +32,7 @@ public class SettingsFragment extends Fragment {
     private RadioGroup temperatureGroup;
     private RadioGroup windGroup;
     private RadioGroup pressureGroup;
-    private RadioButton theme_Dark, theme_Light, temp_Celsi, temp_Faring, wind_MS, wind_KMH, press_MM, press_GPA;
+    private RadioButton theme_Dark, theme_Light, temp_Celsi, temp_kelvin, wind_MS, wind_KMH, press_MM, press_GPA;
 
     public SharedPreferencesManager sPrefs = MainFragment.sPrefs;
 
@@ -87,21 +87,21 @@ public class SettingsFragment extends Fragment {
     public void setUpRadioButton() {
 
         radioButtonsCheckEnter(Constants.tag_theme, Constants.THEME_LIGHT, theme_Light, theme_Dark);
-        radioButtonsCheckEnter(Constants.tag_temp, Constants.POSTFIX_CELS, temp_Celsi, temp_Faring);
-        radioButtonsCheckEnter(Constants.tag_wind, Constants.WINDFORCE_MS, wind_MS, wind_KMH);
-        radioButtonsCheckEnter(Constants.tag_pressure, Constants.PRESSURE_MM, press_MM, press_GPA);
+        radioButtonsCheckEnter(Constants.tag_temp, Constants.POSTFIX_KELVIN, temp_kelvin, temp_Celsi);
+        radioButtonsCheckEnter(Constants.tag_wind, Constants.WINDFORCE_KMH, wind_KMH, wind_MS);
+        radioButtonsCheckEnter(Constants.tag_pressure, Constants.PRESSURE_GPA, press_GPA, press_MM);
     }
 
     public void initListeners() {
 
         //degrees postfix listener
-        temperatureGroup.setOnCheckedChangeListener((RadioGroup radioGroup, int checkedId) -> checkingRadiobutton(temp_Celsi, temp_Faring, Constants.tag_temp, Constants.POSTFIX_CELS, Constants.POSTFIX_FARING));
+        temperatureGroup.setOnCheckedChangeListener((RadioGroup radioGroup, int checkedId) -> checkingRadiobutton(temp_kelvin, temp_Celsi, Constants.tag_temp, Constants.POSTFIX_KELVIN, Constants.POSTFIX_CELS));
 
         //wind force listener
-        windGroup.setOnCheckedChangeListener((RadioGroup radioGroup, int checkedId) -> checkingRadiobutton(wind_MS, wind_KMH, Constants.tag_wind, Constants.WINDFORCE_MS, Constants.WINDFORCE_KMH));
+        windGroup.setOnCheckedChangeListener((RadioGroup radioGroup, int checkedId) -> checkingRadiobutton(wind_KMH, wind_MS, Constants.tag_wind, Constants.WINDFORCE_KMH, Constants.WINDFORCE_MS));
 
         //pressure listener
-        pressureGroup.setOnCheckedChangeListener((RadioGroup radioGroup, int checkedId) -> checkingRadiobutton(press_MM, press_GPA, Constants.tag_pressure, Constants.PRESSURE_MM, Constants.PRESSURE_GPA));
+        pressureGroup.setOnCheckedChangeListener((RadioGroup radioGroup, int checkedId) -> checkingRadiobutton(press_GPA, press_MM, Constants.tag_pressure, Constants.PRESSURE_GPA, Constants.PRESSURE_MM));
     }
 
     public void checkingRadiobutton(RadioButton radioButton1, RadioButton radioButton2, String tag, int... tags) {
@@ -131,7 +131,7 @@ public class SettingsFragment extends Fragment {
         theme_Light = v.findViewById(R.id.radiobuttonTheme2);
 
         temp_Celsi = v.findViewById(R.id.radiobuttonTemp1);
-        temp_Faring = v.findViewById(R.id.radiobuttonTemp2);
+        temp_kelvin = v.findViewById(R.id.radiobuttonTemp2);
 
         wind_MS = v.findViewById(R.id.radiobuttonWind1);
         wind_KMH = v.findViewById(R.id.radiobuttonWind2);

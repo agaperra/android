@@ -1,34 +1,38 @@
-package com.geekbrains.android_lessons;
+package com.geekbrains.android_lessons.model;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
+
+import com.geekbrains.android_lessons.Constants;
+import com.geekbrains.android_lessons.R;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Locale;
 
-public class WeekDay implements Serializable {
+public class AllList implements Serializable {
 
     private String dayOfWeek;
-    private final SimpleDateFormat dateFormat=Constants.dateFormat;
+    private final SimpleDateFormat dateFormat= Constants.dateFormat;
     private static final SimpleDateFormat weekDayFormat=Constants.weekDayFormat;
     private String date;
+    private WeatherRequest[] list;
+
+    public void setList(WeatherRequest[] list){this.list=list;}
+    public WeatherRequest[] getList(){return list;}
 
     private static ArrayList<String> days;
 
-    public static ArrayList<WeekDay> getDays(int value, Activity parent) {
+    public static ArrayList<AllList> getDays(int value, Activity parent) {
 
-        //Locale.setDefault(RUSSIA);
-        ArrayList<WeekDay> arrayList = new ArrayList<>();
+        ArrayList<AllList> arrayList = new ArrayList<>();
         days = new ArrayList<>(Arrays.asList(parent.getResources().getStringArray(R.array.weekday)));
 
         int shift = 0;
 
         for (int i = 0; i < value; i++) {
-            WeekDay day = new WeekDay();
+            AllList day = new AllList();
             day.generateData(shift);
             arrayList.add(day);
             if (day.dayOfWeek.equals(days.get(days.size() - 1))) {
@@ -44,7 +48,6 @@ public class WeekDay implements Serializable {
 
     private void generateData(int shift) {
         Calendar now = Calendar.getInstance();
-
         if (shift>=0) {
             now.add(Calendar.DAY_OF_MONTH, shift);
         }
@@ -53,6 +56,8 @@ public class WeekDay implements Serializable {
         }
         date = dateFormat.format(now.getTime());
         dayOfWeek = getDayName(shift);
+
+
     }
 
     private String getDayName(int shift) {
@@ -66,6 +71,8 @@ public class WeekDay implements Serializable {
         return dayOfWeek;
     }
 
-    public String  getDay(){return date;}
-}
+    public String  getDay(){
+        return date;
+    }
 
+}

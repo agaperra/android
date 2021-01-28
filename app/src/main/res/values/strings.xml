@@ -27,17 +27,17 @@
     <string name="mm_of_m_c">mm of m.c.</string>
     <string name="gPa">gPa</string>
     <string name="cels">С\u00B0</string>
-    <string name="faringate">F\u00B0</string>
+    <string name="kelvin">K\u00B0</string>
     <string name="search">Search</string>
     <string name="error_message">Error</string>
     <string name="moscow">Moscow</string>
-    <string name="spb">St. Petersburg</string>
+    <string name="spb">Saint Petersburg</string>
     <string name="kazan">Kazan</string>
     <string name="voronezh">Voronezh</string>
     <string name="sochi">Sochi</string>
     <string name="update_time">Update Time</string>
     <string name="weather_icon">Icon</string>
-    <string name="error">Error. Choose City.</string>
+    <string name="error">Error</string>
     <string name="option_fragment_name">Settings</string>
     <string name="error_one">Sorry, saving the search query is currently unavailable.</string>
     <string name="time">Time</string>
@@ -50,16 +50,19 @@
     <string name="yes">Yes</string>
     <string name="exit_settings">Finish setting up the parameters?</string>
     <string name="open_url">Open URL in browser?</string>
+    <string name="feels">Feels like</string>
+    <string name="update">Update</string>
+
 
     <string-array name="topCities">
         <item>Moscow</item>
-        <item>St. Petersburg</item>
+        <item>Saint Petersburg</item>
         <item>Kazan</item>
         <item>Sochi</item>
         <item>Voronezh</item>
-        <item>Novgorod</item>
+        <item>Velikii Novgorod</item>
         <item>Suzdal</item>
-        <item>Ekatirinburg</item>
+        <item>Ekaterinburg</item>
         <item>Vologda</item>
         <item>Cyctyvkar</item>
         <item>Samara</item>
@@ -101,6 +104,8 @@
         <item>22:00</item>
         <item>23:00</item>
     </string-array>
+
+    <string name="fall">Fail connection</string>
 
 
 </resources>
