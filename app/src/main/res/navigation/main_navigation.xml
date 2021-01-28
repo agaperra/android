@@ -51,6 +51,23 @@
             app:enterAnim="@animator/enter_from_left"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popUpTo="@id/mainFragment" />
+
+        <action
+            android:id="@+id/navigateToDevelopersFragment"
+            app:destination="@id/developersFragment"
+            app:enterAnim="@animator/enter_from_right"
+            app:exitAnim="@anim/fragment_fade_exit" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/developersFragment"
+        android:name="com.geekbrains.android_lessons.fragments.DevelopersFragment"
+        android:label="fragment_developers"
+        tools:layout="@layout/developers_fragment" >
+        <action
+            android:id="@+id/navigateToSettingsFragmentFromDevelopersFragment"
+            app:destination="@id/settingsFragment"
+            app:popUpTo="@id/settingsFragment" />
     </fragment>
 
 </navigation>

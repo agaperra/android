@@ -29,8 +29,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.geekbrains.android_lessons.Constants;
+import com.geekbrains.android_lessons.Hours;
 import com.geekbrains.android_lessons.R;
 import com.geekbrains.android_lessons.SharedPreferencesManager;
+import com.geekbrains.android_lessons.adapters.RecyclerHorizontalHoursAdapter;
 import com.geekbrains.android_lessons.adapters.RecyclerWeekDayAdapter;
 import com.geekbrains.android_lessons.getWeather;
 import com.geekbrains.android_lessons.interfaces.DateClick;
@@ -58,6 +60,7 @@ public class MainFragment extends Fragment implements DateClick {
     private final String url = Constants.url;
     private String message = "";
     private RecyclerView recyclerViewDays;
+    private RecyclerView recyclerViewHours;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     public static WeatherRequest list;
 
@@ -98,6 +101,7 @@ public class MainFragment extends Fragment implements DateClick {
         typeWeather = v.findViewById(R.id.weatherTypeView);
         timeView = v.findViewById(R.id.updateTime);
         recyclerViewDays = v.findViewById(R.id.recyclerWeekday);
+        recyclerViewHours = v.findViewById(R.id.hoursRecycler);
         feelsLike=v.findViewById(R.id.feelsLike);
         background=v.findViewById(R.id.backgroundView);
     }
@@ -136,8 +140,8 @@ public class MainFragment extends Fragment implements DateClick {
         typeWeather.setText(weatherStatus);
         sPrefs.storeString(Constants.PREF_TYPE, weatherStatus);
 
-        degreesCountView.setText(String.format("%.0f", list.getMain().getTemp()));
-        sPrefs.storeString(Constants.PREF_DEGREES, String.format("%.0f", list.getMain().getTemp()));
+        degreesCountView.setText(String.format("%.1f", list.getMain().getTemp()));
+        sPrefs.storeString(Constants.PREF_DEGREES, String.format("%.1f", list.getMain().getTemp()));
 
         pressureParameterView.setText(String.format("%d", list.getMain().getPressure()));
         sPrefs.storeString(Constants.PREF_PRESS, String.format("%d", list.getMain().getPressure()));
@@ -174,8 +178,8 @@ public class MainFragment extends Fragment implements DateClick {
         //Picasso.with(requireView().getContext()).load(iconUrl).into(weatherIcon);
         sPrefs.storeString(Constants.PREF_ICON, icon);
 
-        feelsLike.setText(String.format("%.0f", list.getMain().getFeels_like()));
-        sPrefs.storeString(Constants.PREF_FEEL, String.format("%.0f", list.getMain().getFeels_like()));
+        feelsLike.setText(String.format("%.1f", list.getMain().getFeels_like()));
+        sPrefs.storeString(Constants.PREF_FEEL, String.format("%.1f", list.getMain().getFeels_like()));
 
         updateAllParameters();
     }
@@ -321,7 +325,19 @@ public class MainFragment extends Fragment implements DateClick {
 
         recyclerViewDays.setLayoutManager(layoutManager2);
         recyclerViewDays.setAdapter(adapterWeek);
+
+        LinearLayoutManager layoutManager1 = new LinearLayoutManager(
+                requireContext(), LinearLayoutManager.HORIZONTAL, false
+        );
+
+
+        RecyclerHorizontalHoursAdapter adapter = new RecyclerHorizontalHoursAdapter(list);
+        adapter.addItems(Hours.getHours(9,requireActivity()));
+
+        recyclerViewHours.setLayoutManager(layoutManager1);
+        recyclerViewHours.setAdapter(adapter);
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
@@ -336,7 +352,7 @@ public class MainFragment extends Fragment implements DateClick {
     }
 
     @SuppressLint({"SetTextI18n", "DefaultLocale"})
-    public static void checkSharedPreferences(String keyContainer, String tag, String parameter, TextView textView, int defaultConst, double multi, double shift, String... tags) {
+    public static void checkSharedPreferences(String format,String keyContainer, String tag, String parameter, TextView textView, int defaultConst, double multi, double shift, String... tags) {
         sPrefs.getEditor().putString(keyContainer, parameter).apply();
         switch (sPrefs.retrieveInt(tag, defaultConst)) {
             case 0:
@@ -345,7 +361,7 @@ public class MainFragment extends Fragment implements DateClick {
             case 1:
                 parameter = parameter.replaceAll(",", ".");
                 double value = Double.parseDouble(parameter) * multi + shift;
-                textView.setText(String.format("%.0f", value) + " " + tags[1]);
+                textView.setText(String.format(format, value) + " " + tags[1]);
                 break;
 
         }
@@ -357,7 +373,7 @@ public class MainFragment extends Fragment implements DateClick {
         sPrefs.getEditor().putString(Constants.tag_cityName, parameters[0]).apply();
         cityNameView.setText(parameters[0]);
 
-        checkSharedPreferences(Constants.PREF_DEGREES,
+        checkSharedPreferences("%.0f",Constants.PREF_DEGREES,
                 Constants.tag_temp,
                 parameters[1],
                 degreesCountView,
@@ -367,7 +383,7 @@ public class MainFragment extends Fragment implements DateClick {
                 getString(R.string.kelvin),
                 getString(R.string.cels));
 
-        checkSharedPreferences(Constants.PREF_WIND,
+        checkSharedPreferences("%.0f",Constants.PREF_WIND,
                 Constants.tag_wind,
                 parameters[2],
                 windForceParameterView,
@@ -380,7 +396,7 @@ public class MainFragment extends Fragment implements DateClick {
         humidityParameterView.setText(parameters[3] + " %");
 
 
-        checkSharedPreferences(Constants.PREF_PRESS,
+        checkSharedPreferences("%.0f",Constants.PREF_PRESS,
                 Constants.tag_pressure,
                 parameters[4],
                 pressureParameterView,
@@ -395,7 +411,7 @@ public class MainFragment extends Fragment implements DateClick {
         sPrefs.getEditor().putString(Constants.tag_time, parameters[6]).apply();
         timeView.setText(parameters[6]);
 
-        checkSharedPreferences(Constants.PREF_FEEL, Constants.tag_temp, parameters[7], feelsLike, Constants.POSTFIX_KELVIN, 1, -273.15, getString(R.string.kelvin), getString(R.string.cels));
+        checkSharedPreferences("%.0f",Constants.PREF_FEEL, Constants.tag_temp, parameters[7], feelsLike, Constants.POSTFIX_KELVIN, 1, -273.15, getString(R.string.kelvin), getString(R.string.cels));
 
 
         int t = sPrefs.retrieveInt(Constants.tag_theme, Constants.THEME_LIGHT);
@@ -437,6 +453,12 @@ public class MainFragment extends Fragment implements DateClick {
         MenuItem menuItem = menu.add(R.string.option_fragment_name);
         menuItem.setIcon(R.drawable.ic_settings);
         menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+
+        super.onCreateOptionsMenu(menu, inflater);
+        menuItem.setOnMenuItemClickListener(item -> {
+            Navigation.findNavController(requireView()).navigate(R.id.navigateToSettingsFragment);
+            return true;
+        });
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -444,9 +466,6 @@ public class MainFragment extends Fragment implements DateClick {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case 0:
-                Navigation.findNavController(requireView()).navigate(R.id.navigateToSettingsFragment);
-                break;
             case android.R.id.home:
                 Navigation.findNavController(requireView()).navigate(R.id.navigateToSearchFragment);
                 break;
