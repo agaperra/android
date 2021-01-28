@@ -199,90 +199,107 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
+                        <ImageView
+                            android:id="@+id/imageViewWind"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/wind"
+                            app:layout_constraintBottom_toBottomOf="@+id/windForceView"
+                            app:layout_constraintStart_toStartOf="@+id/imageViewHumid"
+                            app:layout_constraintTop_toTopOf="@+id/windForceView" />
+
+                        <ImageView
+                            android:id="@+id/imageViewHumid"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/humidity"
+                            android:layout_marginStart="@dimen/margin10dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/humidityView"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/humidityView" />
+
+                        <ImageView
+                            android:id="@+id/imageViewPress"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/pressure"
+                            app:layout_constraintBottom_toBottomOf="@+id/pressureView"
+                            app:layout_constraintStart_toStartOf="@+id/imageViewWind"
+                            app:layout_constraintTop_toTopOf="@+id/pressureView" />
 
                         <TextView
                             android:id="@+id/humidityView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/humidity"
-                            app:layout_constraintEnd_toStartOf="@+id/windForceView"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/windForceView" />
+                            app:layout_constraintTop_toBottomOf="@+id/weatherTypeView"
+                            app:layout_constraintStart_toEndOf="@+id/imageViewHumid"
+                            android:layout_margin="@dimen/margin10dp"/>
 
                         <TextView
                             android:id="@+id/humidityParameterView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="@+id/humidityView"
-                            app:layout_constraintStart_toStartOf="@+id/humidityView"
-                            app:layout_constraintTop_toBottomOf="@+id/humidityView"
-                            tools:text="@string/humidity" />
+                            app:layout_constraintBottom_toBottomOf="@+id/humidityView"
+                            app:layout_constraintStart_toEndOf="@+id/humidityView"
+                            app:layout_constraintTop_toTopOf="@+id/humidityView"
+                            tools:text="@string/humidity"
+                            android:layout_marginStart="@dimen/margin10dp"/>
 
                         <TextView
                             android:id="@+id/windForceView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/margin10dp"
                             android:text="@string/wind"
-                            app:layout_constraintBottom_toBottomOf="@+id/humidityView"
-                            app:layout_constraintEnd_toEndOf="@+id/weatherTypeView"
-                            app:layout_constraintStart_toStartOf="@+id/weatherTypeView"
-                            app:layout_constraintTop_toBottomOf="@+id/weatherTypeView" />
+                            android:layout_margin="@dimen/margin10dp"
+                            app:layout_constraintStart_toEndOf="@+id/imageViewWind"
+                            app:layout_constraintTop_toBottomOf="@+id/humidityView" />
 
                         <TextView
                             android:id="@+id/windForceParameterView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/margin10dp"
                             android:text="@string/wind"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="@+id/windForceView"
-                            app:layout_constraintStart_toStartOf="@+id/windForceView"
-                            app:layout_constraintTop_toBottomOf="@+id/windForceView" />
+                            app:layout_constraintBottom_toBottomOf="@+id/windForceView"
+                            app:layout_constraintStart_toStartOf="@+id/humidityParameterView"
+                            app:layout_constraintTop_toTopOf="@+id/windForceView" />
 
 
                         <TextView
                             android:id="@+id/pressureView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/margin10dp"
                             android:text="@string/pressure"
-                            app:layout_constraintBottom_toBottomOf="@+id/windForceView"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/windForceView"
-                            app:layout_constraintTop_toTopOf="@+id/windForceView" />
+                            app:layout_constraintStart_toEndOf="@+id/imageViewPress"
+                            app:layout_constraintTop_toBottomOf="@+id/windForceView" />
 
                         <TextView
-                            android:gravity="center"
                             android:id="@+id/pressureParameterView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="@+id/pressureView"
-                            app:layout_constraintStart_toStartOf="@+id/pressureView"
-                            app:layout_constraintTop_toBottomOf="@+id/pressureView"
+                            android:gravity="left"
+                            app:layout_constraintBottom_toBottomOf="@+id/pressureView"
+                            app:layout_constraintStart_toStartOf="@+id/windForceParameterView"
+                            app:layout_constraintTop_toTopOf="@+id/pressureView"
                             tools:text="@string/pressure" />
 
-                        <!--                <LinearLayout-->
-                        <!--                    android:layout_width="0dp"-->
-                        <!--                    android:layout_height="wrap_content"-->
-                        <!--                    android:layout_marginStart="15dp"-->
-                        <!--                    app:layout_constraintBottom_toBottomOf="@id/pressureParameterView"-->
-                        <!--                    app:layout_constraintEnd_toEndOf="parent"-->
-                        <!--                    app:layout_constraintStart_toEndOf="@+id/pressureParameterView"-->
-                        <!--                    app:layout_constraintTop_toTopOf="@id/humidityParameterView">-->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/margin10dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/pressureParameterView"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/pressureParameterView"
+                            app:layout_constraintTop_toTopOf="@+id/humidityParameterView">
 
-                        <!--                    <androidx.recyclerview.widget.RecyclerView-->
-                        <!--                        android:id="@+id/hoursRecycler"-->
-                        <!--                        android:layout_width="wrap_content"-->
-                        <!--                        android:layout_height="wrap_content"-->
-                        <!--                        app:layout_constraintBottom_toBottomOf="@+id/pressureParameterView"-->
-                        <!--                        app:layout_constraintEnd_toEndOf="parent"-->
-                        <!--                        app:layout_constraintStart_toEndOf="@+id/humidityParameterView"-->
-                        <!--                        app:layout_constraintTop_toTopOf="@+id/humidityParameterView" />-->
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/hoursRecycler"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
 
 
-                        <!--                </LinearLayout>-->
+                        </LinearLayout>
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </LinearLayout>

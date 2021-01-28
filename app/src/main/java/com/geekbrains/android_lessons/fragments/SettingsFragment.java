@@ -116,6 +116,12 @@ public class SettingsFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.back, menu);
+
+        MenuItem authorsItem = menu.add(R.string.developers);
+        authorsItem.setOnMenuItemClickListener(item -> {
+            Navigation.findNavController(requireView()).navigate(R.id.navigateToDevelopersFragment);
+            return true;
+        });
         super.onCreateOptionsMenu(menu, inflater);
 
     }
