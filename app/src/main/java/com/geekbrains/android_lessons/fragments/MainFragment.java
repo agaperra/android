@@ -25,7 +25,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.geekbrains.android_lessons.Constants;
-import com.geekbrains.android_lessons.Hours;
 import com.geekbrains.android_lessons.R;
 import com.geekbrains.android_lessons.SharedPreferencesManager;
 import com.geekbrains.android_lessons.adapters.RecyclerHorizontalHoursAdapter;
@@ -335,7 +334,7 @@ public class MainFragment extends Fragment implements DateClick {
 
 
         RecyclerHorizontalHoursAdapter adapter = new RecyclerHorizontalHoursAdapter(list);
-        adapter.addItems(Hours.getHours(9, requireActivity()));
+        adapter.addItems(AllList.getHours(9));
 
         recyclerViewHours.setLayoutManager(layoutManager1);
         recyclerViewHours.setAdapter(adapter);

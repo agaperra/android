@@ -13,10 +13,10 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.geekbrains.android_lessons.Constants;
-import com.geekbrains.android_lessons.Hours;
 import com.geekbrains.android_lessons.R;
 import com.geekbrains.android_lessons.SharedPreferencesManager;
 import com.geekbrains.android_lessons.fragments.MainFragment;
+import com.geekbrains.android_lessons.model.AllList;
 import com.geekbrains.android_lessons.model.WeatherRequest;
 
 import java.text.DateFormat;
@@ -25,10 +25,10 @@ import java.util.Date;
 
 public class RecyclerHorizontalHoursAdapter extends RecyclerView.Adapter<RecyclerHorizontalHoursAdapter.ViewHolder> {
 
-    private final ArrayList<Hours> hours = new ArrayList<>();
+    private final ArrayList<AllList> hours = new ArrayList<>();
     private static WeatherRequest[] list;
     private static final SharedPreferencesManager sPrefs= MainFragment.sPrefs;
-    private final int shift=0;
+    //private final int shift=0;
 
     public RecyclerHorizontalHoursAdapter(WeatherRequest[] list) {
         RecyclerHorizontalHoursAdapter.list =list;
@@ -53,7 +53,7 @@ public class RecyclerHorizontalHoursAdapter extends RecyclerView.Adapter<Recycle
         return hours.size();
     }
 
-    public void addItems(ArrayList<Hours> arrayList) {
+    public void addItems(ArrayList<AllList> arrayList) {
         hours.addAll(arrayList);
     }
 
@@ -83,6 +83,7 @@ public class RecyclerHorizontalHoursAdapter extends RecyclerView.Adapter<Recycle
                 else updatedOn+=":00";
 
                 time.setText(String.format("%s", updatedOn));
+                //time.setText(hour.getHourInADay());
                 String t=String.format("%.0f", list[position].getMain().getTemp());
                 double k=list[position].getMain().getTemp();
                 if (t.contains("-")){

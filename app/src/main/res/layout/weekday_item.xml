@@ -30,7 +30,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin10dp"
-                android:text="@string/date" />
+                android:text="@string/date"
+                android:textStyle=""/>
 
             <TextView
                 android:id="@+id/weatherDayView"
@@ -58,9 +59,6 @@
             android:id="@+id/weatherWind"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
             android:src="@drawable/wind"
             android:layout_marginTop="5dp"
             card_view:layout_constraintEnd_toEndOf="@+id/weatherPress"
@@ -81,9 +79,6 @@
             android:id="@+id/weatherPress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
             android:src="@drawable/pressure"
             card_view:layout_constraintBottom_toBottomOf="@+id/weatherIconWeekDay"
 
@@ -105,9 +100,6 @@
             android:id="@+id/weatherhumid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
             android:layout_marginTop="4dp"
             android:src="@drawable/humidity"
             android:layout_marginBottom="5dp"

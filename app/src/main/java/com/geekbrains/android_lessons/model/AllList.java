@@ -18,11 +18,16 @@ public class AllList implements Serializable {
     private static final SimpleDateFormat weekDayFormat=Constants.weekDayFormat;
     private String date;
     private WeatherRequest[] list;
+//    private String hourInADay;
+//    @SuppressLint({"SimpleDateFormat", "ConstantLocale"})
+//    private static final SimpleDateFormat hoursFormat=Constants.hoursFormat;
+//    private static ArrayList<String> hours;
+    private static ArrayList<String> days;
 
     public void setList(WeatherRequest[] list){this.list=list;}
     public WeatherRequest[] getList(){return list;}
 
-    private static ArrayList<String> days;
+
 
     public static ArrayList<AllList> getDays(int value, Activity parent) {
 
@@ -42,6 +47,15 @@ public class AllList implements Serializable {
                 continue;
             }
             shift++;
+        }
+        return arrayList;
+    }
+
+    public static ArrayList<AllList> getHours(int value) {
+        ArrayList<AllList> arrayList = new ArrayList<>();
+        for (int i = 0; i < value; i++) {
+            AllList hour = new AllList();
+            arrayList.add(hour);
         }
         return arrayList;
     }

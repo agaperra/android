@@ -19,7 +19,15 @@ import com.geekbrains.android_lessons.fragments.MainFragment;
 import com.geekbrains.android_lessons.model.AllList;
 import com.geekbrains.android_lessons.model.WeatherRequest;
 
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.LineNumberReader;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicReference;
+
+import javax.net.ssl.HttpsURLConnection;
 
 
 public class RecyclerWeekDayAdapter extends RecyclerView.Adapter<RecyclerWeekDayAdapter.ViewHolder> {
@@ -60,7 +68,7 @@ public class RecyclerWeekDayAdapter extends RecyclerView.Adapter<RecyclerWeekDay
     class ViewHolder extends RecyclerView.ViewHolder {
         CardView layout;
         TextView date, weekDay, degrees, humid, press, windd;
-        ImageView weatherIcon,windI,humidI,pressI;
+        ImageView weatherIcon, windI, humidI, pressI;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -69,9 +77,9 @@ public class RecyclerWeekDayAdapter extends RecyclerView.Adapter<RecyclerWeekDay
             date = itemView.findViewById(R.id.dateTextView);
             weekDay = itemView.findViewById(R.id.weatherDayView);
             weatherIcon = itemView.findViewById(R.id.weatherIconWeekDay);
-            windI=itemView.findViewById(R.id.weatherWind);
-            pressI=itemView.findViewById(R.id.weatherPress);
-            humidI=itemView.findViewById(R.id.weatherhumid);
+            windI = itemView.findViewById(R.id.weatherWind);
+            pressI = itemView.findViewById(R.id.weatherPress);
+            humidI = itemView.findViewById(R.id.weatherhumid);
             degrees = itemView.findViewById(R.id.degreesWeekDay);
             windd = itemView.findViewById(R.id.weatherItemWindText);
             humid = itemView.findViewById(R.id.weatherItemHumidText);
@@ -79,13 +87,41 @@ public class RecyclerWeekDayAdapter extends RecyclerView.Adapter<RecyclerWeekDay
 
         }
 
+        public String trying() {
+            AtomicReference<String> string= new AtomicReference<>("");
+            try {
+                URL url = new URL("https://isdayoff.ru/20200130");
+                new Thread(() -> {
+                    HttpsURLConnection urlConnection;
+                    try {
+                        urlConnection = (HttpsURLConnection) url.openConnection();
+                        urlConnection.setRequestMethod("GET");
+                        urlConnection.setReadTimeout(1000);
+                        LineNumberReader reader = new LineNumberReader(new InputStreamReader(url.openStream()));
+                        string.set(reader.readLine());
+                        while (string.get() != null) {
+                            string.set(reader.readLine());
+                        }
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }).start();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            return string.get();
+        }
 
         @SuppressLint({"DefaultLocale", "SetTextI18n"})
         public void bind(int position) {
             AllList day = days.get(position);
-            weekDay.setText(day.getDayOfWeek());
+            if (trying().equals("1") || day.getDayOfWeek().contains("Суббота") || day.getDayOfWeek().contains("Воскресенье")) {
+                date.setTextColor(Color.parseColor("#C33D3D"));
+                weekDay.setTextColor(Color.parseColor("#C33D3D"));
+            }
             date.setText(day.getDay());
-
+            weekDay.setText(day.getDayOfWeek());
 
             if (shift <= list.length) {
                 switch (sPrefs.retrieveInt(Constants.tag_temp, Constants.POSTFIX_KELVIN)) {
@@ -106,7 +142,7 @@ public class RecyclerWeekDayAdapter extends RecyclerView.Adapter<RecyclerWeekDay
                     case 1:
                         String parameter = String.valueOf(list[shift].getWind().getSpeed());
                         parameter = parameter.replaceAll(",", ".");
-                        double value = Double.parseDouble(parameter) *0.27;
+                        double value = Double.parseDouble(parameter) * 0.27;
                         windd.setText(String.format("%.0f", value));
                         break;
 
@@ -118,13 +154,13 @@ public class RecyclerWeekDayAdapter extends RecyclerView.Adapter<RecyclerWeekDay
                     case 1:
                         String parameter = String.valueOf(list[shift].getMain().getPressure());
                         parameter = parameter.replaceAll(",", ".");
-                        double value = Double.parseDouble(parameter) *0.75;
+                        double value = Double.parseDouble(parameter) * 0.75;
                         press.setText(String.format("%.0f", value));
                         break;
 
                 }
                 humid.setText(String.format("%d", list[shift].getMain().getHumidity()));
-                MainFragment.setIcons(list[shift],weatherIcon);
+                MainFragment.setIcons(list[shift], weatherIcon);
                 int t = sPrefs.retrieveInt(Constants.tag_theme, Constants.THEME_LIGHT);
                 if (t == 1) {
                     windI.setColorFilter(Color.WHITE);
@@ -134,8 +170,9 @@ public class RecyclerWeekDayAdapter extends RecyclerView.Adapter<RecyclerWeekDay
 
                 shift += 7;
             }
+
+
         }
 
     }
-
 }
