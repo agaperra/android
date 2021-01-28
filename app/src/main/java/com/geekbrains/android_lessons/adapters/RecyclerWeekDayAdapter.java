@@ -123,11 +123,8 @@ public class RecyclerWeekDayAdapter extends RecyclerView.Adapter<RecyclerWeekDay
                         break;
 
                 }
-                System.out.println(String.format("%d", list[shift].getMain().getHumidity()));
                 humid.setText(String.format("%d", list[shift].getMain().getHumidity()));
-                //String icon = list[shift].getWeather()[0].getIcon();
                 MainFragment.setIcons(list[shift],weatherIcon);
-//                new MainFragment.DownloadImageTask(weatherIcon).execute("http://openweathermap.org/img/wn/" + icon + "@4x.png");
                 int t = sPrefs.retrieveInt(Constants.tag_theme, Constants.THEME_LIGHT);
                 if (t == 1) {
                     windI.setColorFilter(Color.WHITE);

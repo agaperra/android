@@ -2,13 +2,9 @@ package com.geekbrains.android_lessons.fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -40,9 +36,11 @@ import com.geekbrains.android_lessons.model.AllList;
 import com.geekbrains.android_lessons.model.WeatherRequest;
 import com.google.android.material.snackbar.Snackbar;
 
-import java.io.InputStream;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Objects;
 
 public class MainFragment extends Fragment implements DateClick {
@@ -65,32 +63,6 @@ public class MainFragment extends Fragment implements DateClick {
     public static WeatherRequest list;
 
 
-    public static class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        @SuppressLint("StaticFieldLeak")
-        ImageView bmImage;
-
-        public DownloadImageTask(ImageView bmImage) {
-            this.bmImage = bmImage;
-        }
-
-        protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-            Bitmap mIcon11 = null;
-            try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Log.e("Error_", e.getMessage());
-                e.printStackTrace();
-            }
-            return mIcon11;
-        }
-
-        protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
-        }
-    }
-
     private void findViews(View v) {
 
         degreesCountView = v.findViewById(R.id.degreesCountView);
@@ -102,23 +74,21 @@ public class MainFragment extends Fragment implements DateClick {
         timeView = v.findViewById(R.id.updateTime);
         recyclerViewDays = v.findViewById(R.id.recyclerWeekday);
         recyclerViewHours = v.findViewById(R.id.hoursRecycler);
-        feelsLike=v.findViewById(R.id.feelsLike);
-        background=v.findViewById(R.id.backgroundView);
+        feelsLike = v.findViewById(R.id.feelsLike);
+        background = v.findViewById(R.id.backgroundView);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View root=inflater.inflate(R.layout.fragment_main, container, false);
+        View root = inflater.inflate(R.layout.fragment_main, container, false);
         return root;
     }
 
-    public void error(){
+    public void error() {
         Snackbar snackbar = Snackbar.make(requireView(), getString(R.string.error), Snackbar.LENGTH_LONG).
                 setAction(getString(R.string.update), ignored -> {
-                    getWeather.getWeather( this);
+                    getWeather.getWeather(this);
                     getWeather.getWeatherForecast(this);
-//                    setData(Constants.urlWeatherStatic +
-//                            URLEncoder.encode(getCityName())+Constants.final_url);
                 });
         @SuppressLint("InflateParams")
         View customSnackView = getLayoutInflater().inflate(R.layout.rounded, null);
@@ -157,9 +127,9 @@ public class MainFragment extends Fragment implements DateClick {
         timeView.setText(String.format("%s", updatedOn));
         sPrefs.storeString(Constants.tag_time, String.format("%s", updatedOn));
 
-        String  icon = list.getWeather()[0].getIcon();
+        String icon = list.getWeather()[0].getIcon();
         setBackgroundMode(icon);
-        setIcons(list,requireView().findViewById(R.id.weather_icon));
+        setIcons(list, requireView().findViewById(R.id.weather_icon));
 
         feelsLike.setText(String.format("%.1f", list.getMain().getFeels_like()));
         sPrefs.storeString(Constants.PREF_FEEL, String.format("%.1f", list.getMain().getFeels_like()));
@@ -167,38 +137,54 @@ public class MainFragment extends Fragment implements DateClick {
         updateAllParameters();
     }
 
-    public static void setIcons(WeatherRequest list, View v){
-        int t=list.getWeather()[0].getId();
-        if(t>=200&&t<=232){
+    public static void setIcons(WeatherRequest list, View v) {
+        int t = list.getWeather()[0].getId();
+        boolean day = true;
+        Calendar now = Calendar.getInstance();
+        now.add(Calendar.HOUR, 0);
+        int time = Integer.parseInt(new SimpleDateFormat("HH", Locale.forLanguageTag(Locale.getDefault().getLanguage())).format(now.getTime()));
+        day= time > 6 && time < 18;
+
+        if (t >= 200 && t <= 232) {
             v.setBackgroundResource(R.drawable.thunderstorm);
         }
-        if(t>=300&&t<=321){
+        if (t >= 300 && t <= 321) {
             v.setBackgroundResource(R.drawable.rain);
         }
-        if(t>=500&&t<=504){
+        if (t >= 500 && t <= 504) {
+            if (day)
             v.setBackgroundResource(R.drawable.clouds_sun);
+            else v.setBackgroundResource(R.drawable.moon_cloud);
         }
-        if(t==511){
+        if (t == 511) {
             v.setBackgroundResource(R.drawable.snow);
         }
-        if(t>=520&&t<=531){
+        if (t >= 520 && t <= 531) {
             v.setBackgroundResource(R.drawable.rain);
         }
-        if(t>=600&&t<=622){
-           v.setBackgroundResource(R.drawable.snow);
+        if (t >= 600 && t <= 622) {
+            v.setBackgroundResource(R.drawable.snow);
         }
-        if(t>=701&&t<=781){
+        if (t >= 701 && t <= 781) {
+            if (day)
             v.setBackgroundResource(R.drawable.mist);
+            else v.setBackgroundResource(R.drawable.fog);
         }
-        if(t==800){
+        if (t == 800) {
+            if (day)
             v.setBackgroundResource(R.drawable.sun);
+            else v.setBackgroundResource(R.drawable.moon);
         }
-        switch (t){
+        switch (t) {
             case 801:
+                if (day)
                 v.setBackgroundResource(R.drawable.clouds_15);
+                else v.setBackgroundResource(R.drawable.moon_cloud_15);
                 break;
             case 802:
-                v.setBackgroundResource(R.drawable.clouds_30);
+                if (day)
+                    v.setBackgroundResource(R.drawable.clouds_30);
+                else v.setBackgroundResource(R.drawable.moon_cloud_30);
                 break;
             case 803:
             case 804:
@@ -207,17 +193,17 @@ public class MainFragment extends Fragment implements DateClick {
         }
     }
 
-    public void setBackgroundMode(String icon){
-        String tmp="01";
-        String mode="d";
-        if (icon.contains("d")){
-            mode="d";
-            tmp=icon.replaceAll("d","");
-        }else if (icon.contains("n")){
-            mode="n";
-            tmp=icon.replaceAll("n","");
+    public void setBackgroundMode(String icon) {
+        String tmp = "01";
+        String mode = "d";
+        if (icon.contains("d")) {
+            mode = "d";
+            tmp = icon.replaceAll("d", "");
+        } else if (icon.contains("n")) {
+            mode = "n";
+            tmp = icon.replaceAll("n", "");
         }
-        switch (tmp){
+        switch (tmp) {
             case "01":
                 check(mode, R.drawable.icon_01d, R.drawable.icon_01n);
                 break;
@@ -250,16 +236,15 @@ public class MainFragment extends Fragment implements DateClick {
 
     }
 
-    public void check(String mode,int... tags){
-        if (mode.equals("d")){
+    public void check(String mode, int... tags) {
+        if (mode.equals("d")) {
             background.setImageResource(tags[0]);
-        }
-        else if (mode.equals("n")){
+        } else if (mode.equals("n")) {
             background.setImageResource(tags[1]);
         }
     }
 
-    public void updateAllParameters(){
+    public void updateAllParameters() {
         updateValue(getCityName(),
                 getValue(Constants.PREF_DEGREES),
                 getValue(Constants.PREF_WIND),
@@ -278,7 +263,6 @@ public class MainFragment extends Fragment implements DateClick {
         setRetainInstance(true);
         sPrefs = new SharedPreferencesManager(requireContext());
         findViews(view);
-
         getWeather.getWeather(this);
         getWeather.getWeatherForecast(this);
         Intent intent = requireActivity().getIntent();
@@ -297,18 +281,15 @@ public class MainFragment extends Fragment implements DateClick {
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setHomeAsUpIndicator(R.drawable.ic_menu);
 
         mSwipeRefreshLayout = view.findViewById(R.id.refresh);
-
         mSwipeRefreshLayout.setOnRefreshListener(() -> {
-
             mSwipeRefreshLayout.setRefreshing(true);
-            // ждем 3 секунды и прячем прогресс
+            getWeather.getWeather(this);
+            getWeather.getWeatherForecast(this);
+            updateAllParameters();
             mSwipeRefreshLayout.postOnAnimationDelayed(() -> {
-                getWeather.getWeather(this);
-                getWeather.getWeatherForecast(this);
-                updateAllParameters();
                 mSwipeRefreshLayout.setRefreshing(false);
-
-            }, 1000);});
+            }, 2000);
+        });
 
         int t = sPrefs.retrieveInt(Constants.tag_theme, Constants.THEME_LIGHT);
         switch (t) {
@@ -354,7 +335,7 @@ public class MainFragment extends Fragment implements DateClick {
 
 
         RecyclerHorizontalHoursAdapter adapter = new RecyclerHorizontalHoursAdapter(list);
-        adapter.addItems(Hours.getHours(9,requireActivity()));
+        adapter.addItems(Hours.getHours(9, requireActivity()));
 
         recyclerViewHours.setLayoutManager(layoutManager1);
         recyclerViewHours.setAdapter(adapter);
@@ -374,7 +355,7 @@ public class MainFragment extends Fragment implements DateClick {
     }
 
     @SuppressLint({"SetTextI18n", "DefaultLocale"})
-    public static void checkSharedPreferences(String format,String keyContainer, String tag, String parameter, TextView textView, int defaultConst, double multi, double shift, String... tags) {
+    public static void checkSharedPreferences(String format, String keyContainer, String tag, String parameter, TextView textView, int defaultConst, double multi, double shift, String... tags) {
         sPrefs.getEditor().putString(keyContainer, parameter).apply();
         switch (sPrefs.retrieveInt(tag, defaultConst)) {
             case 0:
@@ -394,46 +375,16 @@ public class MainFragment extends Fragment implements DateClick {
 
         sPrefs.getEditor().putString(Constants.tag_cityName, parameters[0]).apply();
         cityNameView.setText(parameters[0]);
-
-        checkSharedPreferences("%.0f",Constants.PREF_DEGREES,
-                Constants.tag_temp,
-                parameters[1],
-                degreesCountView,
-                Constants.POSTFIX_KELVIN,
-                1,
-                -273.15,
-                getString(R.string.kelvin),
-                getString(R.string.cels));
-
-        checkSharedPreferences("%.0f",Constants.PREF_WIND,
-                Constants.tag_wind,
-                parameters[2],
-                windForceParameterView,
-                Constants.WINDFORCE_KMH,
-                0.27, 0,
-                getString(R.string.km_h),
-                getString(R.string.m_s));
-
+        checkSharedPreferences("%.0f", Constants.PREF_DEGREES, Constants.tag_temp, parameters[1], degreesCountView, Constants.POSTFIX_KELVIN, 1, -273.15, getString(R.string.kelvin), getString(R.string.cels));
+        checkSharedPreferences("%.0f", Constants.PREF_WIND, Constants.tag_wind, parameters[2], windForceParameterView, Constants.WINDFORCE_KMH, 0.27, 0, getString(R.string.km_h), getString(R.string.m_s));
         sPrefs.getEditor().putString(Constants.PREF_HUMID, parameters[3]).apply();
         humidityParameterView.setText(parameters[3] + " %");
-
-
-        checkSharedPreferences("%.0f",Constants.PREF_PRESS,
-                Constants.tag_pressure,
-                parameters[4],
-                pressureParameterView,
-                Constants.PRESSURE_GPA,
-                0.75,
-                0,
-                getString(R.string.gPa),
-                getString(R.string.mm_of_m_c));
+        checkSharedPreferences("%.0f", Constants.PREF_PRESS, Constants.tag_pressure, parameters[4], pressureParameterView, Constants.PRESSURE_GPA, 0.75, 0, getString(R.string.gPa), getString(R.string.mm_of_m_c));
         sPrefs.getEditor().putString(Constants.PREF_TYPE, parameters[5]).apply();
         typeWeather.setText(parameters[5]);
-
         sPrefs.getEditor().putString(Constants.tag_time, parameters[6]).apply();
         timeView.setText(parameters[6]);
-
-        checkSharedPreferences("%.0f",Constants.PREF_FEEL, Constants.tag_temp, parameters[7], feelsLike, Constants.POSTFIX_KELVIN, 1, -273.15, getString(R.string.kelvin), getString(R.string.cels));
+        checkSharedPreferences("%.0f", Constants.PREF_FEEL, Constants.tag_temp, parameters[7], feelsLike, Constants.POSTFIX_KELVIN, 1, -273.15, getString(R.string.kelvin), getString(R.string.cels));
     }
 
     private String getValue(String key) {
@@ -469,7 +420,9 @@ public class MainFragment extends Fragment implements DateClick {
         }
         return super.onOptionsItemSelected(item);
     }
+
     @Override
-    public void onItemClicked(String itemText) { }
+    public void onItemClicked(String itemText) {
+    }
 
 }
