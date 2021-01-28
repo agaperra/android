@@ -102,8 +102,7 @@ public class RecyclerHorizontalHoursAdapter extends RecyclerView.Adapter<Recycle
                         degrees.setText(String.format("%.0f", value) + "С\u00B0");
                         break;
                 }
-                String icon = list[position].getWeather()[0].getIcon();
-                new MainFragment.DownloadImageTask(iconW).execute("http://openweathermap.org/img/wn/" + icon + "@2x.png");
+                MainFragment.setIcons(list[position],iconW);
             }
         }
     }

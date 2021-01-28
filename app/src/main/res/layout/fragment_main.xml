@@ -199,15 +199,42 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
+                        <ImageView
+                            android:id="@+id/imageViewWind"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/wind"
+                            app:layout_constraintBottom_toBottomOf="@+id/windForceView"
+                            app:layout_constraintStart_toStartOf="@+id/imageViewHumid"
+                            app:layout_constraintTop_toTopOf="@+id/windForceView" />
+
+                        <ImageView
+                            android:id="@+id/imageViewHumid"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/humidity"
+                            android:layout_marginStart="@dimen/margin10dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/humidityView"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/humidityView" />
+
+                        <ImageView
+                            android:id="@+id/imageViewPress"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/pressure"
+                            app:layout_constraintBottom_toBottomOf="@+id/pressureView"
+                            app:layout_constraintStart_toStartOf="@+id/imageViewWind"
+                            app:layout_constraintTop_toTopOf="@+id/pressureView" />
 
                         <TextView
                             android:id="@+id/humidityView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/margin10dp"
                             android:text="@string/humidity"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/weatherTypeView" />
+                            app:layout_constraintTop_toBottomOf="@+id/weatherTypeView"
+                            app:layout_constraintStart_toEndOf="@+id/imageViewHumid"
+                            android:layout_margin="@dimen/margin10dp"/>
 
                         <TextView
                             android:id="@+id/humidityParameterView"
@@ -224,7 +251,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/wind"
-                            app:layout_constraintStart_toStartOf="@+id/humidityView"
+                            android:layout_margin="@dimen/margin10dp"
+                            app:layout_constraintStart_toEndOf="@+id/imageViewWind"
                             app:layout_constraintTop_toBottomOf="@+id/humidityView" />
 
                         <TextView
@@ -232,16 +260,18 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/wind"
+                            app:layout_constraintBottom_toBottomOf="@+id/windForceView"
                             app:layout_constraintStart_toStartOf="@+id/humidityParameterView"
-                            app:layout_constraintTop_toBottomOf="@+id/humidityParameterView" />
+                            app:layout_constraintTop_toTopOf="@+id/windForceView" />
 
 
                         <TextView
                             android:id="@+id/pressureView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/margin10dp"
                             android:text="@string/pressure"
-                            app:layout_constraintStart_toStartOf="@+id/windForceView"
+                            app:layout_constraintStart_toEndOf="@+id/imageViewPress"
                             app:layout_constraintTop_toBottomOf="@+id/windForceView" />
 
                         <TextView
@@ -249,8 +279,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="left"
+                            app:layout_constraintBottom_toBottomOf="@+id/pressureView"
                             app:layout_constraintStart_toStartOf="@+id/windForceParameterView"
-                            app:layout_constraintTop_toBottomOf="@+id/windForceParameterView"
+                            app:layout_constraintTop_toTopOf="@+id/pressureView"
                             tools:text="@string/pressure" />
 
                         <LinearLayout

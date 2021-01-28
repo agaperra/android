@@ -24,12 +24,12 @@ import java.util.ArrayList;
 
 public class RecyclerWeekDayAdapter extends RecyclerView.Adapter<RecyclerWeekDayAdapter.ViewHolder> {
     private final ArrayList<AllList> days = new ArrayList<>();
-    private static final SharedPreferencesManager sPrefs= MainFragment.sPrefs;
-    private int shift=0;
+    private static final SharedPreferencesManager sPrefs = MainFragment.sPrefs;
+    private int shift = 0;
     private static WeatherRequest[] list;
 
     public RecyclerWeekDayAdapter(WeatherRequest[] list) {
-        RecyclerWeekDayAdapter.list =list;
+        RecyclerWeekDayAdapter.list = list;
     }
 
 
@@ -59,8 +59,8 @@ public class RecyclerWeekDayAdapter extends RecyclerView.Adapter<RecyclerWeekDay
 
     class ViewHolder extends RecyclerView.ViewHolder {
         CardView layout;
-        TextView date, weekDay,  degrees;
-        ImageView weatherIcon;
+        TextView date, weekDay, degrees, humid, press, windd;
+        ImageView weatherIcon,windI,humidI,pressI;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -69,9 +69,15 @@ public class RecyclerWeekDayAdapter extends RecyclerView.Adapter<RecyclerWeekDay
             date = itemView.findViewById(R.id.dateTextView);
             weekDay = itemView.findViewById(R.id.weatherDayView);
             weatherIcon = itemView.findViewById(R.id.weatherIconWeekDay);
+            windI=itemView.findViewById(R.id.weatherWind);
+            pressI=itemView.findViewById(R.id.weatherPress);
+            humidI=itemView.findViewById(R.id.weatherhumid);
             degrees = itemView.findViewById(R.id.degreesWeekDay);
-        }
+            windd = itemView.findViewById(R.id.weatherItemWindText);
+            humid = itemView.findViewById(R.id.weatherItemHumidText);
+            press = itemView.findViewById(R.id.weatherItemPressText);
 
+        }
 
 
         @SuppressLint({"DefaultLocale", "SetTextI18n"})
@@ -81,7 +87,7 @@ public class RecyclerWeekDayAdapter extends RecyclerView.Adapter<RecyclerWeekDay
             date.setText(day.getDay());
 
 
-            if(shift<=list.length) {
+            if (shift <= list.length) {
                 switch (sPrefs.retrieveInt(Constants.tag_temp, Constants.POSTFIX_KELVIN)) {
                     case 0:
                         degrees.setText(String.format("%.0f", list[shift].getMain().getTemp()) + "K\u00B0");
@@ -93,11 +99,40 @@ public class RecyclerWeekDayAdapter extends RecyclerView.Adapter<RecyclerWeekDay
                         degrees.setText(String.format("%.0f", value) + "С\u00B0");
                         break;
                 }
-                String icon = list[shift].getWeather()[0].getIcon();
-                new MainFragment.DownloadImageTask(weatherIcon).execute("http://openweathermap.org/img/wn/" + icon + "@4x.png");
+                switch (sPrefs.retrieveInt(Constants.tag_wind, Constants.WINDFORCE_KMH)) {
+                    case 0:
+                        windd.setText(String.format("%.0f", list[shift].getWind().getSpeed()));
+                        break;
+                    case 1:
+                        String parameter = String.valueOf(list[shift].getWind().getSpeed());
+                        parameter = parameter.replaceAll(",", ".");
+                        double value = Double.parseDouble(parameter) *0.27;
+                        windd.setText(String.format("%.0f", value));
+                        break;
+
+                }
+                switch (sPrefs.retrieveInt(Constants.tag_pressure, Constants.PRESSURE_GPA)) {
+                    case 0:
+                        press.setText(String.format("%d", list[shift].getMain().getPressure()));
+                        break;
+                    case 1:
+                        String parameter = String.valueOf(list[shift].getMain().getPressure());
+                        parameter = parameter.replaceAll(",", ".");
+                        double value = Double.parseDouble(parameter) *0.75;
+                        press.setText(String.format("%.0f", value));
+                        break;
+
+                }
+                System.out.println(String.format("%d", list[shift].getMain().getHumidity()));
+                humid.setText(String.format("%d", list[shift].getMain().getHumidity()));
+                //String icon = list[shift].getWeather()[0].getIcon();
+                MainFragment.setIcons(list[shift],weatherIcon);
+//                new MainFragment.DownloadImageTask(weatherIcon).execute("http://openweathermap.org/img/wn/" + icon + "@4x.png");
                 int t = sPrefs.retrieveInt(Constants.tag_theme, Constants.THEME_LIGHT);
-                if (t==1) {
-                    weatherIcon.setColorFilter(Color.WHITE);
+                if (t == 1) {
+                    windI.setColorFilter(Color.WHITE);
+                    pressI.setColorFilter(Color.WHITE);
+                    humidI.setColorFilter(Color.WHITE);
                 }
 
                 shift += 7;

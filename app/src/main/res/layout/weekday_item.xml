@@ -12,7 +12,7 @@
     card_view:contentPaddingLeft="4dp"
     card_view:contentPaddingRight="4dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -21,9 +21,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/dateTextView"
@@ -48,21 +48,93 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            tools:text="@string/weather_icon"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintEnd_toEndOf="@+id/degreesWeekDay"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/weather_icon" />
+
+        <ImageView
+            android:id="@+id/weatherWind"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:src="@drawable/wind"
+            android:layout_marginTop="5dp"
+            card_view:layout_constraintEnd_toEndOf="@+id/weatherPress"
+            card_view:layout_constraintStart_toStartOf="@+id/weatherPress"
+            card_view:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/weather_icon" />
+
+        <TextView
+            android:id="@+id/weatherItemWindText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            card_view:layout_constraintBottom_toBottomOf="@+id/weatherWind"
+            card_view:layout_constraintEnd_toStartOf="@+id/degreesWeekDay"
+            card_view:layout_constraintStart_toEndOf="@+id/weatherWind"
+            card_view:layout_constraintTop_toTopOf="@+id/weatherWind" />
+
+        <ImageView
+            android:id="@+id/weatherPress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:src="@drawable/pressure"
+            card_view:layout_constraintBottom_toBottomOf="@+id/weatherIconWeekDay"
+
+            card_view:layout_constraintEnd_toStartOf="@+id/degreesWeekDay"
+            card_view:layout_constraintStart_toStartOf="@+id/weatherIconWeekDay"
+            card_view:layout_constraintTop_toTopOf="@+id/weatherIconWeekDay"
+            tools:text="@string/weather_icon" />
+
+        <TextView
+            android:id="@+id/weatherItemPressText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            card_view:layout_constraintBottom_toBottomOf="@+id/weatherPress"
+            card_view:layout_constraintEnd_toEndOf="@+id/weatherItemWindText"
+            card_view:layout_constraintStart_toStartOf="@+id/weatherItemWindText"
+            card_view:layout_constraintTop_toTopOf="@+id/weatherPress" />
+
+        <ImageView
+            android:id="@+id/weatherhumid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="4dp"
+            android:src="@drawable/humidity"
+            android:layout_marginBottom="5dp"
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintEnd_toEndOf="@+id/weatherPress"
+            card_view:layout_constraintStart_toStartOf="@+id/weatherPress"
+            card_view:layout_constraintTop_toBottomOf="@+id/weatherPress"
+            tools:text="@string/weather_icon" />
+
+        <TextView
+            android:id="@+id/weatherItemHumidText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            card_view:layout_constraintBottom_toBottomOf="@+id/weatherhumid"
+            card_view:layout_constraintEnd_toEndOf="@+id/weatherItemPressText"
+            card_view:layout_constraintStart_toStartOf="@+id/weatherItemPressText"
+            card_view:layout_constraintTop_toTopOf="@+id/weatherhumid" />
 
         <TextView
             android:id="@+id/degreesWeekDay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/cels"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/weatherIconWeekDay"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_marginEnd="15dp"
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

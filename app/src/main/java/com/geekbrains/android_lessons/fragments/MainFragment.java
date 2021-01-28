@@ -158,30 +158,53 @@ public class MainFragment extends Fragment implements DateClick {
         sPrefs.storeString(Constants.tag_time, String.format("%s", updatedOn));
 
         String  icon = list.getWeather()[0].getIcon();
-
-        int t = sPrefs.retrieveInt(Constants.tag_theme, Constants.THEME_LIGHT);
         setBackgroundMode(icon);
-        switch (t) {
-            case 0:
-                if (icon.contains("d")){
-                icon=icon.replaceAll("d", "n");
-                }
-                break;
-            case 1:
-                if (icon.contains("n")){
-                    icon=icon.replaceAll("n", "d");
-                }
-                break;
-        }
-        String iconUrl = "http://openweathermap.org/img/wn/" + icon + "@4x.png";
-        new DownloadImageTask((ImageView) requireView().findViewById(R.id.weather_icon)).execute(iconUrl);
-        //Picasso.with(requireView().getContext()).load(iconUrl).into(weatherIcon);
-        sPrefs.storeString(Constants.PREF_ICON, icon);
+        setIcons(list,requireView().findViewById(R.id.weather_icon));
 
         feelsLike.setText(String.format("%.1f", list.getMain().getFeels_like()));
         sPrefs.storeString(Constants.PREF_FEEL, String.format("%.1f", list.getMain().getFeels_like()));
 
         updateAllParameters();
+    }
+
+    public static void setIcons(WeatherRequest list, View v){
+        int t=list.getWeather()[0].getId();
+        if(t>=200&&t<=232){
+            v.setBackgroundResource(R.drawable.thunderstorm);
+        }
+        if(t>=300&&t<=321){
+            v.setBackgroundResource(R.drawable.rain);
+        }
+        if(t>=500&&t<=504){
+            v.setBackgroundResource(R.drawable.clouds_sun);
+        }
+        if(t==511){
+            v.setBackgroundResource(R.drawable.snow);
+        }
+        if(t>=520&&t<=531){
+            v.setBackgroundResource(R.drawable.rain);
+        }
+        if(t>=600&&t<=622){
+           v.setBackgroundResource(R.drawable.snow);
+        }
+        if(t>=701&&t<=781){
+            v.setBackgroundResource(R.drawable.mist);
+        }
+        if(t==800){
+            v.setBackgroundResource(R.drawable.sun);
+        }
+        switch (t){
+            case 801:
+                v.setBackgroundResource(R.drawable.clouds_15);
+                break;
+            case 802:
+                v.setBackgroundResource(R.drawable.clouds_30);
+                break;
+            case 803:
+            case 804:
+                v.setBackgroundResource(R.drawable.clouds_60);
+                break;
+        }
     }
 
     public void setBackgroundMode(String icon){
@@ -244,8 +267,7 @@ public class MainFragment extends Fragment implements DateClick {
                 getValue(Constants.PREF_PRESS),
                 getValue(Constants.PREF_TYPE),
                 getValue(Constants.tag_time),
-                getValue(Constants.PREF_FEEL),
-                getValue(Constants.PREF_ICON));
+                getValue(Constants.PREF_FEEL));
     }
 
     @Override
@@ -404,7 +426,7 @@ public class MainFragment extends Fragment implements DateClick {
                 0.75,
                 0,
                 getString(R.string.gPa),
-                "\n"+getString(R.string.mm_of_m_c));
+                getString(R.string.mm_of_m_c));
         sPrefs.getEditor().putString(Constants.PREF_TYPE, parameters[5]).apply();
         typeWeather.setText(parameters[5]);
 
@@ -412,31 +434,6 @@ public class MainFragment extends Fragment implements DateClick {
         timeView.setText(parameters[6]);
 
         checkSharedPreferences("%.0f",Constants.PREF_FEEL, Constants.tag_temp, parameters[7], feelsLike, Constants.POSTFIX_KELVIN, 1, -273.15, getString(R.string.kelvin), getString(R.string.cels));
-
-
-        int t = sPrefs.retrieveInt(Constants.tag_theme, Constants.THEME_LIGHT);
-        setBackgroundMode(parameters[8]);
-        switch (t) {
-            case 0:
-                if (parameters[8].contains("d")){
-                    parameters[8]=parameters[8].replaceAll("d", "n");
-                }
-                break;
-            case 1:
-                if (parameters[8].contains("n")){
-                    parameters[8]=parameters[8].replaceAll("n", "d");
-                }
-                break;
-        }
-        String iconUrl = "http://openweathermap.org/img/wn/" + parameters[8] + "@4x.png";
-        new DownloadImageTask((ImageView) requireView().findViewById(R.id.weather_icon)).execute(iconUrl);
-        //Picasso.with(requireView().getContext()).load(iconUrl).into(weatherIcon);
-        sPrefs.getEditor().putString(Constants.PREF_ICON,parameters[8]).apply();
-
-
-
-
-
     }
 
     private String getValue(String key) {
