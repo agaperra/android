@@ -94,6 +94,16 @@
     <string name="dev_by">Developed by:</string>
     <string name="name">Varvara Agapova @agaperra</string>
     <string name="vk_app_id">agaperra</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_settings">Settings</string>
+    <string name="menu_developers">Developers</string>
 
 
 </resources>

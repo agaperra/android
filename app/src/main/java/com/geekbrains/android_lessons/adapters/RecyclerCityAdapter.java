@@ -66,7 +66,7 @@ public class RecyclerCityAdapter extends RecyclerView.Adapter<RecyclerCityAdapte
 //        });
 //    }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
         ConstraintLayout layout;
         ImageView nextCityItem;
         TextView textView;

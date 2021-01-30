@@ -28,6 +28,8 @@ import com.geekbrains.android_lessons.SharedPreferencesManager;
 import com.geekbrains.android_lessons.adapters.RecyclerCityAdapter;
 import com.geekbrains.android_lessons.interfaces.CityClick;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -39,7 +41,9 @@ public class SearchFragment extends Fragment implements CityClick {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_search, container, false);
+
+        View root = inflater.inflate(R.layout.fragment_search, container, false);
+        return root;
     }
 
     @Override
@@ -124,14 +128,8 @@ public class SearchFragment extends Fragment implements CityClick {
 
     @SuppressLint("NonConstantResourceId")
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(@NotNull MenuItem item) {
 
-        //Toast.makeText(requireView().getContext(), R.string.error_one, Toast.LENGTH_SHORT).show();
-//        if (!data.trim().equals("")) {
-//            Intent intentCity = new Intent(requireView().getContext(), MainFragment.class);
-//            intentCity.putExtra(Constants.tag_cityName, data);
-//            startActivityForResult(intentCity, Constants.searchActivityRequestCode);
-//        }
         Navigation.findNavController(requireView()).popBackStack();
         return super.onOptionsItemSelected(item);
     }
@@ -140,9 +138,6 @@ public class SearchFragment extends Fragment implements CityClick {
     public void onItemClicked(String itemText) {
         sPrefs.storeString(Constants.tag_cityName,itemText);
         Navigation.findNavController(requireView()).popBackStack();
-//        Intent intentCity = new Intent(requireView().getContext(), MainActivity.class);
-//        intentCity.putExtra(Constants.tag_cityName, itemText);
-//        startActivityForResult(intentCity, Constants.searchActivityRequestCode);
     }
 
 }

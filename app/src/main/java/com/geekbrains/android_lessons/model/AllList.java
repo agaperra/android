@@ -14,17 +14,13 @@ import java.util.Calendar;
 public class AllList implements Serializable {
 
     private String dayOfWeek;
-    private final SimpleDateFormat dateFormat= Constants.dateFormat;
+    private final SimpleDateFormat dateFormat= Constants.DD_MMMM;
     private static final SimpleDateFormat weekDayFormat=Constants.weekDayFormat;
     private String date;
+    private String dt;
     private WeatherRequest[] list;
-//    private String hourInADay;
-//    @SuppressLint({"SimpleDateFormat", "ConstantLocale"})
-//    private static final SimpleDateFormat hoursFormat=Constants.hoursFormat;
-//    private static ArrayList<String> hours;
     private static ArrayList<String> days;
 
-    public void setList(WeatherRequest[] list){this.list=list;}
     public WeatherRequest[] getList(){return list;}
 
 
@@ -68,6 +64,7 @@ public class AllList implements Serializable {
         else {
             now.add(Calendar.DAY_OF_MONTH, shift+7);
         }
+        dt=Constants.YYYYM_MDD.format(now.getTime());
         date = dateFormat.format(now.getTime());
         dayOfWeek = getDayName(shift);
 
@@ -88,5 +85,11 @@ public class AllList implements Serializable {
     public String  getDay(){
         return date;
     }
+    public String  getDt(){
+        return dt;
+    }
 
+    public void setList(WeatherRequest[] list) {
+        this.list = list;
+    }
 }

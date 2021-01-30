@@ -87,10 +87,10 @@ public class RecyclerWeekDayAdapter extends RecyclerView.Adapter<RecyclerWeekDay
 
         }
 
-        public String trying() {
+        public String trying(String str) {
             AtomicReference<String> string= new AtomicReference<>("");
             try {
-                URL url = new URL("https://isdayoff.ru/20200130");
+                URL url = new URL("https://isdayoff.ru/"+str);
                 new Thread(() -> {
                     HttpsURLConnection urlConnection;
                     try {
@@ -116,7 +116,7 @@ public class RecyclerWeekDayAdapter extends RecyclerView.Adapter<RecyclerWeekDay
         @SuppressLint({"DefaultLocale", "SetTextI18n"})
         public void bind(int position) {
             AllList day = days.get(position);
-            if (trying().equals("1") || day.getDayOfWeek().contains("Суббота") || day.getDayOfWeek().contains("Воскресенье")) {
+            if (trying(day.getDt()).equals("1") || day.getDayOfWeek().contains("Суббота") || day.getDayOfWeek().contains("Воскресенье")) {
                 date.setTextColor(Color.parseColor("#C33D3D"));
                 weekDay.setTextColor(Color.parseColor("#C33D3D"));
             }
@@ -124,12 +124,16 @@ public class RecyclerWeekDayAdapter extends RecyclerView.Adapter<RecyclerWeekDay
             weekDay.setText(day.getDayOfWeek());
 
             if (shift <= list.length) {
+                double k=list[position].getMain().getTemp();
+                if (k<273.15&&k>272.15){
+                    k=273.15;
+                }
                 switch (sPrefs.retrieveInt(Constants.tag_temp, Constants.POSTFIX_KELVIN)) {
                     case 0:
-                        degrees.setText(String.format("%.0f", list[shift].getMain().getTemp()) + "K\u00B0");
+                        degrees.setText(k + "K\u00B0");
                         break;
                     case 1:
-                        String parameter = String.valueOf(list[shift].getMain().getTemp());
+                        String parameter=String.valueOf(k);
                         parameter = parameter.replaceAll(",", ".");
                         double value = Double.parseDouble(parameter) - 273.15;
                         degrees.setText(String.format("%.0f", value) + "С\u00B0");

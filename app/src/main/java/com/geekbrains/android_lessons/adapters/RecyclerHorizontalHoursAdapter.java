@@ -39,7 +39,7 @@ public class RecyclerHorizontalHoursAdapter extends RecyclerView.Adapter<Recycle
     public RecyclerHorizontalHoursAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.hours_weather_item, parent, false);
-        return new RecyclerHorizontalHoursAdapter.ViewHolder(view);
+        return new ViewHolder(view);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class RecyclerHorizontalHoursAdapter extends RecyclerView.Adapter<Recycle
     }
 
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
         ConstraintLayout layout;
         TextView time;
         ImageView iconW;
@@ -84,13 +84,11 @@ public class RecyclerHorizontalHoursAdapter extends RecyclerView.Adapter<Recycle
 
                 time.setText(String.format("%s", updatedOn));
                 //time.setText(hour.getHourInADay());
-                String t=String.format("%.0f", list[position].getMain().getTemp());
                 double k=list[position].getMain().getTemp();
-                if (t.contains("-")){
                     if (k<273.15&&k>272.15){
                         k=273.15;
                     }
-                }
+
                 switch (sPrefs.retrieveInt(Constants.tag_temp, Constants.POSTFIX_KELVIN)) {
                     case 0:
 

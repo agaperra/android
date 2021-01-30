@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -54,13 +55,12 @@ public class MainFragment extends Fragment implements DateClick {
     private TextView feelsLike;
     private ImageView background;
     public static SharedPreferencesManager sPrefs;
-    private final String url = Constants.url;
+    private final String url = Constants.urlYANDEX;
     private String message = "";
     private RecyclerView recyclerViewDays;
     private RecyclerView recyclerViewHours;
     private SwipeRefreshLayout mSwipeRefreshLayout;
-    public static WeatherRequest list;
-
+    private String data;
 
     private void findViews(View v) {
 
@@ -138,12 +138,11 @@ public class MainFragment extends Fragment implements DateClick {
 
     public static void setIcons(WeatherRequest list, View v) {
         int t = list.getWeather()[0].getId();
-        boolean day = true;
+        boolean day;
         Calendar now = Calendar.getInstance();
         now.add(Calendar.HOUR, 0);
         int time = Integer.parseInt(new SimpleDateFormat("HH", Locale.forLanguageTag(Locale.getDefault().getLanguage())).format(now.getTime()));
         day= time > 6 && time < 18;
-
         if (t >= 200 && t <= 232) {
             v.setBackgroundResource(R.drawable.thunderstorm);
         }
@@ -152,7 +151,7 @@ public class MainFragment extends Fragment implements DateClick {
         }
         if (t >= 500 && t <= 504) {
             if (day)
-            v.setBackgroundResource(R.drawable.clouds_sun);
+                v.setBackgroundResource(R.drawable.clouds_sun);
             else v.setBackgroundResource(R.drawable.moon_cloud);
         }
         if (t == 511) {
@@ -166,18 +165,18 @@ public class MainFragment extends Fragment implements DateClick {
         }
         if (t >= 701 && t <= 781) {
             if (day)
-            v.setBackgroundResource(R.drawable.mist);
+                v.setBackgroundResource(R.drawable.mist);
             else v.setBackgroundResource(R.drawable.fog);
         }
         if (t == 800) {
             if (day)
-            v.setBackgroundResource(R.drawable.sun);
+                v.setBackgroundResource(R.drawable.sun);
             else v.setBackgroundResource(R.drawable.moon);
         }
         switch (t) {
             case 801:
                 if (day)
-                v.setBackgroundResource(R.drawable.clouds_15);
+                    v.setBackgroundResource(R.drawable.clouds_15);
                 else v.setBackgroundResource(R.drawable.moon_cloud_15);
                 break;
             case 802:
@@ -285,9 +284,7 @@ public class MainFragment extends Fragment implements DateClick {
             getWeather.getWeather(this);
             getWeather.getWeatherForecast(this);
             updateAllParameters();
-            mSwipeRefreshLayout.postOnAnimationDelayed(() -> {
-                mSwipeRefreshLayout.setRefreshing(false);
-            }, 2000);
+            mSwipeRefreshLayout.postOnAnimationDelayed(() -> mSwipeRefreshLayout.setRefreshing(false), 2000);
         });
 
         int t = sPrefs.retrieveInt(Constants.tag_theme, Constants.THEME_LIGHT);
@@ -331,7 +328,6 @@ public class MainFragment extends Fragment implements DateClick {
         LinearLayoutManager layoutManager1 = new LinearLayoutManager(
                 requireContext(), LinearLayoutManager.HORIZONTAL, false
         );
-
 
         RecyclerHorizontalHoursAdapter adapter = new RecyclerHorizontalHoursAdapter(list);
         adapter.addItems(AllList.getHours(9));
@@ -396,7 +392,8 @@ public class MainFragment extends Fragment implements DateClick {
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-
+        inflater.inflate(R.menu.search, menu);
+        SearchView actionSearch = (SearchView) menu.findItem(R.id.action_search).getActionView();
         MenuItem menuItem = menu.add(R.string.option_fragment_name);
         menuItem.setIcon(R.drawable.ic_settings);
         menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
@@ -406,16 +403,38 @@ public class MainFragment extends Fragment implements DateClick {
             Navigation.findNavController(requireView()).navigate(R.id.navigateToSettingsFragment);
             return true;
         });
+
+        actionSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                if (!data.trim().equals("")) {
+
+                    sPrefs.getEditor().putString(Constants.tag_cityName, data).apply();
+                    cityNameView.setText(data);
+                    getWeather.getWeather(com.geekbrains.android_lessons.fragments.MainFragment.this);
+                    getWeather.getWeatherForecast(com.geekbrains.android_lessons.fragments.MainFragment.this);
+                    actionSearch.onActionViewCollapsed();
+                    return true;
+                }
+                return false;
+            }
+
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                data = newText;
+                return true;
+            }
+        });
         super.onCreateOptionsMenu(menu, inflater);
     }
 
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                Navigation.findNavController(requireView()).navigate(R.id.navigateToSearchFragment);
-                break;
+
+        if (item.getItemId() == android.R.id.home) {
+            Navigation.findNavController(requireView()).navigate(R.id.navigateToSearchFragment);
         }
         return super.onOptionsItemSelected(item);
     }
