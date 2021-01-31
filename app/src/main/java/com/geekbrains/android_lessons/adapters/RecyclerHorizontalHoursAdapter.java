@@ -12,14 +12,13 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.geekbrains.android_lessons.R;
 import com.geekbrains.android_lessons.Constants;
+import com.geekbrains.android_lessons.R;
 import com.geekbrains.android_lessons.SharedPreferencesManager;
 import com.geekbrains.android_lessons.fragments.MainFragment;
 import com.geekbrains.android_lessons.model.AllList;
 import com.geekbrains.android_lessons.model.WeatherRequest;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -75,9 +74,12 @@ public class RecyclerHorizontalHoursAdapter extends RecyclerView.Adapter<Recycle
         @SuppressLint({"DefaultLocale", "SetTextI18n"})
         public void bind(int position) {
             if(position<=list.length) {
-                DateFormat df = DateFormat.getDateTimeInstance();
-                String updatedOn = df.format(new Date(1000 * list[position].getDate()));
-                updatedOn=updatedOn.substring(16, 18);
+                //DateFormat df = DateFormat.getDateTimeInstance();
+                String updatedOn =Constants.hoursFormat.format(new Date(1000 * list[position].getDate()));
+//                if (String.valueOf(Locale.forLanguageTag(Locale.getDefault().getLanguage())).equals("ru")) {
+//                    updatedOn=updatedOn.substring(17, 19);
+//                }
+//                else updatedOn=updatedOn.substring(13, 15);
                 if (updatedOn.contains(":"))
                     updatedOn+="00";
                 else updatedOn+=":00";

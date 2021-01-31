@@ -49,6 +49,31 @@ public class getWeather {
             e.printStackTrace();
         }
     }
+    public static void getWeather( String city,MainActivity parent) {
+        try {
+            URL url = new URL(Constants.urlWeatherStatic +
+                    URLEncoder.encode(city)+Constants.final_url);
+            Handler handler = new Handler(Looper.getMainLooper());
+            new Thread(() -> {
+                HttpsURLConnection urlConnection;
+                try {
+                    urlConnection = (HttpsURLConnection) url.openConnection();
+                    urlConnection.setRequestMethod("GET");
+                    urlConnection.setReadTimeout(1000);
+                    BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+                    String result = getLines(in);
+
+                    WeatherRequest weatherRequest = gson.fromJson(result, WeatherRequest.class);
+                    handler.post(() -> parent.displayWeather(weatherRequest));
+                    urlConnection.disconnect();
+                } catch (IOException e) {
+                   e.printStackTrace();
+                }
+            }).start();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static void getWeatherForecast(MainFragment parent) {
         try {

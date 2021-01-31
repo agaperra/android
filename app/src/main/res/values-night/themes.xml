@@ -2,8 +2,8 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto">
     <!-- Base application theme. -->
     <style name="Theme.Android_Lessons" parent="Theme.AppCompat.DayNight.DarkActionBar">
-        <!-- <item name="colorPrimary">@color/black</item>-->
-        <item name="colorPrimaryVariant">@color/grey</item>
+        <item name="colorPrimary">#A592EC</item>
+        <item name="colorPrimaryVariant">@android:color/transparent</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="android:textColor">@color/white</item>
         <item name="colorSecondary">@color/white</item>
@@ -11,11 +11,17 @@
         <item name="colorOnSecondary">@color/white</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="windowActionBarOverlay">true</item>
-        <item name="colorPrimary">@android:color/transparent</item>
+       <!-- <item name="colorPrimary">@android:color/transparent</item>-->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+       <!-- <item name="android:activatedBackgroundIndicator">@color/purple_m</item>-->
+<!--        <item name="android:actionBarStyle">@style/TransparentActionBar</item>-->
     </style>
+
+<!--    <style name="TransparentActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">-->
+<!--        <item name="android:background">@android:color/transparent</item>-->
+<!--    </style>-->
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@drawable/splash_screen</item>
     </style>

@@ -100,11 +100,12 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
-    <string name="exit">Exit</string>
+    <string name="exit">Are you sure you want to close the app?</string>
 
     <string name="menu_home">Home</string>
     <string name="menu_settings">Settings</string>
     <string name="menu_developers">Developers</string>
+    <string name="message">Open URL in browser?</string>
 
 
 </resources>

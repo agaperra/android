@@ -3,99 +3,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation"
-    app:startDestination="@id/mainFragment">
+    app:startDestination="@id/home_nav">
 
     <fragment
-        android:id="@+id/mainFragment"
+        android:id="@+id/home_nav"
         android:name="com.geekbrains.android_lessons.fragments.MainFragment"
-        android:label="fragment_main"
-        tools:layout="@layout/fragment_main" >
-        <action
-            android:id="@+id/navigateToSearchFragment"
-            app:destination="@id/searchFragment"
-            app:enterAnim="@animator/enter_from_left"
-            app:exitAnim="@anim/nav_default_exit_anim" />
-        <action
-            android:id="@+id/navigateToSettingsFragment"
-            app:destination="@id/settingsFragment"
-            app:enterAnim="@animator/enter_from_right"
-            app:exitAnim="@anim/nav_default_exit_anim" />
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_main">
         <argument
             android:name="cityName"
-            app:argType="string"
-            android:defaultValue="City" />
-
-    </fragment>
-
-    <fragment
-        android:id="@+id/searchFragment"
-        android:name="com.geekbrains.android_lessons.fragments.SearchFragment"
-        android:label="fragment_search"
-        tools:layout="@layout/fragment_search" >
-        <action
-            android:id="@+id/navigateToMainFragmentFromSearchFragment"
-            app:destination="@id/mainFragment"
-            app:enterAnim="@animator/enter_from_right"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popUpTo="@id/mainFragment"
-            app:popUpToInclusive="false" />
+            android:defaultValue="DefaultString"
+            app:argType="string" />
     </fragment>
     <fragment
-        android:id="@+id/settingsFragment"
+        android:id="@+id/settings_nav"
         android:name="com.geekbrains.android_lessons.fragments.SettingsFragment"
-        android:label="fragment_settings"
-        tools:layout="@layout/fragment_settings" >
-        <action
-            android:id="@+id/navigateToMainFragmentFromOptionsFragment"
-            app:destination="@id/mainFragment"
-            app:enterAnim="@animator/enter_from_left"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popUpTo="@id/mainFragment" />
-
-        <action
-            android:id="@+id/navigateToDevelopersFragment"
-            app:destination="@id/developersFragment"
-            app:enterAnim="@animator/enter_from_right"
-            app:exitAnim="@anim/fragment_fade_exit" />
-    </fragment>
-
+        android:label="@string/menu_settings"
+        tools:layout="@layout/fragment_settings"/>
     <fragment
-        android:id="@+id/developersFragment"
+        android:id="@+id/developers_nav"
         android:name="com.geekbrains.android_lessons.fragments.DevelopersFragment"
-        android:label="fragment_developers"
-        tools:layout="@layout/developers_fragment" >
-        <action
-            android:id="@+id/navigateToSettingsFragmentFromDevelopersFragment"
-            app:destination="@id/settingsFragment"
-            app:popUpTo="@id/settingsFragment" />
-    </fragment>
-
+        android:label="@string/menu_developers"
+        tools:layout="@layout/developers_fragment" />
 </navigation>
-
-    <!--<?xml version="1.0" encoding="utf-8"?>-->
-    <!--<navigation xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
-    <!--    xmlns:tools="http://schemas.android.com/tools"-->
-    <!--    android:id="@+id/main_nav"-->
-    <!--    app:startDestination="@id/home_nav">-->
-
-    <!--    <fragment-->
-    <!--        android:id="@+id/home_nav"-->
-    <!--        android:name="com.geekbrains.android_lessons.fragments.MainFragment"-->
-    <!--        android:label="@string/menu_home"-->
-    <!--        tools:layout="@layout/fragment_main">-->
-    <!--        <argument-->
-    <!--            android:name="cityName"-->
-    <!--            android:defaultValue="DefaultString"-->
-    <!--            app:argType="string" />-->
-    <!--    </fragment>-->
-    <!--    <fragment-->
-    <!--        android:id="@+id/developers_nav"-->
-    <!--        android:name="com.geekbrains.android_lessons.fragments.DevelopersFragment"-->
-    <!--        android:label="@string/developers"-->
-    <!--        tools:layout="@layout/developers_fragment" />-->
-    <!--    <fragment-->
-    <!--        android:id="@+id/options_nav"-->
-    <!--        android:name="com.geekbrains.android_lessons.fragments.SettingsFragment"-->
-    <!--        android:label="@string/menu_settings" />-->
-    <!--</navigation>-->

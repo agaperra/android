@@ -37,7 +37,7 @@ public class Constants {
     @SuppressLint("ConstantLocale")
     public static final String urlWeatherStatic = "https://api.openweathermap.org/data/2.5/weather?q=";
     @SuppressLint("ConstantLocale")
-    //public static final SimpleDateFormat hoursFormat=new SimpleDateFormat("HH", Locale.forLanguageTag(Locale.getDefault().getLanguage()));
+    public static final SimpleDateFormat hoursFormat=new SimpleDateFormat("HH", Locale.forLanguageTag(Locale.getDefault().getLanguage()));
     public static final String urlWeather7Days="https://api.openweathermap.org/data/2.5/forecast?q=";
     public static final String lang="&lang=";
     public static final String weatherKey = "&appid=";

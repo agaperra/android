@@ -1,12 +1,8 @@
 package com.geekbrains.android_lessons.fragments;
 
-import android.annotation.SuppressLint;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
@@ -14,16 +10,12 @@ import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 
-import com.geekbrains.android_lessons.R;
 import com.geekbrains.android_lessons.Constants;
+import com.geekbrains.android_lessons.R;
 import com.geekbrains.android_lessons.SharedPreferencesManager;
-
-import java.util.Objects;
 
 
 public class SettingsFragment extends Fragment {
@@ -44,17 +36,15 @@ public class SettingsFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        requireActivity().setTitle("");
-        ((AppCompatActivity) requireActivity()).setSupportActionBar(view.findViewById(R.id.toolbar));
         setHasOptionsMenu(true);
         setRetainInstance(true);
 
         findViews(view);
         setUpRadioButton();
         initListeners();
-        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setDisplayShowHomeEnabled(true);
-        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setHomeAsUpIndicator(R.drawable.back_line);
+//        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+//        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setDisplayShowHomeEnabled(true);
+//        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setHomeAsUpIndicator(R.drawable.back_line);
 
         //theme group listener
         themeGroup.setOnCheckedChangeListener((RadioGroup radioGroup, int checkedId) -> {
@@ -75,6 +65,8 @@ public class SettingsFragment extends Fragment {
 
 
     }
+
+
 
     public void radioButtonsCheckEnter(String tag, int defValue, RadioButton... radioButtons) {
         int temp = sPrefs.retrieveInt(tag, defValue);
@@ -114,18 +106,6 @@ public class SettingsFragment extends Fragment {
         }
     }
 
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.back, menu);
-
-        MenuItem authorsItem = menu.add(R.string.developers);
-        authorsItem.setOnMenuItemClickListener(item -> {
-            Navigation.findNavController(requireView()).navigate(R.id.navigateToDevelopersFragment);
-            return true;
-        });
-        super.onCreateOptionsMenu(menu, inflater);
-
-    }
 
     public void findViews(View v) {
 
@@ -148,16 +128,5 @@ public class SettingsFragment extends Fragment {
 
     }
 
-
-    @SuppressLint("NonConstantResourceId")
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home || item.getItemId() == R.id.home) {
-            Navigation.findNavController(requireView()).popBackStack();
-
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
 }

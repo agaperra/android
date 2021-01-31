@@ -17,16 +17,17 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.geekbrains.android_lessons.R;
 import com.geekbrains.android_lessons.Constants;
+import com.geekbrains.android_lessons.MainActivity;
+import com.geekbrains.android_lessons.R;
 import com.geekbrains.android_lessons.SharedPreferencesManager;
 import com.geekbrains.android_lessons.adapters.RecyclerHorizontalHoursAdapter;
 import com.geekbrains.android_lessons.adapters.RecyclerWeekDayAdapter;
@@ -255,28 +256,29 @@ public class MainFragment extends Fragment implements DateClick {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        requireActivity().setTitle("");
-        ((AppCompatActivity) requireActivity()).setSupportActionBar(view.findViewById(R.id.toolbar));
+    //    requireActivity().setTitle("");
+    //    ((AppCompatActivity) requireActivity()).setSupportActionBar(view.findViewById(R.id.toolbar));
         setHasOptionsMenu(true);
         setRetainInstance(true);
-        sPrefs = new SharedPreferencesManager(requireContext());
-        findViews(view);
-        getWeather.getWeather(this);
-        getWeather.getWeatherForecast(this);
-        Intent intent = requireActivity().getIntent();
-        if (intent.hasExtra(Constants.tag_cityName)) {
-            message = intent.getStringExtra(Constants.tag_cityName);
-            if (!message.equals("")) {
-                sPrefs.storeString(Constants.tag_cityName, message);
-                cityNameView.setText(message);
-
-            }
-        }
-        updateAllParameters();
 
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setDisplayShowHomeEnabled(true);
-        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setHomeAsUpIndicator(R.drawable.ic_menu);
+//        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setHomeAsUpIndicator(R.drawable.ic_menu);
+       sPrefs = MainActivity.preferencesManager;
+        findViews(view);
+        getWeather.getWeather(this);
+        getWeather.getWeatherForecast(this);
+//        Intent intent = requireActivity().getIntent();
+//        if (intent.hasExtra(Constants.tag_cityName)) {
+//            message = intent.getStringExtra(Constants.tag_cityName);
+//            if (!message.equals("")) {
+//                sPrefs.storeString(Constants.tag_cityName, message);
+//                cityNameView.setText(message);
+//
+//            }
+//        }
+        updateAllParameters();
+
 
         mSwipeRefreshLayout = view.findViewById(R.id.refresh);
         mSwipeRefreshLayout.setOnRefreshListener(() -> {
@@ -300,17 +302,27 @@ public class MainFragment extends Fragment implements DateClick {
 
 //по нажатию на название города - открытие поискового запроса в яндексе
         view.findViewById(R.id.search_in_internet).setOnClickListener(v -> {
-            if (!message.trim().equals("")) {
-                Snackbar snackbar = Snackbar.make(requireView(), getString(R.string.open_url), Snackbar.LENGTH_LONG).
-                        setAction(getString(R.string.yes), ignored -> {
-                            Intent openURL = new Intent(android.content.Intent.ACTION_VIEW);
-                            openURL.setData(Uri.parse(url + message));
-                            startActivity(openURL);
-                        });
-                snackbar.setTextColor(Color.WHITE);
-                snackbar.show();
+//            if (!message.trim().equals("")) {
+//                Snackbar snackbar = Snackbar.make(requireView(), getString(R.string.open_url), Snackbar.LENGTH_LONG).
+//                        setAction(getString(R.string.yes), ignored -> {
+//                            Intent openURL = new Intent(android.content.Intent.ACTION_VIEW);
+//                            openURL.setData(Uri.parse(url + message));
+//                            startActivity(openURL);
+//                        });
+//                snackbar.setTextColor(Color.WHITE);
+//                snackbar.show();
+            AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+            builder.setTitle(getString(R.string.message))
+                    .setPositiveButton(getString(R.string.yes), (dialog, which) -> openURL())
+                    .setNegativeButton(getString(R.string.chancel), (dialog, which) -> dialog.cancel()).show();
             }
-        });
+        );
+    }
+
+    public void openURL(){
+        Intent openURL = new Intent(android.content.Intent.ACTION_VIEW);
+        openURL.setData(Uri.parse(url + cityNameView.getText()));
+        startActivity(openURL);
     }
 
     public void setupRecyclerView(WeatherRequest[] list) {
@@ -394,15 +406,15 @@ public class MainFragment extends Fragment implements DateClick {
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.search, menu);
         SearchView actionSearch = (SearchView) menu.findItem(R.id.action_search).getActionView();
-        MenuItem menuItem = menu.add(R.string.option_fragment_name);
-        menuItem.setIcon(R.drawable.ic_settings);
-        menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+       // MenuItem menuItem = menu.add(R.string.option_fragment_name);
+       // menuItem.setIcon(R.drawable.ic_settings);
+        //menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 
         super.onCreateOptionsMenu(menu, inflater);
-        menuItem.setOnMenuItemClickListener(item -> {
-            Navigation.findNavController(requireView()).navigate(R.id.navigateToSettingsFragment);
-            return true;
-        });
+//        menuItem.setOnMenuItemClickListener(item -> {
+//            Navigation.findNavController(requireView()).navigate(R.id.navigateToSettingsFragment);
+//            return true;
+//        });
 
         actionSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -413,6 +425,7 @@ public class MainFragment extends Fragment implements DateClick {
                     cityNameView.setText(data);
                     getWeather.getWeather(MainFragment.this);
                     getWeather.getWeatherForecast(MainFragment.this);
+                    getWeather.getWeather(String.valueOf(cityNameView.getText()), (MainActivity)getActivity());
                     actionSearch.onActionViewCollapsed();
                     return true;
                 }
@@ -432,12 +445,13 @@ public class MainFragment extends Fragment implements DateClick {
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-        if (item.getItemId() == android.R.id.home) {
-            Navigation.findNavController(requireView()).navigate(R.id.navigateToSearchFragment);
-        }
+//
+//        if (item.getItemId() == android.R.id.home) {
+//            Navigation.findNavController(requireView()).navigate(R.id.navigateToSearchFragment);
+//        }
         return super.onOptionsItemSelected(item);
     }
+
 
     @Override
     public void onItemClicked(String itemText) {

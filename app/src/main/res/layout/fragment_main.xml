@@ -1,36 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".fragments.MainFragment">
-
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/toolbarLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="?attr/actionBarSize"
-            android:fitsSystemWindows="true"
-            app:contentScrim="@android:color/transparent"
-            app:layout_scrollFlags="scroll">
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_collapseMode="pin"/>
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
-
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/refresh"
@@ -76,7 +48,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="40dp"
                     android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -112,7 +83,7 @@
                             android:gravity="center"
                             android:text="@string/city"
                             android:textAppearance="?android:attr/textAppearanceLarge"
-                            android:textSize="@dimen/text_size_big"
+                            android:textSize="20sp"
                             android:textStyle="bold"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -123,6 +94,7 @@
                             android:id="@+id/search_in_internet"
                             android:layout_width="35dp"
                             android:layout_height="35dp"
+                            android:layout_marginStart="15dp"
                             android:src="@drawable/search_in_internet"
                             app:layout_constraintBottom_toBottomOf="@+id/cityNameView"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -318,5 +290,4 @@
 
         </androidx.core.widget.NestedScrollView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
 
