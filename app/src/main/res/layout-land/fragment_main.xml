@@ -92,8 +92,8 @@
 
                     <ImageView
                         android:id="@+id/search_in_internet"
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
                         android:layout_marginStart="15dp"
                         android:src="@drawable/search_in_internet"
                         app:layout_constraintBottom_toBottomOf="@+id/cityNameView"

@@ -100,7 +100,7 @@ public class MainFragment extends Fragment implements DateClick {
         snackbar.show();
     }
 
-    @SuppressLint("DefaultLocale")
+    @SuppressLint({"DefaultLocale", "SetTextI18n"})
     public void displayWeather(WeatherRequest list) {
         cityNameView.setText(list.getName());
         sPrefs.storeString(Constants.tag_cityName, list.getName());
@@ -119,8 +119,9 @@ public class MainFragment extends Fragment implements DateClick {
         humidityParameterView.setText(String.format("%d", list.getMain().getHumidity()));
         sPrefs.storeString(Constants.PREF_HUMID, String.format("%d", list.getMain().getHumidity()));
 
-        windForceParameterView.setText(String.format("%.0f", list.getWind().getSpeed()));
+        windForceParameterView.setText(String.format("%.0f", list.getWind().getSpeed())+", "+getOrientation(list.getWind().getDeg()));
         sPrefs.storeString(Constants.PREF_WIND, String.format("%.0f", list.getWind().getSpeed()));
+        sPrefs.storeString(Constants.PREF_ORIENTATION, String.valueOf(list.getWind().getDeg()));
 
         DateFormat df = DateFormat.getDateTimeInstance();
         String updatedOn = df.format(new Date(1000 * list.getDate()));
@@ -135,6 +136,33 @@ public class MainFragment extends Fragment implements DateClick {
         sPrefs.storeString(Constants.PREF_FEEL, String.format("%.1f", list.getMain().getFeels_like()));
 
         updateAllParameters();
+    }
+
+    public String getOrientation(int deg){
+        String orientation=getString(R.string.e);
+        if (deg>=22&&deg<67){
+            orientation=getString(R.string.ne);
+        }
+        if (deg>=67&&deg<112){
+            orientation=getString(R.string.n);
+        }
+        if (deg>=112&&deg<157){
+            orientation=getString(R.string.nw);
+        }
+        if (deg>=157&&deg<202){
+            orientation=getString(R.string.w);
+        }
+        if (deg>=202&&deg<247){
+            orientation=getString(R.string.ws);
+        }
+        if (deg>=247&&deg<292){
+            orientation=getString(R.string.s);
+        }
+        if (deg>=292&&deg<337){
+            orientation=getString(R.string.se);
+        }
+        return orientation;
+
     }
 
     public static void setIcons(WeatherRequest list, View v) {
@@ -251,7 +279,8 @@ public class MainFragment extends Fragment implements DateClick {
                 getValue(Constants.PREF_PRESS),
                 getValue(Constants.PREF_TYPE),
                 getValue(Constants.tag_time),
-                getValue(Constants.PREF_FEEL));
+                getValue(Constants.PREF_FEEL),
+                getValue(Constants.PREF_ORIENTATION));
     }
 
     @Override
@@ -376,13 +405,31 @@ public class MainFragment extends Fragment implements DateClick {
         }
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "DefaultLocale"})
     private void updateValue(String... parameters) {
 
         sPrefs.getEditor().putString(Constants.tag_cityName, parameters[0]).apply();
         cityNameView.setText(parameters[0]);
         checkSharedPreferences("%.0f", Constants.PREF_DEGREES, Constants.tag_temp, parameters[1], degreesCountView, Constants.POSTFIX_KELVIN, 1, -273.15, getString(R.string.kelvin), getString(R.string.cels));
-        checkSharedPreferences("%.0f", Constants.PREF_WIND, Constants.tag_wind, parameters[2], windForceParameterView, Constants.WINDFORCE_KMH, 0.27, 0, getString(R.string.km_h), getString(R.string.m_s));
+
+
+        //checkSharedPreferences("%.0f", Constants.PREF_WIND, Constants.tag_wind, parameters[2], windForceParameterView, Constants.WINDFORCE_KMH, 0.27, 0, getString(R.string.km_h), getString(R.string.m_s));
+        sPrefs.getEditor().putString(Constants.PREF_WIND, parameters[2]).apply();
+        sPrefs.getEditor().putString(Constants.PREF_ORIENTATION,parameters[8]).apply();
+        switch (sPrefs.retrieveInt(Constants.tag_wind, Constants.WINDFORCE_KMH)) {
+            case 0:
+                System.out.println(parameters[8]);
+                windForceParameterView.setText(parameters[2] + " " + getString(R.string.km_h)+", "+getOrientation(Integer.parseInt(parameters[8])));
+                break;
+            case 1:
+                parameters[2] = parameters[2].replaceAll(",", ".");
+                double value = Double.parseDouble(parameters[2]) *0.27 ;
+                windForceParameterView.setText(String.format("%.0f", value) + " " + getString(R.string.m_s)+", "+getOrientation(Integer.parseInt(parameters[8])));
+                break;
+
+        }
+
+
         sPrefs.getEditor().putString(Constants.PREF_HUMID, parameters[3]).apply();
         humidityParameterView.setText(parameters[3] + " %");
         checkSharedPreferences("%.0f", Constants.PREF_PRESS, Constants.tag_pressure, parameters[4], pressureParameterView, Constants.PRESSURE_GPA, 0.75, 0, getString(R.string.gPa), getString(R.string.mm_of_m_c));

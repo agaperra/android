@@ -107,5 +107,15 @@
     <string name="menu_developers">Developers</string>
     <string name="message">Open URL in browser?</string>
 
+    <!-->north west south east-->
+    <string name="e">E</string>
+    <string name="ne">NE</string>
+    <string name="n">N</string>
+    <string name="nw">NW</string>
+    <string name="w">W</string>
+    <string name="ws">SW</string>
+    <string name="s">s</string>
+    <string name="se">SE</string>
+
 
 </resources>

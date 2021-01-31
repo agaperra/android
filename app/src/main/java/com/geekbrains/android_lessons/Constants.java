@@ -12,6 +12,7 @@ public class Constants {
     public static final String PREF_PRESS = "PREF_PRESS";
     public static final String PREF_TYPE = "PREF_TYPE";
     public static final String PREF_FEEL = "PREF_FEEL";
+    public static final String PREF_ORIENTATION = "PREF_ORIENTATION";
     public static final String tag_temp="temperature";
     public static final String tag_wind="wind_force";
     public static final String tag_pressure="pressure";

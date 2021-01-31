@@ -110,4 +110,14 @@
     <string name="menu_developers">Разработчики</string>
     <string name="message">Открыть ссылку в браузере?</string>
 
+    <!-->north west south east-->
+    <string name="e">В</string>
+    <string name="ne">СВ</string>
+    <string name="n">С</string>
+    <string name="nw">СЗ</string>
+    <string name="w">З</string>
+    <string name="ws">ЮЗ</string>
+    <string name="s">Ю</string>
+    <string name="se">ЮВ</string>
+
 </resources>
