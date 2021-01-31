@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
         String weatherStatusValue = String.valueOf(list.getWeather()[0].getDescription());
         weatherStatusValue = weatherStatusValue.substring(0, 1).toUpperCase() + weatherStatusValue.substring(1);
         ((TextView) headerView.findViewById(R.id.navWeatherStatus)).setText(weatherStatusValue);
-        ((TextView) headerView.findViewById(R.id.texthumid)).setText(String.format("%d", list.getMain().getHumidity()));
+        ((TextView) headerView.findViewById(R.id.texthumid)).setText(String.format("%d", list.getMain().getHumidity())+"%");
 
 
         double k=list.getMain().getTemp();
@@ -115,25 +115,25 @@ public class MainActivity extends AppCompatActivity {
         }
         switch (preferencesManager.retrieveInt(Constants.tag_wind, Constants.WINDFORCE_KMH)) {
             case 0:
-                ((TextView) headerView.findViewById(R.id.textWind)).setText(String.format("%.0f", list.getWind().getSpeed()));
+                ((TextView) headerView.findViewById(R.id.textWind)).setText(String.format("%.0f", list.getWind().getSpeed())+getString(R.string.km_h));
                 break;
             case 1:
                 String parameter = String.valueOf(list.getWind().getSpeed());
                 parameter = parameter.replaceAll(",", ".");
                 double value = Double.parseDouble(parameter) * 0.27;
-                ((TextView) headerView.findViewById(R.id.textWind)).setText(String.format("%.0f", value));
+                ((TextView) headerView.findViewById(R.id.textWind)).setText(String.format("%.0f", value)+getString(R.string.m_s));
                 break;
 
         }
         switch (preferencesManager.retrieveInt(Constants.tag_pressure, Constants.PRESSURE_GPA)) {
             case 0:
-                ((TextView) headerView.findViewById(R.id.textPress)).setText(String.format("%d", list.getMain().getPressure()));
+                ((TextView) headerView.findViewById(R.id.textPress)).setText(String.format("%d", list.getMain().getPressure())+getString(R.string.gPa));
                 break;
             case 1:
                 String parameter = String.valueOf(list.getMain().getPressure());
                 parameter = parameter.replaceAll(",", ".");
                 double value = Double.parseDouble(parameter) * 0.75;
-                ((TextView) headerView.findViewById(R.id.textPress)).setText(String.format("%.0f", value));
+                ((TextView) headerView.findViewById(R.id.textPress)).setText(String.format("%.0f", value)+"\n"+getString(R.string.mm_of_m_c));
                 break;
 
         }

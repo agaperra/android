@@ -348,18 +348,18 @@ public class MainFragment extends Fragment implements DateClick {
         recyclerViewHours.setAdapter(adapter);
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-
-        if (requestCode == Constants.REQUEST_CODE) {
-            if (resultCode == Constants.RESULT_OK) {
-                String location = Objects.requireNonNull(data).getStringExtra(Constants.ACCESS_MESSAGE);
-                cityNameView.setText(location);
-            }
-        } else {
-            super.onActivityResult(requestCode, resultCode, data);
-        }
-    }
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//
+//        if (requestCode == Constants.REQUEST_CODE) {
+//            if (resultCode == Constants.RESULT_OK) {
+//                String location = Objects.requireNonNull(data).getStringExtra(Constants.ACCESS_MESSAGE);
+//                cityNameView.setText(location);
+//            }
+//        } else {
+//            super.onActivityResult(requestCode, resultCode, data);
+//        }
+//    }
 
     @SuppressLint({"SetTextI18n", "DefaultLocale"})
     public static void checkSharedPreferences(String format, String keyContainer, String tag, String parameter, TextView textView, int defaultConst, double multi, double shift, String... tags) {
@@ -406,15 +406,6 @@ public class MainFragment extends Fragment implements DateClick {
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.search, menu);
         SearchView actionSearch = (SearchView) menu.findItem(R.id.action_search).getActionView();
-       // MenuItem menuItem = menu.add(R.string.option_fragment_name);
-       // menuItem.setIcon(R.drawable.ic_settings);
-        //menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-
-        super.onCreateOptionsMenu(menu, inflater);
-//        menuItem.setOnMenuItemClickListener(item -> {
-//            Navigation.findNavController(requireView()).navigate(R.id.navigateToSettingsFragment);
-//            return true;
-//        });
 
         actionSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
