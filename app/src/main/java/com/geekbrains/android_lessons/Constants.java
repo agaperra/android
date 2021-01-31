@@ -43,5 +43,5 @@ public class Constants {
     public static final String weatherKey = "&appid=";
     public static final String urlYANDEX = "https://yandex.ru/search/?text=";
     @SuppressLint("ConstantLocale")
-    public static final String final_url=Constants.lang+Locale.forLanguageTag(Locale.getDefault().getLanguage())+Constants.weatherKey+BuildConfig.WEATHER_API_KEY;
+    public static final String final_url=Constants.lang+Locale.forLanguageTag(Locale.getDefault().getLanguage())+Constants.weatherKey+ BuildConfig.WEATHER_API_KEY;
 }

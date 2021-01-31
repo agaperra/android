@@ -12,8 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.geekbrains.android_lessons.Constants;
 import com.geekbrains.android_lessons.R;
+import com.geekbrains.android_lessons.Constants;
 import com.geekbrains.android_lessons.SharedPreferencesManager;
 import com.geekbrains.android_lessons.fragments.MainFragment;
 import com.geekbrains.android_lessons.model.AllList;
@@ -31,6 +31,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 
 public class RecyclerWeekDayAdapter extends RecyclerView.Adapter<RecyclerWeekDayAdapter.ViewHolder> {
+
     private final ArrayList<AllList> days = new ArrayList<>();
     private static final SharedPreferencesManager sPrefs = MainFragment.sPrefs;
     private int shift = 0;

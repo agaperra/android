@@ -54,26 +54,26 @@ public class getWeather {
         try {
             URL url = new URL(Constants.urlWeather7Days +
                     URLEncoder.encode(parent.getCityName())+Constants.final_url);
-          Handler handler = new Handler(Looper.getMainLooper());
-                new Thread(() -> {
-                    HttpsURLConnection urlConnection;
-                    try {
-                        urlConnection = (HttpsURLConnection) url.openConnection();
-                        urlConnection.setRequestMethod("GET");
-                        urlConnection.setReadTimeout(1000);
-                        BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-                        String result = getLines(in);
+            Handler handler = new Handler(Looper.getMainLooper());
+            new Thread(() -> {
+                HttpsURLConnection urlConnection;
+                try {
+                    urlConnection = (HttpsURLConnection) url.openConnection();
+                    urlConnection.setRequestMethod("GET");
+                    urlConnection.setReadTimeout(1000);
+                    BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+                    String result = getLines(in);
 
-                        AllList weatherList = gson.fromJson(result, AllList.class);
-                        handler.post(() -> parent.setupRecyclerView(weatherList.getList()));
-                        urlConnection.disconnect();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }).start();
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
+                    AllList weatherList = gson.fromJson(result, AllList.class);
+                    handler.post(() -> parent.setupRecyclerView(weatherList.getList()));
+                    urlConnection.disconnect();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }).start();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
     }
 
     private static String getLines(BufferedReader in) {

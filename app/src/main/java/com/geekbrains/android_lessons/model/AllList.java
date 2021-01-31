@@ -2,8 +2,8 @@ package com.geekbrains.android_lessons.model;
 
 import android.app.Activity;
 
-import com.geekbrains.android_lessons.Constants;
 import com.geekbrains.android_lessons.R;
+import com.geekbrains.android_lessons.Constants;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;

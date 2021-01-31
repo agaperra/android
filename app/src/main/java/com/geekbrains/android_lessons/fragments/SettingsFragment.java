@@ -19,8 +19,8 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
-import com.geekbrains.android_lessons.Constants;
 import com.geekbrains.android_lessons.R;
+import com.geekbrains.android_lessons.Constants;
 import com.geekbrains.android_lessons.SharedPreferencesManager;
 
 import java.util.Objects;

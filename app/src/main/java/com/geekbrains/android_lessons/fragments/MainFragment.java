@@ -25,8 +25,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.geekbrains.android_lessons.Constants;
 import com.geekbrains.android_lessons.R;
+import com.geekbrains.android_lessons.Constants;
 import com.geekbrains.android_lessons.SharedPreferencesManager;
 import com.geekbrains.android_lessons.adapters.RecyclerHorizontalHoursAdapter;
 import com.geekbrains.android_lessons.adapters.RecyclerWeekDayAdapter;
@@ -319,7 +319,7 @@ public class MainFragment extends Fragment implements DateClick {
                 requireContext(), LinearLayoutManager.VERTICAL, false
         );
 
-        RecyclerWeekDayAdapter adapterWeek = new RecyclerWeekDayAdapter(list);
+       RecyclerWeekDayAdapter adapterWeek = new RecyclerWeekDayAdapter(list);
         adapterWeek.addItems(AllList.getDays(5, requireActivity()));
 
         recyclerViewDays.setLayoutManager(layoutManager2);
@@ -411,8 +411,8 @@ public class MainFragment extends Fragment implements DateClick {
 
                     sPrefs.getEditor().putString(Constants.tag_cityName, data).apply();
                     cityNameView.setText(data);
-                    getWeather.getWeather(com.geekbrains.android_lessons.fragments.MainFragment.this);
-                    getWeather.getWeatherForecast(com.geekbrains.android_lessons.fragments.MainFragment.this);
+                    getWeather.getWeather(MainFragment.this);
+                    getWeather.getWeatherForecast(MainFragment.this);
                     actionSearch.onActionViewCollapsed();
                     return true;
                 }

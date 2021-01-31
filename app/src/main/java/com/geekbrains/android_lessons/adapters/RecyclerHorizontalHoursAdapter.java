@@ -12,8 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.geekbrains.android_lessons.Constants;
 import com.geekbrains.android_lessons.R;
+import com.geekbrains.android_lessons.Constants;
 import com.geekbrains.android_lessons.SharedPreferencesManager;
 import com.geekbrains.android_lessons.fragments.MainFragment;
 import com.geekbrains.android_lessons.model.AllList;
@@ -85,9 +85,9 @@ public class RecyclerHorizontalHoursAdapter extends RecyclerView.Adapter<Recycle
                 time.setText(String.format("%s", updatedOn));
                 //time.setText(hour.getHourInADay());
                 double k=list[position].getMain().getTemp();
-                    if (k<273.15&&k>272.15){
-                        k=273.15;
-                    }
+                if (k<273.15&&k>272.15){
+                    k=273.15;
+                }
 
                 switch (sPrefs.retrieveInt(Constants.tag_temp, Constants.POSTFIX_KELVIN)) {
                     case 0:

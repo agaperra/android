@@ -71,3 +71,31 @@
     </fragment>
 
 </navigation>
+
+    <!--<?xml version="1.0" encoding="utf-8"?>-->
+    <!--<navigation xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--    xmlns:tools="http://schemas.android.com/tools"-->
+    <!--    android:id="@+id/main_nav"-->
+    <!--    app:startDestination="@id/home_nav">-->
+
+    <!--    <fragment-->
+    <!--        android:id="@+id/home_nav"-->
+    <!--        android:name="com.geekbrains.android_lessons.fragments.MainFragment"-->
+    <!--        android:label="@string/menu_home"-->
+    <!--        tools:layout="@layout/fragment_main">-->
+    <!--        <argument-->
+    <!--            android:name="cityName"-->
+    <!--            android:defaultValue="DefaultString"-->
+    <!--            app:argType="string" />-->
+    <!--    </fragment>-->
+    <!--    <fragment-->
+    <!--        android:id="@+id/developers_nav"-->
+    <!--        android:name="com.geekbrains.android_lessons.fragments.DevelopersFragment"-->
+    <!--        android:label="@string/developers"-->
+    <!--        tools:layout="@layout/developers_fragment" />-->
+    <!--    <fragment-->
+    <!--        android:id="@+id/options_nav"-->
+    <!--        android:name="com.geekbrains.android_lessons.fragments.SettingsFragment"-->
+    <!--        android:label="@string/menu_settings" />-->
+    <!--</navigation>-->
