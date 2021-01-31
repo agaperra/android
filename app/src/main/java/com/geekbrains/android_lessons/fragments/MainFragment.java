@@ -256,8 +256,7 @@ public class MainFragment extends Fragment implements DateClick {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-    //    requireActivity().setTitle("");
-    //    ((AppCompatActivity) requireActivity()).setSupportActionBar(view.findViewById(R.id.toolbar));
+
         setHasOptionsMenu(true);
         setRetainInstance(true);
 
@@ -268,15 +267,6 @@ public class MainFragment extends Fragment implements DateClick {
         findViews(view);
         getWeather.getWeather(this);
         getWeather.getWeatherForecast(this);
-//        Intent intent = requireActivity().getIntent();
-//        if (intent.hasExtra(Constants.tag_cityName)) {
-//            message = intent.getStringExtra(Constants.tag_cityName);
-//            if (!message.equals("")) {
-//                sPrefs.storeString(Constants.tag_cityName, message);
-//                cityNameView.setText(message);
-//
-//            }
-//        }
         updateAllParameters();
 
 
@@ -362,7 +352,16 @@ public class MainFragment extends Fragment implements DateClick {
 //    }
 
     @SuppressLint({"SetTextI18n", "DefaultLocale"})
-    public static void checkSharedPreferences(String format, String keyContainer, String tag, String parameter, TextView textView, int defaultConst, double multi, double shift, String... tags) {
+    public static void checkSharedPreferences(
+            String format,
+            String keyContainer,
+            String tag,
+            String parameter,
+            TextView textView,
+            int defaultConst,
+            double multi,
+            double shift,
+            String... tags) {
         sPrefs.getEditor().putString(keyContainer, parameter).apply();
         switch (sPrefs.retrieveInt(tag, defaultConst)) {
             case 0:
