@@ -15,4 +15,17 @@
     <color name="drk_m">#1d1d1b</color>
     <color name="light">#DFD8D8</color>
 
+
+
+
+
+    <color name="dialog_background">#C33D3D</color>
+    <color name="dialog_text">#EEEEEE</color>
+    <color name="dialog_buttons_color">#FFFFFF</color>
+    <color name="dialog_checkbox">#FFF</color>
+    <color name="dialog_checkbox_activated">#E4B86A</color>
+    <color name="dialog_list_item">#FFF</color>
+    <color name="dialog_accent_button">#FFF</color>
+    <color name="dialog_button">#77FFFFFF</color>
+
 </resources>
