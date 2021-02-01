@@ -27,8 +27,6 @@ public class RecyclerHorizontalHoursAdapter extends RecyclerView.Adapter<Recycle
     private final ArrayList<AllList> hours = new ArrayList<>();
     private static WeatherRequest[] list;
     private static final SharedPreferencesManager sPrefs= MainFragment.sPrefs;
-    //private final int shift=0;
-
     public RecyclerHorizontalHoursAdapter(WeatherRequest[] list) {
         RecyclerHorizontalHoursAdapter.list =list;
     }
@@ -43,7 +41,7 @@ public class RecyclerHorizontalHoursAdapter extends RecyclerView.Adapter<Recycle
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerHorizontalHoursAdapter.ViewHolder holder, int position) {
-        holder.bind(position);
+        holder.onGetData(position);
     }
 
 
@@ -72,20 +70,10 @@ public class RecyclerHorizontalHoursAdapter extends RecyclerView.Adapter<Recycle
         }
 
         @SuppressLint({"DefaultLocale", "SetTextI18n"})
-        public void bind(int position) {
+        public void onGetData(int position) {
             if(position<=list.length) {
-                //DateFormat df = DateFormat.getDateTimeInstance();
                 String updatedOn =Constants.hoursFormat.format(new Date(1000 * list[position].getDate()));
-//                if (String.valueOf(Locale.forLanguageTag(Locale.getDefault().getLanguage())).equals("ru")) {
-//                    updatedOn=updatedOn.substring(17, 19);
-//                }
-//                else updatedOn=updatedOn.substring(13, 15);
-                if (updatedOn.contains(":"))
-                    updatedOn+="00";
-                else updatedOn+=":00";
-
-                time.setText(String.format("%s", updatedOn));
-                //time.setText(hour.getHourInADay());
+                time.setText(String.format("%s", updatedOn+":00"));
                 double k=list[position].getMain().getTemp();
                 if (k<273.15&&k>272.15){
                     k=273.15;

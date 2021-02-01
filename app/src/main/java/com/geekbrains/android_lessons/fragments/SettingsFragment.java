@@ -45,11 +45,8 @@ public class SettingsFragment extends Fragment {
         findViews(view);
         setUpRadioButton();
         initListeners();
-//        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-//        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setDisplayShowHomeEnabled(true);
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setHomeAsUpIndicator(R.drawable.back_line);
 
-        //theme group listener
         themeGroup.setOnCheckedChangeListener((RadioGroup radioGroup, int checkedId) -> {
             int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
             if (theme_Dark.isChecked()) {
@@ -69,14 +66,14 @@ public class SettingsFragment extends Fragment {
 
     }
 
-
-
     public void radioButtonsCheckEnter(String tag, int defValue, RadioButton... radioButtons) {
-        int temp = sPrefs.retrieveInt(tag, defValue);
-        if (temp == 1) {
-            radioButtons[1].setChecked(true);
-        } else {
+       switch (sPrefs.retrieveInt(tag, defValue)){
+           case 1:
+               radioButtons[1].setChecked(true);
+               break;
+           default:
             radioButtons[0].setChecked(true);
+            break;
         }
     }
 
@@ -84,19 +81,14 @@ public class SettingsFragment extends Fragment {
 
         radioButtonsCheckEnter(Constants.tag_theme, Constants.THEME_LIGHT, theme_Light, theme_Dark);
         radioButtonsCheckEnter(Constants.tag_temp, Constants.POSTFIX_KELVIN, temp_kelvin, temp_Celsi);
-        radioButtonsCheckEnter(Constants.tag_wind, Constants.WINDFORCE_KMH, wind_KMH, wind_MS);
+        radioButtonsCheckEnter(Constants.tag_wind, Constants.WIND_KMH, wind_KMH, wind_MS);
         radioButtonsCheckEnter(Constants.tag_pressure, Constants.PRESSURE_GPA, press_GPA, press_MM);
     }
 
     public void initListeners() {
 
-        //degrees postfix listener
-        temperatureGroup.setOnCheckedChangeListener((RadioGroup radioGroup, int checkedId) -> checkingRadiobutton(temp_kelvin, temp_Celsi, Constants.tag_temp, Constants.POSTFIX_KELVIN, Constants.POSTFIX_CELS));
-
-        //wind force listener
-        windGroup.setOnCheckedChangeListener((RadioGroup radioGroup, int checkedId) -> checkingRadiobutton(wind_KMH, wind_MS, Constants.tag_wind, Constants.WINDFORCE_KMH, Constants.WINDFORCE_MS));
-
-        //pressure listener
+        temperatureGroup.setOnCheckedChangeListener((RadioGroup radioGroup, int checkedId) -> checkingRadiobutton(temp_kelvin, temp_Celsi, Constants.tag_temp, Constants.POSTFIX_KELVIN, Constants.POSTFIX_CELSIUS));
+        windGroup.setOnCheckedChangeListener((RadioGroup radioGroup, int checkedId) -> checkingRadiobutton(wind_KMH, wind_MS, Constants.tag_wind, Constants.WIND_KMH, Constants.WIND_MS));
         pressureGroup.setOnCheckedChangeListener((RadioGroup radioGroup, int checkedId) -> checkingRadiobutton(press_GPA, press_MM, Constants.tag_pressure, Constants.PRESSURE_GPA, Constants.PRESSURE_MM));
     }
 
@@ -104,9 +96,7 @@ public class SettingsFragment extends Fragment {
         if (radioButton1.isChecked()) {
             sPrefs.storeInt(tag, tags[0]);
         }
-        if (radioButton2.isChecked()) {
-            sPrefs.storeInt(tag, tags[1]);
-        }
+        else sPrefs.storeInt(tag, tags[1]);
     }
 
 

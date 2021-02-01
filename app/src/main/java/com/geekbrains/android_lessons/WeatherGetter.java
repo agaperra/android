@@ -14,20 +14,19 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.util.stream.Collectors;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class getWeather {
+public class WeatherGetter {
 
 
     private static final Gson gson = new Gson();
 
-    public static void getWeather( MainFragment parent) {
+    public static void getWeatherStatic(MainFragment parent) {
         try {
             URL url = new URL(Constants.urlWeatherStatic +
-                    URLEncoder.encode(parent.getCityName())+Constants.final_url);
+                    parent.getCityName()+Constants.final_url);
             Handler handler = new Handler(Looper.getMainLooper());
             new Thread(() -> {
                 HttpsURLConnection urlConnection;
@@ -42,17 +41,17 @@ public class getWeather {
                     handler.post(() -> parent.displayWeather(weatherRequest));
                     urlConnection.disconnect();
                 } catch (IOException e) {
-                    handler.post(parent::error);
+                    handler.post(parent::showError);
                 }
             }).start();
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
     }
-    public static void getWeather( String city,MainActivity parent) {
+    public static void getWeatherForSlideMenu(String city, MainActivity parent) {
         try {
             URL url = new URL(Constants.urlWeatherStatic +
-                    URLEncoder.encode(city)+Constants.final_url);
+                    city+Constants.final_url);
             Handler handler = new Handler(Looper.getMainLooper());
             new Thread(() -> {
                 HttpsURLConnection urlConnection;
@@ -75,10 +74,10 @@ public class getWeather {
         }
     }
 
-    public static void getWeatherForecast(MainFragment parent) {
+    public static void getWeatherForRecyclers(MainFragment parent) {
         try {
             URL url = new URL(Constants.urlWeather7Days +
-                    URLEncoder.encode(parent.getCityName())+Constants.final_url);
+                    parent.getCityName()+Constants.final_url);
             Handler handler = new Handler(Looper.getMainLooper());
             new Thread(() -> {
                 HttpsURLConnection urlConnection;

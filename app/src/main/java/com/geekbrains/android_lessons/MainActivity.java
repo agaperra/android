@@ -26,11 +26,9 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
-    private  DrawerLayout drawer;
     private NavigationView navigationView;
     private  NavController navController;
     public ConstraintLayout constraintLayout;
-    private View headerView;
     public static SharedPreferencesManager preferencesManager;
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -44,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         //constraintLayout=findViewById(R.id.navHeader);
         preferencesManager= new SharedPreferencesManager(this);
 
-        drawer = findViewById(R.id.drawerLayoutView);
+        DrawerLayout drawer = findViewById(R.id.drawerLayoutView);
         navigationView = findViewById(R.id.navigationView);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -55,11 +53,7 @@ public class MainActivity extends AppCompatActivity {
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-
-//preferencesManager.retrieveString(Constants.tag_cityName,getString(R.string.moscow))
-        getWeather.getWeather(preferencesManager.retrieveString(Constants.tag_cityName,getString(R.string.moscow)),this);
-        //getWeather.getWeather(String.valueOf((TextView)findViewById(R.id.cityNameView)),this);
-        //MainFragment.sPrefs.storeString(Constants.tag_cityName, String.valueOf(((TextView) headerView.findViewById(R.id.navHeaderLocationView)).getText()));
+        WeatherGetter.getWeatherForSlideMenu(preferencesManager.retrieveString(Constants.tag_cityName,getString(R.string.moscow)),this);
     }
 
 
@@ -88,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint({"DefaultLocale", "SetTextI18n"})
     public void displayWeather(WeatherRequest list) {
-       headerView = navigationView.getHeaderView(0);
+        View headerView = navigationView.getHeaderView(0);
         ((TextView) headerView.findViewById(R.id.navHeaderLocationView)).setText(list.getName());
        constraintLayout= (ConstraintLayout) headerView.findViewById(R.id.navHeader);
         String weatherStatusValue = String.valueOf(list.getWeather()[0].getDescription());
@@ -113,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
                 ( (TextView) headerView.findViewById(R.id.textdDegrees)).setText(String.format("%.0f", value) + "С\u00B0");
                 break;
         }
-        switch (preferencesManager.retrieveInt(Constants.tag_wind, Constants.WINDFORCE_KMH)) {
+        switch (preferencesManager.retrieveInt(Constants.tag_wind, Constants.WIND_KMH)) {
             case 0:
                 ((TextView) headerView.findViewById(R.id.textWind)).setText(String.format("%.0f", list.getWind().getSpeed())+getString(R.string.km_h));
                 break;
@@ -139,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
         }
        String icon = list.getWeather()[0].getIcon();
         setBackgroundMode(constraintLayout,icon);
-        setIcons(list,headerView.findViewById(R.id.navHeaderIconView));
+        setIcons(list, headerView.findViewById(R.id.navHeaderIconView));
 
 
     }
@@ -155,21 +149,15 @@ public class MainActivity extends AppCompatActivity {
         if (t >= 200 && t <= 232) {
             v.setBackgroundResource(R.drawable.thunderstorm);
         }
-        if (t >= 300 && t <= 321) {
-            v.setBackgroundResource(R.drawable.rain);
-        }
         if (t >= 500 && t <= 504) {
             if (day)
                 v.setBackgroundResource(R.drawable.clouds_sun);
             else v.setBackgroundResource(R.drawable.moon_cloud);
         }
-        if (t == 511) {
-            v.setBackgroundResource(R.drawable.snow);
-        }
-        if (t >= 520 && t <= 531) {
+        if ((t >= 520 && t <= 531)||(t >= 300 && t <= 321)){
             v.setBackgroundResource(R.drawable.rain);
         }
-        if (t >= 600 && t <= 622) {
+        if (t == 511||(t >= 600 && t <= 622)) {
             v.setBackgroundResource(R.drawable.snow);
         }
         if (t >= 701 && t <= 781) {
@@ -184,14 +172,10 @@ public class MainActivity extends AppCompatActivity {
         }
         switch (t) {
             case 801:
+            case 802:
                 if (day)
                     v.setBackgroundResource(R.drawable.clouds_15);
                 else v.setBackgroundResource(R.drawable.moon_cloud_15);
-                break;
-            case 802:
-                if (day)
-                    v.setBackgroundResource(R.drawable.clouds_30);
-                else v.setBackgroundResource(R.drawable.moon_cloud_30);
                 break;
             case 803:
             case 804:

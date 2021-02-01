@@ -14,7 +14,7 @@ import java.util.Calendar;
 public class AllList implements Serializable {
 
     private String dayOfWeek;
-    private final SimpleDateFormat dateFormat= Constants.DD_MMMM;
+    private final SimpleDateFormat dateFormat= Constants.dayMonthFormat;
     private static final SimpleDateFormat weekDayFormat=Constants.weekDayFormat;
     private String date;
     private String dt;
@@ -64,7 +64,7 @@ public class AllList implements Serializable {
         else {
             now.add(Calendar.DAY_OF_MONTH, shift+7);
         }
-        dt=Constants.YYYYM_MDD.format(now.getTime());
+        dt=Constants.yearFormat.format(now.getTime());
         date = dateFormat.format(now.getTime());
         dayOfWeek = getDayName(shift);
 

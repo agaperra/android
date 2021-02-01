@@ -88,7 +88,7 @@ public class RecyclerWeekDayAdapter extends RecyclerView.Adapter<RecyclerWeekDay
 
         }
 
-        public String trying(String str) {
+        public String checkWeekend(String str) {
             AtomicReference<String> string= new AtomicReference<>("");
             try {
                 URL url = new URL("https://isdayoff.ru/"+str);
@@ -117,7 +117,7 @@ public class RecyclerWeekDayAdapter extends RecyclerView.Adapter<RecyclerWeekDay
         @SuppressLint({"DefaultLocale", "SetTextI18n"})
         public void bind(int position) {
             AllList day = days.get(position);
-            if (trying(day.getDt()).equals("1") || day.getDayOfWeek().contains("Суббота") || day.getDayOfWeek().contains("Воскресенье")) {
+            if (checkWeekend(day.getDt()).equals("1") || day.getDayOfWeek().contains("Суббота") || day.getDayOfWeek().contains("Воскресенье")) {
                 date.setTextColor(Color.parseColor("#C33D3D"));
                 weekDay.setTextColor(Color.parseColor("#C33D3D"));
             }
@@ -140,7 +140,7 @@ public class RecyclerWeekDayAdapter extends RecyclerView.Adapter<RecyclerWeekDay
                         degrees.setText(String.format("%.0f", value) + "С\u00B0");
                         break;
                 }
-                switch (sPrefs.retrieveInt(Constants.tag_wind, Constants.WINDFORCE_KMH)) {
+                switch (sPrefs.retrieveInt(Constants.tag_wind, Constants.WIND_KMH)) {
                     case 0:
                         windd.setText(String.format("%.0f", list[shift].getWind().getSpeed()));
                         break;

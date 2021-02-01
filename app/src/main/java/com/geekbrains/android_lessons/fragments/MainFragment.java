@@ -29,9 +29,9 @@ import com.geekbrains.android_lessons.Constants;
 import com.geekbrains.android_lessons.MainActivity;
 import com.geekbrains.android_lessons.R;
 import com.geekbrains.android_lessons.SharedPreferencesManager;
+import com.geekbrains.android_lessons.WeatherGetter;
 import com.geekbrains.android_lessons.adapters.RecyclerHorizontalHoursAdapter;
 import com.geekbrains.android_lessons.adapters.RecyclerWeekDayAdapter;
-import com.geekbrains.android_lessons.getWeather;
 import com.geekbrains.android_lessons.interfaces.DateClick;
 import com.geekbrains.android_lessons.model.AllList;
 import com.geekbrains.android_lessons.model.WeatherRequest;
@@ -84,11 +84,11 @@ public class MainFragment extends Fragment implements DateClick {
         return root;
     }
 
-    public void error() {
+    public void showError() {
         Snackbar snackbar = Snackbar.make(requireView(), getString(R.string.error), Snackbar.LENGTH_LONG).
                 setAction(getString(R.string.update), ignored -> {
-                    getWeather.getWeather(this);
-                    getWeather.getWeatherForecast(this);
+                    WeatherGetter.getWeatherStatic(this);
+                    WeatherGetter.getWeatherForRecyclers(this);
                 });
         @SuppressLint("InflateParams")
         View customSnackView = getLayoutInflater().inflate(R.layout.rounded, null);
@@ -139,29 +139,28 @@ public class MainFragment extends Fragment implements DateClick {
     }
 
     public String getOrientation(int deg){
-        String orientation=getString(R.string.e);
         if (deg>=22&&deg<67){
-            orientation=getString(R.string.ne);
+            return getString(R.string.ne);
         }
         if (deg>=67&&deg<112){
-            orientation=getString(R.string.n);
+            return getString(R.string.n);
         }
         if (deg>=112&&deg<157){
-            orientation=getString(R.string.nw);
+            return getString(R.string.nw);
         }
         if (deg>=157&&deg<202){
-            orientation=getString(R.string.w);
+            return getString(R.string.w);
         }
         if (deg>=202&&deg<247){
-            orientation=getString(R.string.ws);
+            return getString(R.string.ws);
         }
         if (deg>=247&&deg<292){
-            orientation=getString(R.string.s);
+            return getString(R.string.s);
         }
         if (deg>=292&&deg<337){
-            orientation=getString(R.string.se);
+            return getString(R.string.se);
         }
-        return orientation;
+        return getString(R.string.e);
 
     }
 
@@ -204,14 +203,10 @@ public class MainFragment extends Fragment implements DateClick {
         }
         switch (t) {
             case 801:
+            case 802:
                 if (day)
                     v.setBackgroundResource(R.drawable.clouds_15);
                 else v.setBackgroundResource(R.drawable.moon_cloud_15);
-                break;
-            case 802:
-                if (day)
-                    v.setBackgroundResource(R.drawable.clouds_30);
-                else v.setBackgroundResource(R.drawable.moon_cloud_30);
                 break;
             case 803:
             case 804:
@@ -232,38 +227,38 @@ public class MainFragment extends Fragment implements DateClick {
         }
         switch (tmp) {
             case "01":
-                check(mode, R.drawable.icon_01d, R.drawable.icon_01n);
+                checkBackgroundMode(mode, R.drawable.icon_01d, R.drawable.icon_01n);
                 break;
             case "02":
-                check(mode, R.drawable.icon_02d, R.drawable.icon_02n);
+                checkBackgroundMode(mode, R.drawable.icon_02d, R.drawable.icon_02n);
                 break;
             case "03":
-                check(mode, R.drawable.icon_03d, R.drawable.icon_03d);
+                checkBackgroundMode(mode, R.drawable.icon_03d, R.drawable.icon_03d);
                 break;
             case "04":
-                check(mode, R.drawable.icon_04d, R.drawable.icon_04d);
+                checkBackgroundMode(mode, R.drawable.icon_04d, R.drawable.icon_04d);
                 break;
             case "09":
-                check(mode, R.drawable.icon_09d, R.drawable.icon_09n);
+                checkBackgroundMode(mode, R.drawable.icon_09d, R.drawable.icon_09n);
                 break;
             case "10":
-                check(mode, R.drawable.icon_10d, R.drawable.icon_10n);
+                checkBackgroundMode(mode, R.drawable.icon_10d, R.drawable.icon_10n);
                 break;
             case "11":
-                check(mode, R.drawable.icon_11d, R.drawable.icon_11n);
+                checkBackgroundMode(mode, R.drawable.icon_11d, R.drawable.icon_11n);
                 break;
             case "13":
-                check(mode, R.drawable.icon_13d, R.drawable.icon_13n);
+                checkBackgroundMode(mode, R.drawable.icon_13d, R.drawable.icon_13n);
                 break;
             case "50":
-                check(mode, R.drawable.icon_50d, R.drawable.icon_50n);
+                checkBackgroundMode(mode, R.drawable.icon_50d, R.drawable.icon_50n);
                 break;
         }
 
 
     }
 
-    public void check(String mode, int... tags) {
+    public void checkBackgroundMode(String mode, int... tags) {
         if (mode.equals("d")) {
             background.setImageResource(tags[0]);
         } else if (mode.equals("n")) {
@@ -291,19 +286,18 @@ public class MainFragment extends Fragment implements DateClick {
 
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setDisplayShowHomeEnabled(true);
-//        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setHomeAsUpIndicator(R.drawable.ic_menu);
        sPrefs = MainActivity.preferencesManager;
         findViews(view);
-        getWeather.getWeather(this);
-        getWeather.getWeatherForecast(this);
+        WeatherGetter.getWeatherStatic(this);
+        WeatherGetter.getWeatherForRecyclers(this);
         updateAllParameters();
 
 
         mSwipeRefreshLayout = view.findViewById(R.id.refresh);
         mSwipeRefreshLayout.setOnRefreshListener(() -> {
             mSwipeRefreshLayout.setRefreshing(true);
-            getWeather.getWeather(this);
-            getWeather.getWeatherForecast(this);
+            WeatherGetter.getWeatherStatic(this);
+            WeatherGetter.getWeatherForRecyclers(this);
             updateAllParameters();
             mSwipeRefreshLayout.postOnAnimationDelayed(() -> mSwipeRefreshLayout.setRefreshing(false), 2000);
         });
@@ -318,18 +312,7 @@ public class MainFragment extends Fragment implements DateClick {
                 break;
         }
 
-
-//по нажатию на название города - открытие поискового запроса в яндексе
         view.findViewById(R.id.search_in_internet).setOnClickListener(v -> {
-//            if (!message.trim().equals("")) {
-//                Snackbar snackbar = Snackbar.make(requireView(), getString(R.string.open_url), Snackbar.LENGTH_LONG).
-//                        setAction(getString(R.string.yes), ignored -> {
-//                            Intent openURL = new Intent(android.content.Intent.ACTION_VIEW);
-//                            openURL.setData(Uri.parse(url + message));
-//                            startActivity(openURL);
-//                        });
-//                snackbar.setTextColor(Color.WHITE);
-//                snackbar.show();
             AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
             builder.setTitle(getString(R.string.message))
                     .setPositiveButton(getString(R.string.yes), (dialog, which) -> openURL())
@@ -367,19 +350,6 @@ public class MainFragment extends Fragment implements DateClick {
         recyclerViewHours.setAdapter(adapter);
     }
 
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//
-//        if (requestCode == Constants.REQUEST_CODE) {
-//            if (resultCode == Constants.RESULT_OK) {
-//                String location = Objects.requireNonNull(data).getStringExtra(Constants.ACCESS_MESSAGE);
-//                cityNameView.setText(location);
-//            }
-//        } else {
-//            super.onActivityResult(requestCode, resultCode, data);
-//        }
-//    }
-
     @SuppressLint({"SetTextI18n", "DefaultLocale"})
     public static void checkSharedPreferences(
             String format,
@@ -413,10 +383,9 @@ public class MainFragment extends Fragment implements DateClick {
         checkSharedPreferences("%.0f", Constants.PREF_DEGREES, Constants.tag_temp, parameters[1], degreesCountView, Constants.POSTFIX_KELVIN, 1, -273.15, getString(R.string.kelvin), getString(R.string.cels));
 
 
-        //checkSharedPreferences("%.0f", Constants.PREF_WIND, Constants.tag_wind, parameters[2], windForceParameterView, Constants.WINDFORCE_KMH, 0.27, 0, getString(R.string.km_h), getString(R.string.m_s));
         sPrefs.getEditor().putString(Constants.PREF_WIND, parameters[2]).apply();
         sPrefs.getEditor().putString(Constants.PREF_ORIENTATION,parameters[8]).apply();
-        switch (sPrefs.retrieveInt(Constants.tag_wind, Constants.WINDFORCE_KMH)) {
+        switch (sPrefs.retrieveInt(Constants.tag_wind, Constants.WIND_KMH)) {
             case 0:
                 System.out.println(parameters[8]);
                 windForceParameterView.setText(parameters[2] + " " + getString(R.string.km_h)+", "+getOrientation(Integer.parseInt(parameters[8])));
@@ -460,9 +429,9 @@ public class MainFragment extends Fragment implements DateClick {
 
                     sPrefs.getEditor().putString(Constants.tag_cityName, data).apply();
                     cityNameView.setText(data);
-                    getWeather.getWeather(MainFragment.this);
-                    getWeather.getWeatherForecast(MainFragment.this);
-                    getWeather.getWeather(String.valueOf(cityNameView.getText()), (MainActivity)getActivity());
+                    WeatherGetter.getWeatherStatic(MainFragment.this);
+                    WeatherGetter.getWeatherForRecyclers(MainFragment.this);
+                    WeatherGetter.getWeatherForSlideMenu(String.valueOf(cityNameView.getText()), (MainActivity)getActivity());
                     actionSearch.onActionViewCollapsed();
                     return true;
                 }
@@ -482,10 +451,7 @@ public class MainFragment extends Fragment implements DateClick {
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-//
-//        if (item.getItemId() == android.R.id.home) {
-//            Navigation.findNavController(requireView()).navigate(R.id.navigateToSearchFragment);
-//        }
+
         return super.onOptionsItemSelected(item);
     }
 
