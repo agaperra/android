@@ -37,15 +37,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
-//        toolbar.setBackgroundColor(getResources().getColor(R.color.design_default_color_background));
         setSupportActionBar(toolbar);
-        //constraintLayout=findViewById(R.id.navHeader);
         preferencesManager= new SharedPreferencesManager(this);
 
         DrawerLayout drawer = findViewById(R.id.drawerLayoutView);
         navigationView = findViewById(R.id.navigationView);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.home_nav, R.id.settings_nav, R.id.developers_nav)
                 .setDrawerLayout(drawer)
