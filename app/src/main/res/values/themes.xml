@@ -1,23 +1,33 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Theme.Android_Lessons" parent="Theme.AppCompat.DayNight.DarkActionBar">
-        <!-- <item name="colorPrimary">@color/normal</item>-->
-        <item name="colorPrimaryVariant">@color/grey</item>
+        <item name="colorPrimary">@color/purple_m</item>
+        <item name="colorPrimaryVariant">@android:color/transparent</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="android:textColor">@color/black</item>
         <item name="colorSecondary">@color/black</item>
         <item name="colorSecondaryVariant">@color/black</item>
         <item name="colorOnSecondary">@color/white</item>
-<!--        <item name="colorAccent">@color/normal</item>-->
-<item name="android:windowContentOverlay">@null</item>
+        <!--        <item name="colorAccent">@color/normal</item>-->
+        <item name="android:windowContentOverlay">@null</item>
         <item name="windowActionBarOverlay">true</item>
-        <item name="colorPrimary">@android:color/transparent</item>
+       <!-- <item name="colorPrimary">@android:color/transparent</item>-->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorSecondary</item>
+        <item name="alertDialogTheme">@style/YDialog</item>
+<!--        <item name="android:actionBarStyle">@style/TransparentActionBar</item>-->
     </style>
 
+<!--    <style name="TransparentActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">-->
+<!--        <item name="android:background">@android:color/transparent</item>-->
+<!--    </style>-->
 
+
+    <style name="Theme.Android_Lessons.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 
 
     <style name="Theme.Android_Lessons_ActionBar" parent="Theme.AppCompat.DayNight.DarkActionBar">
@@ -28,7 +38,7 @@
         <item name="colorSecondary">@color/black</item>
         <item name="colorSecondaryVariant">@color/black</item>
         <item name="colorOnSecondary">@color/grey</item>
-<!--        <item name="colorAccent">@color/normal</item>-->
+        <!--        <item name="colorAccent">@color/normal</item>-->
         <item name="android:actionBarStyle">@style/MyActionBarTheme</item>
     </style>
 
@@ -46,5 +56,51 @@
         <!-- цвет дорожки для неактивного состояния (30% прозрачности) -->
         <item name="android:colorForeground">#A1A1A1</item>
     </style>
+
+
+    <style name="Theme.Android_Lessons.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.Android_Lessons.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+    <style name="YDialog" parent="Theme.MaterialComponents.Light.Dialog.Alert">
+        <!-- Base colors -->
+        <item name="android:textColorPrimary">@color/dialog_text</item>
+        <item name="android:windowBackground">@drawable/dialog_style</item>
+        <item name="colorControlNormal">@color/dialog_checkbox</item>
+        <item name="colorControlActivated">@color/dialog_checkbox_activated</item>
+        <item name="textColorAlertDialogListItem">@color/dialog_list_item</item>
+
+        <!-- Button styles -->
+        <item name="buttonBarPositiveButtonStyle">@style/YDialogPositiveButton</item>
+        <item name="buttonBarNegativeButtonStyle">@style/YDialogNegativeButton</item>
+        <item name="buttonBarNeutralButtonStyle">@style/YDialogNeutralButton</item>
+
+        <!-- Sizes -->
+        <item name="android:lineSpacingExtra">@dimen/dialog_line_spacing</item>
+        <item name="android:textSize">@dimen/dialog_text_size</item>
+        <item name="android:windowTitleStyle">@style/YDialogTitleTextAppearance</item>
+    </style>
+
+    <style name="YDialogButton" parent="@style/Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/dialog_button</item>
+        <item name="android:textSize">@dimen/dialog_buttons_size</item>
+    </style>
+
+    <style name="YDialogPositiveButton" parent="YDialogButton">
+        <item name="android:textColor">@color/dialog_accent_button</item>
+    </style>
+
+    <style name="YDialogNegativeButton" parent="YDialogButton"/>
+    <style name="YDialogNeutralButton" parent="YDialogButton"/>
+
+    <style name="YDialogTitleTextAppearance" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
+        <item name="android:textSize">@dimen/dialog_title_size</item>
+    </style>
+
+    <dimen name="dialog_line_spacing">2dp</dimen>
+    <dimen name="dialog_title_size">20sp</dimen>
+    <dimen name="dialog_text_size">16sp</dimen>
+    <dimen name="dialog_buttons_size">14sp</dimen>
 
 </resources>

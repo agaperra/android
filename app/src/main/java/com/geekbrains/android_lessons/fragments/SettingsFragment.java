@@ -1,12 +1,8 @@
 package com.geekbrains.android_lessons.fragments;
 
-import android.annotation.SuppressLint;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
@@ -17,7 +13,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 
 import com.geekbrains.android_lessons.Constants;
 import com.geekbrains.android_lessons.R;
@@ -38,24 +33,20 @@ public class SettingsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_settings, container, false);
+        View root = inflater.inflate(R.layout.fragment_settings, container, false);
+        return root;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        requireActivity().setTitle("");
-        ((AppCompatActivity) requireActivity()).setSupportActionBar(view.findViewById(R.id.toolbar));
         setHasOptionsMenu(true);
         setRetainInstance(true);
 
         findViews(view);
         setUpRadioButton();
         initListeners();
-        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setDisplayShowHomeEnabled(true);
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setHomeAsUpIndicator(R.drawable.back_line);
 
-        //theme group listener
         themeGroup.setOnCheckedChangeListener((RadioGroup radioGroup, int checkedId) -> {
             int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
             if (theme_Dark.isChecked()) {
@@ -76,11 +67,13 @@ public class SettingsFragment extends Fragment {
     }
 
     public void radioButtonsCheckEnter(String tag, int defValue, RadioButton... radioButtons) {
-        int temp = sPrefs.retrieveInt(tag, defValue);
-        if (temp == 1) {
-            radioButtons[1].setChecked(true);
-        } else {
+       switch (sPrefs.retrieveInt(tag, defValue)){
+           case 1:
+               radioButtons[1].setChecked(true);
+               break;
+           default:
             radioButtons[0].setChecked(true);
+            break;
         }
     }
 
@@ -88,19 +81,14 @@ public class SettingsFragment extends Fragment {
 
         radioButtonsCheckEnter(Constants.tag_theme, Constants.THEME_LIGHT, theme_Light, theme_Dark);
         radioButtonsCheckEnter(Constants.tag_temp, Constants.POSTFIX_KELVIN, temp_kelvin, temp_Celsi);
-        radioButtonsCheckEnter(Constants.tag_wind, Constants.WINDFORCE_KMH, wind_KMH, wind_MS);
+        radioButtonsCheckEnter(Constants.tag_wind, Constants.WIND_KMH, wind_KMH, wind_MS);
         radioButtonsCheckEnter(Constants.tag_pressure, Constants.PRESSURE_GPA, press_GPA, press_MM);
     }
 
     public void initListeners() {
 
-        //degrees postfix listener
-        temperatureGroup.setOnCheckedChangeListener((RadioGroup radioGroup, int checkedId) -> checkingRadiobutton(temp_kelvin, temp_Celsi, Constants.tag_temp, Constants.POSTFIX_KELVIN, Constants.POSTFIX_CELS));
-
-        //wind force listener
-        windGroup.setOnCheckedChangeListener((RadioGroup radioGroup, int checkedId) -> checkingRadiobutton(wind_KMH, wind_MS, Constants.tag_wind, Constants.WINDFORCE_KMH, Constants.WINDFORCE_MS));
-
-        //pressure listener
+        temperatureGroup.setOnCheckedChangeListener((RadioGroup radioGroup, int checkedId) -> checkingRadiobutton(temp_kelvin, temp_Celsi, Constants.tag_temp, Constants.POSTFIX_KELVIN, Constants.POSTFIX_CELSIUS));
+        windGroup.setOnCheckedChangeListener((RadioGroup radioGroup, int checkedId) -> checkingRadiobutton(wind_KMH, wind_MS, Constants.tag_wind, Constants.WIND_KMH, Constants.WIND_MS));
         pressureGroup.setOnCheckedChangeListener((RadioGroup radioGroup, int checkedId) -> checkingRadiobutton(press_GPA, press_MM, Constants.tag_pressure, Constants.PRESSURE_GPA, Constants.PRESSURE_MM));
     }
 
@@ -108,23 +96,9 @@ public class SettingsFragment extends Fragment {
         if (radioButton1.isChecked()) {
             sPrefs.storeInt(tag, tags[0]);
         }
-        if (radioButton2.isChecked()) {
-            sPrefs.storeInt(tag, tags[1]);
-        }
+        else sPrefs.storeInt(tag, tags[1]);
     }
 
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.back, menu);
-
-        MenuItem authorsItem = menu.add(R.string.developers);
-        authorsItem.setOnMenuItemClickListener(item -> {
-            Navigation.findNavController(requireView()).navigate(R.id.navigateToDevelopersFragment);
-            return true;
-        });
-        super.onCreateOptionsMenu(menu, inflater);
-
-    }
 
     public void findViews(View v) {
 
@@ -147,16 +121,5 @@ public class SettingsFragment extends Fragment {
 
     }
 
-
-    @SuppressLint("NonConstantResourceId")
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home || item.getItemId() == R.id.home) {
-            Navigation.findNavController(requireView()).popBackStack();
-
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
 }

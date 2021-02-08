@@ -2,8 +2,8 @@ package com.geekbrains.android_lessons.model;
 
 import android.app.Activity;
 
-import com.geekbrains.android_lessons.Constants;
 import com.geekbrains.android_lessons.R;
+import com.geekbrains.android_lessons.Constants;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -14,15 +14,16 @@ import java.util.Calendar;
 public class AllList implements Serializable {
 
     private String dayOfWeek;
-    private final SimpleDateFormat dateFormat= Constants.dateFormat;
+    private final SimpleDateFormat dateFormat= Constants.dayMonthFormat;
     private static final SimpleDateFormat weekDayFormat=Constants.weekDayFormat;
     private String date;
+    private String dt;
     private WeatherRequest[] list;
+    private static ArrayList<String> days;
 
-    public void setList(WeatherRequest[] list){this.list=list;}
     public WeatherRequest[] getList(){return list;}
 
-    private static ArrayList<String> days;
+
 
     public static ArrayList<AllList> getDays(int value, Activity parent) {
 
@@ -46,6 +47,15 @@ public class AllList implements Serializable {
         return arrayList;
     }
 
+    public static ArrayList<AllList> getHours(int value) {
+        ArrayList<AllList> arrayList = new ArrayList<>();
+        for (int i = 0; i < value; i++) {
+            AllList hour = new AllList();
+            arrayList.add(hour);
+        }
+        return arrayList;
+    }
+
     private void generateData(int shift) {
         Calendar now = Calendar.getInstance();
         if (shift>=0) {
@@ -54,6 +64,7 @@ public class AllList implements Serializable {
         else {
             now.add(Calendar.DAY_OF_MONTH, shift+7);
         }
+        dt=Constants.yearFormat.format(now.getTime());
         date = dateFormat.format(now.getTime());
         dayOfWeek = getDayName(shift);
 
@@ -74,5 +85,11 @@ public class AllList implements Serializable {
     public String  getDay(){
         return date;
     }
+    public String  getDt(){
+        return dt;
+    }
 
+    public void setList(WeatherRequest[] list) {
+        this.list = list;
+    }
 }

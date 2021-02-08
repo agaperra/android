@@ -3,6 +3,7 @@
     <color name="light_green">#98E0AD</color>
     <color name="normal">#34C6B1</color>
     <color name="dark">#2D3739</color>
+    <color name="splash">#2F3032</color>
 
     <color name="black">#000000</color>
     <color name="white">#FFFFFFFF</color>
@@ -12,5 +13,19 @@
     <color name="purple_m">#451883</color>
     <color name="pnk_m">#7A5CEA</color>
     <color name="drk_m">#1d1d1b</color>
+    <color name="light">#DFD8D8</color>
+
+
+
+
+
+    <color name="dialog_background">#C33D3D</color>
+    <color name="dialog_text">#EEEEEE</color>
+    <color name="dialog_buttons_color">#FFFFFF</color>
+    <color name="dialog_checkbox">#FFF</color>
+    <color name="dialog_checkbox_activated">#E4B86A</color>
+    <color name="dialog_list_item">#FFF</color>
+    <color name="dialog_accent_button">#FFF</color>
+    <color name="dialog_button">#77FFFFFF</color>
 
 </resources>

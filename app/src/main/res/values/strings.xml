@@ -79,14 +79,14 @@
     </string-array>
 
     <string-array name="hours_in_a_day">
-        <item>00:00</item>
-        <item>03:00</item>
-        <item>06:00</item>
-        <item>09:00</item>
-        <item>12:00</item>
-        <item>15:00</item>
-        <item>18:00</item>
-        <item>21:00</item>
+        <item>00</item>
+        <item>03</item>
+        <item>06</item>
+        <item>09</item>
+        <item>12</item>
+        <item>15</item>
+        <item>18</item>
+        <item>21</item>
     </string-array>
 
     <string name="fall">Fail connection</string>
@@ -94,6 +94,28 @@
     <string name="dev_by">Developed by:</string>
     <string name="name">Varvara Agapova @agaperra</string>
     <string name="vk_app_id">agaperra</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="exit">Are you sure you want to close the app?</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_settings">Settings</string>
+    <string name="menu_developers">Developers</string>
+    <string name="message">Open URL in browser?</string>
+
+    <!-->north west south east-->
+    <string name="e">E</string>
+    <string name="ne">NE</string>
+    <string name="n">N</string>
+    <string name="nw">NW</string>
+    <string name="w">W</string>
+    <string name="ws">SW</string>
+    <string name="s">s</string>
+    <string name="se">SE</string>
 
 
 </resources>

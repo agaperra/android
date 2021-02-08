@@ -55,6 +55,7 @@
     <string name="update">Обновить</string>
 
 
+
     <string-array name="topCities">
         <item>Москва</item>
         <item>Санкт-Петербург</item>
@@ -81,19 +82,42 @@
     </string-array>
 
     <string-array name="hours_in_a_day">
-        <item>00:00</item>
-        <item>03:00</item>
-        <item>06:00</item>
-        <item>09:00</item>
-        <item>12:00</item>
-        <item>15:00</item>
-        <item>18:00</item>
-        <item>21:00</item>
+        <item>00</item>
+        <item>03</item>
+        <item>06</item>
+        <item>09</item>
+        <item>12</item>
+        <item>15</item>
+        <item>18</item>
+        <item>21</item>
     </string-array>
     <string name="fall">Соединение потеряно</string>
     <string name="developers">Разработчики</string>
     <string name="dev_by">Разработано:</string>
     <string name="name">Варвара Агапова @agaperra</string>
     <string name="vk_app_id">agaperra</string>
+    <string name="exit">Вы уверены, что хотите выйти из приложения?</string>
+
+    <string name="navigation_drawer_open">Открыть</string>
+    <string name="navigation_drawer_close">Закрыть</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Домой</string>
+    <string name="menu_settings">Настройки</string>
+    <string name="menu_developers">Разработчики</string>
+    <string name="message">Открыть ссылку в браузере?</string>
+
+    <!-->north west south east-->
+    <string name="e">В</string>
+    <string name="ne">СВ</string>
+    <string name="n">С</string>
+    <string name="nw">СЗ</string>
+    <string name="w">З</string>
+    <string name="ws">ЮЗ</string>
+    <string name="s">Ю</string>
+    <string name="se">ЮВ</string>
 
 </resources>

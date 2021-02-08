@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navHeader"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:background="@drawable/icon_01d"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+    <ImageView
+        android:id="@+id/navHeaderIconView"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/navHeaderLocationView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/city"
+        android:textSize="18sp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/navHeaderIconView"
+        app:layout_constraintTop_toTopOf="@+id/navHeaderIconView" />
+
+    <TextView
+        android:id="@+id/navWeatherStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/the_type_of_weather"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="@+id/navHeaderLocationView"
+        app:layout_constraintStart_toStartOf="@+id/navHeaderLocationView"
+        app:layout_constraintTop_toBottomOf="@+id/navHeaderLocationView" />
+
+    <ImageView
+        android:id="@+id/imageViewWind"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/wind"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/navWeatherStatus" />
+
+    <TextView
+        android:id="@+id/texthumid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="lol"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewHumid"
+        app:layout_constraintStart_toStartOf="@+id/imageViewHumid"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewHumid" />
+
+    <TextView
+        android:id="@+id/textWind"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="lol"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewWind"
+        app:layout_constraintStart_toStartOf="@+id/imageViewWind"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewWind" />
+
+    <TextView
+        android:id="@+id/textdDegrees"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="lol"
+        app:layout_constraintBottom_toTopOf="@+id/imageViewHumid"
+        app:layout_constraintEnd_toEndOf="@+id/navHeaderIconView"
+        app:layout_constraintStart_toStartOf="@+id/navHeaderIconView"
+        app:layout_constraintTop_toBottomOf="@+id/navHeaderIconView" />
+
+    <TextView
+        android:id="@+id/textPress"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewPress"
+        app:layout_constraintStart_toStartOf="@+id/imageViewPress"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewPress"
+        android:text="lol"/>
+
+    <ImageView
+        android:id="@+id/imageViewHumid"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/humidity"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewWind"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewWind"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageViewWind"
+        />
+
+
+    <ImageView
+        android:id="@+id/imageViewPress"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/pressure"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewWind"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageViewWind"
+        app:layout_constraintTop_toTopOf="@+id/imageViewWind" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
